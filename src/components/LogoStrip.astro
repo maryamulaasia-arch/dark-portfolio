@@ -1,0 +1,90 @@
+---
+const logos = [
+	{ src: "/images/bcl-logo.png", label: "Better Cooperate Life", alt: "BCL", h: 30 },
+	{ src: "/images/oni-logo.png", label: "Oni Cares", alt: "Oni Cares", h: 36 },
+	{ src: "/images/ficnonfic-logo.png", label: "Fic / non fic", alt: "Fic / non fic", h: 38 },
+	{ src: "/images/anchae-logo.png", label: "Anchae", alt: "Anchae", h: 34 },
+];
+---
+
+<section class="logos">
+	<div class="logos__inner">
+		{
+			logos.map((logo, i) => (
+				<>
+					{i > 0 && <span class="logos__divider" aria-hidden="true" />}
+					<div class="logos__item reveal" style={`--reveal-delay:${i * 130}ms`}>
+						<img
+							src={logo.src}
+							alt={logo.alt}
+							style={`height:${logo.h}px`}
+							class="logos__icon"
+						/>
+						<span class="logos__label">{logo.label}</span>
+					</div>
+				</>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.logos__inner {
+		max-width: 1108px;
+		margin-inline: auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 90px;
+		padding-block: 22px;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.logos__item {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding-inline: 14px;
+		/* Combined with .reveal's own opacity/transform transition (see
+		   global.css) into one declaration — two separate `transition`
+		   shorthand rules on the same element would clobber each other
+		   instead of merging. */
+		transition:
+			background-color 0.15s ease,
+			opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+			transform 1000ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+	}
+
+	.logos__item:hover {
+		background-color: rgba(255, 255, 255, 0.03);
+	}
+
+	.logos__item:first-child {
+		padding-left: 48px;
+	}
+
+	.logos__item:last-child {
+		padding-right: 24px;
+	}
+
+	.logos__icon {
+		width: auto;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
+	.logos__label {
+		font-size: 22px;
+		font-weight: 400;
+		color: var(--text-dim);
+		white-space: nowrap;
+	}
+
+	.logos__divider {
+		width: 1px;
+		height: 40px;
+		background-color: var(--hairline);
+		flex-shrink: 0;
+	}
+</style>

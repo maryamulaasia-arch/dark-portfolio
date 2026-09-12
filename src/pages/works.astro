@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import FeaturedWorks from "../components/FeaturedWorks.astro";
+import LogoStrip from "../components/LogoStrip.astro";
+import LetsTalk from "../components/LetsTalk.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+const worksSubtitle = [
+	"A peek into the problems I’ve explored,",
+	"the products I’ve shaped,",
+	"and the thinking behind the pixels.",
+];
+---
+
+<Layout title="Works — Maryamul Aasia">
+	<Header active="works" />
+	<div class="works-lead">
+		<FeaturedWorks subtitleLines={worksSubtitle} />
+	</div>
+	<LogoStrip />
+	<LetsTalk />
+	<SiteFooter />
+</Layout>
+
+<style>
+	/* FeaturedWorks' internal padding-top (112px) was tuned to sit under
+	   Hero + LogoStrip on the Home page. Here it sits directly under Header,
+	   so that padding reads as too much empty space before the heading —
+	   measured against references/final Works.png, the gap from the header
+	   to the first card is ~50px larger than the reference. Pulled up at the
+	   page level (not inside FeaturedWorks itself) so Home's spacing, tuned
+	   for its own context, is untouched. */
+	.works-lead {
+		margin-top: -50px;
+	}
+</style>

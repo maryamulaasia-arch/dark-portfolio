@@ -1,0 +1,199 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import WhyHireMe from "../components/WhyHireMe.astro";
+import About from "../components/About.astro";
+import StatusStrip from "../components/StatusStrip.astro";
+import NotchBox from "../components/NotchBox.astro";
+import LetsTalk from "../components/LetsTalk.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+const education = [
+	{
+		period: "2024 · UI/UX Design",
+		desc: "Turned that business perspective into a career in product design through Lollypop Academy.",
+	},
+	{
+		period: "2021–2024 · B.Com",
+		desc: "Built my foundation in business and understanding how organisations work.",
+	},
+];
+
+const clientRows = [
+	["BCL", "Hapello", "Oni Cares"],
+	["Fic Non fic", "Anchae"],
+];
+---
+
+<Layout title="About — Maryamul Aasia">
+	<Header active="about" />
+	<div class="why-lead">
+		<WhyHireMe />
+	</div>
+	<About
+		thirdParagraph="A freelance designer exploring my next full-time opportunity, where I can take on bigger problems and build meaningful products."
+		showInlineFooter={false}
+	/>
+	<StatusStrip />
+
+	<section class="about-details">
+		<NotchBox width={524} height={383} class="edu-box reveal">
+			<div class="edu">
+				<h3 class="edu__heading pixelify">EDUCATION</h3>
+				{
+					education.map((e) => (
+						<div class="edu__entry">
+							<p class="edu__period">{e.period}</p>
+							<p class="edu__desc">{e.desc}</p>
+						</div>
+					))
+				}
+			</div>
+		</NotchBox>
+
+		<div class="cx">
+			<div class="reveal" style="--reveal-delay:130ms">
+				<h3 class="cx__heading pixelify">CLIENT &amp; EXPERIENCE</h3>
+				<div class="cx__grid">
+					{
+						clientRows.map((row, i) => (
+							<div class:list={["cx__row", i === 1 && "cx__row--offset"]}>
+								{row.map((label) => (
+									<span class="cx__tag">{label}</span>
+								))}
+							</div>
+						))
+					}
+				</div>
+			</div>
+
+			<div class="reveal" style="--reveal-delay:260ms">
+				<NotchBox width={420} height={197} class="contact-box">
+					<div class="contact">
+						<h3 class="contact__heading pixelify">INITIATE CONTACT</h3>
+						<p class="contact__email">maryamulaasia@gmail.com</p>
+					</div>
+				</NotchBox>
+			</div>
+		</div>
+	</section>
+
+	<LetsTalk />
+	<SiteFooter />
+</Layout>
+
+<style>
+	/* WhyHireMe's internal padding-top (66px) was tuned for sitting under
+	   FeaturedWorks on Home, not directly under Header as it does on this
+	   page. Measured against references/final about.png (Contact-Me-button
+	   top to "WHY HIRE ME?" top), this page rendered the gap 23px larger
+	   than the reference. Pulled up at the page level, not inside
+	   WhyHireMe.astro, so Home's spacing stays untouched. */
+	.why-lead {
+		margin-top: -23px;
+	}
+
+	.about-details {
+		max-width: 1110px;
+		margin-inline: auto;
+		padding: 40px 24px 0;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	/* EDUCATION */
+	.about-details :global(.edu-box) {
+		flex-shrink: 0;
+	}
+
+	.edu {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 34px 40px 0;
+	}
+
+	.edu__heading {
+		font-size: 30px;
+		letter-spacing: 0.02em;
+		text-align: center;
+		margin-bottom: 30px;
+	}
+
+	.edu__entry + .edu__entry {
+		margin-top: 30px;
+	}
+
+	.edu__period {
+		font-style: italic;
+		font-size: 21px;
+		margin-bottom: 10px;
+	}
+
+	.edu__desc {
+		font-size: 19px;
+		line-height: 1.4;
+		color: var(--text-muted);
+		max-width: 420px;
+	}
+
+	/* CLIENT & EXPERIENCE + INITIATE CONTACT */
+	.cx {
+		width: 420px;
+		flex-shrink: 0;
+	}
+
+	.cx__heading {
+		font-size: 30px;
+		letter-spacing: 0.02em;
+		margin-bottom: 26px;
+	}
+
+	.cx__grid {
+		margin-bottom: 26px;
+	}
+
+	.cx__row {
+		display: flex;
+	}
+
+	.cx__row--offset {
+		margin-left: 60px;
+	}
+
+	.cx__row + .cx__row {
+		margin-top: 17px;
+	}
+
+	.cx__tag {
+		width: 120px;
+		height: 45px;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--hairline);
+		font-size: 18px;
+		color: var(--text-muted);
+	}
+
+	.cx__tag + .cx__tag {
+		border-left: none;
+	}
+
+	.contact {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 30px 40px 0;
+	}
+
+	.contact__heading {
+		font-size: 28px;
+		letter-spacing: 0.02em;
+		margin-bottom: 22px;
+	}
+
+	.contact__email {
+		font-size: 22px;
+		color: var(--text-muted);
+	}
+</style>

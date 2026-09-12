@@ -1,0 +1,63 @@
+---
+/**
+ * Thin gray notched-outline box — the "EDUCATION" / "INITIATE CONTACT"
+ * card style from references/final about.png. Same visual language as
+ * ProjectCard's notch silhouette (chamfered top-left corner, two
+ * asymmetric bottom notches — short steep drop on the left side of each,
+ * long ~45deg rise on the right) but thin/subtle gray stroke, no fill,
+ * only one chamfer (top-right and bottom-right stay plain square corners).
+ *
+ * Geometry traced from the reference (pixel-scanned the actual stroke,
+ * not eyeballed): chamfer and notch depth are fixed px (they read as a
+ * constant decorative size regardless of box size in the reference);
+ * notch x-positions are fractions of the box's own width, taken from the
+ * EDUCATION box's measured proportions and reused for INITIATE CONTACT
+ * since both follow the same pattern at a different width.
+ */
+interface Props {
+	width: number;
+	height: number;
+	class?: string;
+}
+
+const { width, height, class: className } = Astro.props;
+
+const CHAMFER = 36;
+const NOTCH_DEPTH = 32;
+const baseline = height - NOTCH_DEPTH;
+
+const N1 = { start: 0.0973, floorStart: 0.105, floorEnd: 0.2424, end: 0.3111 };
+const N2 = { start: 0.479, floorStart: 0.4866, floorEnd: 0.8111, end: 0.8798 };
+const x = (f: number) => +(f * width).toFixed(1);
+
+const FRAME = `M${CHAMFER} 0 H${width} V${baseline} H${x(N2.end)} L${x(N2.floorEnd)} ${height} H${x(N2.floorStart)} L${x(N2.start)} ${baseline} H${x(N1.end)} L${x(N1.floorEnd)} ${height} H${x(N1.floorStart)} L${x(N1.start)} ${baseline} H0 V${CHAMFER} L${CHAMFER} 0 Z`;
+---
+
+<div class:list={["notchbox", className]} style={`width:${width}px;height:${height}px`}>
+	<svg class="notchbox__frame" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true">
+		<path d={FRAME} fill="none" stroke="#7a7a7a" stroke-width="1.5" vector-effect="non-scaling-stroke"></path>
+	</svg>
+	<div class="notchbox__content">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.notchbox {
+		position: relative;
+	}
+
+	.notchbox__frame {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.notchbox__content {
+		position: relative;
+		z-index: 1;
+		height: 100%;
+	}
+</style>

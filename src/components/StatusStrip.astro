@@ -1,0 +1,101 @@
+---
+interface Props {
+	items?: { label: string; value: string }[];
+}
+
+const {
+	items = [
+		{ label: "STATUS", value: "DESIGNER" },
+		{ label: "MODE", value: "CURIOUS" },
+		{ label: "SIGNAL", value: "ACTIVE" },
+	],
+} = Astro.props;
+---
+
+<section class="status">
+	<div class="status__inner reveal">
+		{
+			items.map((it, i) => (
+				<>
+					{i > 0 && (
+						<svg class="status__knot" viewBox="0 0 132 54" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M0 1.5 C 44 1.5 88 52.5 132 52.5" stroke="#9a9a9a" stroke-width="1.5" fill="none" />
+							<path d="M0 52.5 C 44 52.5 88 1.5 132 1.5" stroke="#9a9a9a" stroke-width="1.5" fill="none" />
+						</svg>
+					)}
+					<div class="status__seg">
+						<span class="status__label">{it.label} :</span>
+						<span class="status__value">{it.value}</span>
+					</div>
+				</>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.status {
+		padding-block: 30px;
+	}
+
+	.status__inner {
+		max-width: 1180px;
+		margin-inline: auto;
+		padding-inline: 24px;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+	}
+
+	.status__seg {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		height: 54px;
+		border-top: 1.5px solid #9a9a9a;
+		border-bottom: 1.5px solid #9a9a9a;
+		font-size: 21px;
+		white-space: nowrap;
+		padding-inline: 6px;
+	}
+
+	.status__label {
+		color: var(--text-dim);
+		letter-spacing: 0.03em;
+	}
+
+	.status__value {
+		color: #fff;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+	}
+
+	.status__knot {
+		width: 132px;
+		height: 54px;
+		flex-shrink: 0;
+	}
+
+	/* Long label/value pairs (e.g. "PATIENT CONVERSATION") can outgrow a
+	   narrow viewport even with nowrap; below 860px stack each segment full
+	   width instead of forcing the row to overflow horizontally. */
+	@media (max-width: 860px) {
+		.status__inner {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.status__knot {
+			display: none;
+		}
+
+		.status__seg {
+			white-space: normal;
+			height: auto;
+			padding-block: 12px;
+			flex-wrap: wrap;
+		}
+	}
+</style>

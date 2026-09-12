@@ -1,0 +1,131 @@
+---
+import Cta from "./Cta.astro";
+
+interface Props {
+	active?: "home" | "works" | "about";
+}
+
+const { active = "home" } = Astro.props;
+
+const navItems = [
+	{ key: "home", label: "Home", href: "/" },
+	{ key: "works", label: "Works", href: "/works" },
+	{ key: "about", label: "About", href: "/about" },
+];
+---
+
+<header class="header">
+	<div class="container header__inner">
+		<nav class="nav" aria-label="Primary">
+			{
+				navItems.map((item) => (
+					<a
+						href={item.href}
+						class:list={["nav__link", { "nav__link--active": (item.key === active) }]}
+						aria-current={(item.key === active) ? "page" : undefined}
+					>
+						{item.label}
+					</a>
+				))
+			}
+		</nav>
+
+		<Cta label="Contact Me" href="mailto:maryamulaasia@gmail.com" variant="outline" class="header__cta" />
+	</div>
+</header>
+
+<style>
+	.header {
+		position: relative;
+		z-index: 10;
+		padding-top: 34px;
+		padding-bottom: 28px;
+	}
+
+	.header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.nav {
+		display: flex;
+		align-items: center;
+		gap: 58px;
+	}
+
+	.nav__link {
+		position: relative;
+		font-size: 24px;
+		font-weight: 500;
+		color: var(--text-muted);
+		letter-spacing: 0.005em;
+		padding-bottom: 4px;
+		transition: color 190ms ease;
+	}
+
+	/* Purple hover (same --violet token as the Contact Me button fill)
+	   applies to every link EXCEPT the current active page — the :not()
+	   guarantees this by selector logic rather than specificity/source
+	   order, so it can't accidentally start matching the active link. */
+	.nav__link:not(.nav__link--active):hover {
+		color: var(--violet);
+	}
+
+	.nav__link--active {
+		color: var(--accent);
+	}
+
+	/* Replaces the old native text-decoration underline with a pseudo-element
+	   at the exact same position/size/colour (measured against a screenshot
+	   of the previous text-decoration: underline; text-underline-offset: 7px;
+	   text-decoration-thickness: 2px; rendering), so it can be scaleX
+	   animated — text-decoration itself can't be transform-animated.
+	   animation-fill-mode "both" (the trailing `both` below) holds the
+	   scaleX(0) start state before the animation begins, so there's no
+	   flash of a full-width line before it draws in, and holds scaleX(1)
+	   after — the final position/size is identical to the line it replaces. */
+	.nav__link--active::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 3px;
+		height: 2px;
+		background: currentColor;
+		transform-origin: left center;
+		animation: navUnderlineIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	@keyframes navUnderlineIn {
+		from {
+			transform: scaleX(0);
+		}
+		to {
+			transform: scaleX(1);
+		}
+	}
+
+	.header__inner :global(.cta) {
+		margin-right: -14px;
+	}
+
+	/* Contact Me hover — fill with the hero "View Resume" violet.
+	   Geometry, size, padding and position are untouched; only the
+	   fill/border/text colours cross-fade. */
+	.header__inner :global(.header__cta),
+	.header__inner :global(.header__cta::before) {
+		transition:
+			background-color 0.22s ease,
+			color 0.22s ease;
+	}
+
+	.header__inner :global(.header__cta:hover) {
+		background: var(--violet);
+		color: #fff;
+	}
+
+	.header__inner :global(.header__cta:hover::before) {
+		background: var(--violet);
+	}
+</style>

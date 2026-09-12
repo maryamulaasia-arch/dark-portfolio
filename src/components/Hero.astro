@@ -1,0 +1,124 @@
+---
+import PixelText from "./PixelText.astro";
+import Cta from "./Cta.astro";
+
+/* Pixel-glyph maps derived glyph-by-glyph from the reference.
+   Index counts spaces. Only these positions render in Pixelify Sans. */
+const line1 = { text: "MARYAMUL AASIA", pixel: [1, 5, 9, 11] };
+const line2 = { text: "PRODUCT /", pixel: [2, 6] };
+const line3 = { text: "UI UX DESIGNER", pixel: [4, 8, 12] };
+---
+
+<section class="hero">
+	<div class="hero__portrait reveal">
+		<img
+			src="/images/hero-portrait.png"
+			alt="Maryamul Aasia, product and UI/UX designer"
+			width="868"
+			height="868"
+		/>
+	</div>
+
+	<div class="hero__inner">
+		<h1 class="hero__heading">
+			<span class="hero__line"><PixelText text={line1.text} pixel={line1.pixel} /></span>
+			<span class="hero__line"><PixelText text={line2.text} pixel={line2.pixel} /></span>
+			<span class="hero__line"><PixelText text={line3.text} pixel={line3.pixel} /></span>
+		</h1>
+
+		<div class="hero__cta reveal" style="--reveal-delay:120ms">
+			<p class="hero__tagline">
+				Freelance designer looking for<br />full time opportunities
+			</p>
+
+			<Cta
+				label="View Resume"
+				href="https://drive.google.com/file/d/1Nxc1YKvll86CmeozEHyhvAJPVkEoYCaL/view"
+				target="_blank"
+				variant="solid"
+				class="hero__resume"
+			/>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* ---- Black & white portrait, bleeding off the left edge ---- */
+	.hero__portrait {
+		position: absolute;
+		top: 16px;
+		left: calc(50% - 648px);
+		width: 420px;
+		height: 448px;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.hero__portrait img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 1%;
+		/* Recreate the mono treatment in CSS — the file itself is untouched */
+		filter: grayscale(1) contrast(1.03) brightness(1.13);
+		/* Fade into the page on the left and bottom */
+		-webkit-mask-image:
+			linear-gradient(to right, transparent 0%, #000 36%, #000 82%, transparent 100%),
+			linear-gradient(to bottom, #000 68%, transparent 100%);
+		-webkit-mask-composite: source-in;
+		mask-image:
+			linear-gradient(to right, transparent 0%, #000 36%, #000 82%, transparent 100%),
+			linear-gradient(to bottom, #000 68%, transparent 100%);
+		mask-composite: intersect;
+	}
+
+	.hero__inner {
+		position: relative;
+		z-index: 2;
+		max-width: 1100px;
+		margin-inline: auto;
+		padding-inline: 24px;
+		padding-top: 30px;
+		padding-bottom: 86px;
+	}
+
+	/* ---- Display heading ---- */
+	.hero__heading {
+		font-weight: 500;
+		text-transform: uppercase;
+		text-align: right;
+		letter-spacing: -0.005em;
+		color: var(--text);
+		font-size: 81px;
+		line-height: 1.36;
+	}
+
+	.hero__line {
+		display: block;
+	}
+
+	/* ---- Tagline + résumé button ---- */
+	.hero__cta {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 56px;
+		margin-top: 16px;
+		padding-left: 10px;
+	}
+
+	.hero__tagline {
+		font-size: 24px;
+		line-height: 1.32;
+		color: var(--text-muted);
+	}
+
+	.hero__cta :global(.hero__resume) {
+		transform: translateY(-12px);
+	}
+</style>

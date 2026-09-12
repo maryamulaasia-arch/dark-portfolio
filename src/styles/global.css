@@ -1,0 +1,390 @@
+/* ============================================================
+   Fonts
+   ============================================================ */
+
+/* Neue Montreal — primary typeface */
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-light.otf") format("opentype");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-lightitalic.otf") format("opentype");
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-italic.otf") format("opentype");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-medium.otf") format("opentype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-mediumitalic.otf") format("opentype");
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-bold.otf") format("opentype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("/fonts/neuemontreal-bolditalic.otf") format("opentype");
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* Pixelify Sans — used ONLY on individually pixelated display glyphs */
+@font-face {
+	font-family: "Pixelify Sans";
+	src: url("/fonts/PixelifySans-VariableFont_wght.ttf") format("truetype");
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ============================================================
+   Reset / base
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--bg: #141819;
+	--text: #ffffff;
+	--text-muted: #d0d0d0;
+	--text-dim: #8a8a8a;
+	--accent: #c4b0ff;
+	--violet: #744af3;
+	--violet-deep: #4b2ca8;
+	--violet-fold: #744af3;
+	--card-bg: #080808;
+	--card-border: #744af3;
+	--hairline: rgba(255, 255, 255, 0.12);
+	--hairline-soft: rgba(255, 255, 255, 0.08);
+
+	/* Layout — tuned to the 1440px desktop reference */
+	--container: 1016px;
+	--container-wide: 1110px;
+
+	/* Angular "notch" CTA geometry — top-right + bottom-left 45° cuts.
+	   Verified against both CTA buttons in the reference (~20px cut,
+	   ~221px x 62px overall). */
+	--cta-cut: 20px;
+	--cta-notch: polygon(
+		0 0,
+		calc(100% - var(--cta-cut)) 0,
+		100% var(--cta-cut),
+		100% 100%,
+		var(--cta-cut) 100%,
+		0 calc(100% - var(--cta-cut))
+	);
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	position: relative;
+	background-color: var(--bg);
+	/* 88px background grid — matches the reference's faint blueprint grid.
+	   Kept subtle, but lifted enough to read clearly across the dark field
+	   the way it does in the Figma reference. */
+	background-image:
+		linear-gradient(rgba(202, 220, 228, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(202, 220, 228, 0.05) 1px, transparent 1px);
+	background-size: 88px 88px;
+	background-position: center top;
+	color: var(--text);
+	font-family: "Neue Montreal", system-ui, -apple-system, "Segoe UI", sans-serif;
+	font-weight: 400;
+	line-height: 1.4;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	min-height: 100vh;
+}
+
+/* Scattered softly-lit grid cells — the "glow" behind the hero and
+   featured-works area in the reference. Kept blurred and very low
+   contrast so it reads as depth, not a checkerboard. Sits behind
+   all page content. */
+body::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	filter: blur(40px);
+	opacity: 0.5;
+	background:
+		radial-gradient(150px 130px at 82% 2.4%, rgba(150, 170, 185, 0.1), transparent 72%),
+		radial-gradient(160px 150px at 20% 4.5%, rgba(150, 170, 185, 0.08), transparent 72%),
+		radial-gradient(150px 140px at 74% 7.5%, rgba(150, 170, 185, 0.09), transparent 72%),
+		radial-gradient(140px 130px at 12% 9.5%, rgba(150, 170, 185, 0.07), transparent 72%),
+		radial-gradient(180px 150px at 88% 12%, rgba(150, 170, 185, 0.07), transparent 72%),
+		radial-gradient(240px 220px at 50% 17%, rgba(120, 74, 243, 0.04), transparent 76%),
+		radial-gradient(260px 260px at 14% 29%, rgba(150, 170, 185, 0.04), transparent 76%),
+		/* softly-lit patches drifting through the Featured Works band */
+		radial-gradient(320px 280px at 20% 33%, rgba(150, 170, 185, 0.05), transparent 76%),
+		radial-gradient(300px 260px at 84% 39%, rgba(120, 74, 243, 0.038), transparent 78%),
+		radial-gradient(300px 280px at 16% 45%, rgba(150, 170, 185, 0.045), transparent 78%),
+		radial-gradient(240px 220px at 86% 41%, rgba(120, 74, 243, 0.03), transparent 76%);
+	background-repeat: no-repeat;
+}
+
+/* Selected grid cells, softly filled — lighter tonal blocks that snap exactly
+   to the 88px grid (same cell size, same x/y origin: the nearest vertical grid
+   line left of centre sits at `50% - 44px`, horizontal lines start at the top).
+   Every block's edges land on grid lines and stay within the grid's visible
+   span (x 60–1380 at 1440px). Sparse and irregular — some isolated, some
+   paired, opacity varied, densest around the hero. Purely decorative. */
+body::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background-repeat: no-repeat;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.028)),
+		linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+		linear-gradient(rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.024)),
+		linear-gradient(rgba(255, 255, 255, 0.026), rgba(255, 255, 255, 0.026)),
+		linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+		linear-gradient(rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.016)),
+		linear-gradient(rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.024)),
+		linear-gradient(rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.018)),
+		linear-gradient(rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.022)),
+		linear-gradient(rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.016)),
+		linear-gradient(rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.022)),
+		linear-gradient(rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0.024)),
+		linear-gradient(rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.018)),
+		linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+		linear-gradient(rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.016));
+	background-size:
+		88px 176px,
+		176px 88px,
+		176px 88px,
+		88px 88px,
+		88px 88px,
+		88px 88px,
+		88px 264px,
+		176px 88px,
+		88px 176px,
+		88px 88px,
+		88px 176px,
+		176px 88px,
+		88px 88px,
+		88px 88px,
+		88px 176px;
+	background-position:
+		calc(50% - 44px + 528px) 88px,
+		calc(50% - 44px + 352px) 88px,
+		calc(50% - 44px + 264px) 352px,
+		calc(50% - 44px - 176px) 264px,
+		calc(50% - 44px + 0px) 528px,
+		calc(50% - 44px + 528px) 616px,
+		calc(50% - 44px - 616px) 968px,
+		calc(50% - 44px + 528px) 880px,
+		calc(50% - 44px - 528px) 1496px,
+		calc(50% - 44px + 616px) 1672px,
+		calc(50% - 44px - 616px) 2024px,
+		calc(50% - 44px - 176px) 2376px,
+		calc(50% - 44px + 176px) 2640px,
+		calc(50% - 44px + 616px) 2728px,
+		calc(50% - 44px + 528px) 2992px;
+}
+
+body > * {
+	position: relative;
+	z-index: 1;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button {
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+/* ============================================================
+   Shared layout helpers
+   ============================================================ */
+
+.container {
+	max-width: var(--container);
+	margin-inline: auto;
+	padding-inline: 24px;
+}
+
+.container--wide {
+	max-width: var(--container-wide);
+	margin-inline: auto;
+	padding-inline: 24px;
+}
+
+/* Pixelated display glyph — swapped to Pixelify Sans, size-corrected
+   so its cap height sits close to the surrounding Neue Montreal caps. */
+.px {
+	font-family: "Pixelify Sans", "Neue Montreal", sans-serif;
+	font-weight: 500;
+	font-size: 1.08em;
+	line-height: 0;
+}
+
+/* Whole word/heading in Pixelify Sans (used where the reference sets an
+   entire string in the pixel face, e.g. the About section header). */
+.pixelify {
+	font-family: "Pixelify Sans", "Neue Montreal", sans-serif;
+	font-weight: 500;
+}
+
+/* ============================================================
+   CTA button — angular / notched "tag" shape
+   Top-right + bottom-left corners cut at 45°; the other two square.
+   Two variants: --outline (2px accent border, page-bg interior) and
+   --solid (filled). Both share the exact same silhouette.
+   ============================================================ */
+
+.cta {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px 22px;
+	font-size: 25px;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	clip-path: var(--cta-notch);
+	transition:
+		background-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.cta > * {
+	position: relative;
+	z-index: 1;
+}
+
+.cta__arrow {
+	width: 0.92em;
+	height: 0.92em;
+	flex-shrink: 0;
+}
+
+/* Outline: the element itself is the border colour; ::before paints the
+   interior 2px smaller with the same silhouette, leaving a crisp frame
+   on every edge — including the two diagonal cuts. */
+.cta--outline {
+	background: var(--accent);
+	color: var(--accent);
+}
+
+.cta--outline::before {
+	content: "";
+	position: absolute;
+	inset: 2px;
+	background: var(--cta-fill, var(--bg));
+	clip-path: var(--cta-notch);
+	z-index: 0;
+}
+
+.cta--outline:hover {
+	color: var(--bg);
+}
+.cta--outline:hover::before {
+	background: var(--accent);
+}
+
+/* Solid: filled silhouette, no border. */
+.cta--solid {
+	background: var(--cta-fill, var(--violet));
+	color: #fff;
+}
+
+.cta--solid:hover {
+	filter: brightness(1.08);
+}
+
+/* ============================================================
+   Scroll reveal — shared fade-up entrance system, used on /, /works
+   and /about. An element opts in with class="reveal"; Layout.astro's
+   IntersectionObserver adds .is-visible the first time it enters the
+   viewport (and unobserves — the animation never re-triggers). Stagger
+   is set per-element via inline style="--reveal-delay:Nms".
+
+   Only opacity/transform change, and transform is a translateY (no
+   horizontal movement, no scale) — the element's box, and therefore
+   layout, is identical in both states, so this can never cause layout
+   shift or move anything from its final design position.
+
+   Do NOT apply this class directly to an element that already declares
+   its own `transition` (e.g. .cta, .logos__item, .pcard__tags) — the
+   shorthand would clobber it. Wrap such elements in a plain container
+   and put .reveal there instead (see Hero/LetsTalk/ProjectCard usage). */
+.reveal {
+	opacity: 0;
+	transform: translateY(16px);
+	transition:
+		opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+		transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+	transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

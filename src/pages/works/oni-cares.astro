@@ -1,0 +1,1649 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import NotchBox from "../../components/NotchBox.astro";
+import PixelText from "../../components/PixelText.astro";
+import LetsTalk from "../../components/LetsTalk.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+/* ============================================================
+   Content — every string below is read directly from
+   references/ONI Case study.png. Typos present in that PNG are
+   reproduced verbatim EXCEPT the corrections explicitly confirmed
+   by the user (see each spot below), per the brief's
+   "PNG contains it -> include it" rule.
+
+   GRID: the whole page uses ONE container width — the same
+   Home-nav-to-Contact-Me bounding box as the header
+   (var(--container): 1016px + 24px inline padding). Verified by
+   pixel-measuring the reference: the header's visible content spans
+   x≈237..1230 at 1440px width, and every other row checked (meta
+   row, card grids, the competitive table, the journey/IA diagrams)
+   lines up with that same box within a few px of bleed — there is
+   no separate "wide" container anywhere on this page. Only the hero
+   device composition intentionally bleeds further left (see .hero).
+   ============================================================ */
+
+const metaRow = [
+	{ label: "Product", value: "ONI DIDI" },
+	{ label: "Domain", value: "Maternal Health" }, // corrected: PNG shows "Domine"
+	{ label: "Platform", value: "Responsive Design" },
+	{ label: "Role", value: "Product Designer" },
+];
+
+const problemCards = [
+	{ title: "MISSED INPUTS", desc: "Important information could be skipped or documented later." },
+	{ title: "DIVIDED ATTENTION", desc: "Typing competed with the patient conversation." },
+	{ title: "INCONSISTENT RECORDS", desc: "Documentation varied across doctors and visits." },
+	{ title: "NO SAFETY NET", desc: "The system couldn't surface potentially missing information." },
+];
+
+const roleCards = [
+	{ title: "0→1 PRODUCT DESIGN", desc: "Led the end-to-end design of the doctor-facing mobile app" },
+	{ title: "AI UX", desc: "Designed AI Prompts, follow-ups, summaries, and information retrieval" },
+	{ title: "RESPONSIVE DESIGN", desc: "Designed across web , tablet, and mobile." },
+	{ title: "AI TESTING", desc: "Consultation scenarios and edge cases" },
+];
+
+const researchStatus = [
+	{ label: "STATUS", value: "TIME-PRESSED" },
+	{ label: "PRIORITY", value: "PATIENT CONVERSATION" },
+	{ label: "CONTROL", value: "DOCTOR LED" },
+];
+
+const researchThemes = [
+	{ title: "Notes came second", desc: "Patients came first" },
+	{ title: "Flexibility matters", desc: "Work happens anywhere" },
+	{ title: "Data entry slows", desc: "Long forms add friction" },
+	{ title: "AI should assist", desc: "Doctors stay in control" },
+];
+
+/* "Context" — the PNG's rendered pixel glyphs literally spell "CONTACT" (verified
+   by zooming the source image), but this matches the user's explicit correction
+   the same way "Domain"/"Risk factor in appointment" do elsewhere in the brief. */
+const competitiveHeaders = ["PRODUCT", "WORKFLOW", "DOCS", "AI", "SPECIALTY", "CONTEXT", "DEVICES"];
+const competitiveRows = [
+	["HealthPlix", "Strong", "Strong", "Strong", "Strong", "Moderate", "Moderate"],
+	["Eka Care", "Moderate", "Moderate", "Moderate", "Moderate", "Strong", "Strong"],
+	["Augnito", "Moderate", "Strong", "Strong", "Broad", "Limited", "Strong"],
+	["Practo Ray", "Strong", "Moderate", "Limited", "Limited", "Moderate", "Limited"],
+	["Hospital HIS", "Strong", "Strong", "Limited", "Varies", "Strong", "Limited"],
+];
+
+const principleCards = [
+	{ title: "SHORT CONSULTATIONS", desc: "Capture first, AI-completed" },
+	{ title: "AI CAN MISS INFORMATION", desc: "Design for review" },
+	{ title: "AI SHOULDN'T INTERRUPT CARE", desc: "Assist in the background" },
+	{ title: "CLINICAL DATA IS COMPLEX", desc: "Structure where possible" },
+];
+
+const deviceCaptions = [
+	{ device: "Desktop", text: "for deep work" },
+	{ device: "Tablet", text: "for consultation" },
+	{ device: "Mobile", text: "for on the go use" },
+];
+
+const resultCards = [
+	{ value: "45%", label: "reduction in documentation time" },
+	{ value: "60–70%", label: "improvement in structured data completeness" },
+	{ value: "30%", label: "reduction in missed clinical inputs" },
+	{ value: "2×", label: "faster prescription generation" },
+];
+
+const citations = [
+	"Sinsky et al.; Rule et al.",
+	"Olson et al., JAMA Network Open, 2025",
+	"Irving et al., BMJ Open, 2017",
+];
+---
+
+<Layout title="ONI CARES — Maryamul Aasia">
+	<Header active="works" />
+
+	<main class="oni">
+		<!-- ============ HERO ============ -->
+		<section class="hero">
+			<div class="hero__device reveal">
+				<img src="/images/ONI/oni-hero.png" alt="ONI Cares doctor dashboard shown on tablet, laptop and phone" />
+				<p class="hero__tags">UX/ Product design<br />Healthcare UX</p>
+			</div>
+			<div class="hero__copy reveal" style="--reveal-delay:120ms">
+				<h1 class="hero__title">
+					<PixelText text="ONI CARES" pixel={[5, 7]} />
+				</h1>
+				<p class="hero__subtitle">AI - Powered tool for Gynecologists</p>
+			</div>
+		</section>
+
+		<!-- ============ META ROW ============ -->
+		<section class="block meta reveal">
+			<div class="meta__row">
+				{
+					metaRow.map((m, i) => (
+						<>
+							{i > 0 && <span class="meta__divider" aria-hidden="true" />}
+							<div class="meta__col">
+								<p class="meta__label">{m.label}</p>
+								<p class="meta__value">{m.value}</p>
+							</div>
+						</>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ ABOUT ONI ============ -->
+		<section class="block reveal">
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<h2 class="h2"><PixelText text="ABOUT" pixel={[2]} /><br /><PixelText text="ONI" pixel={[0]} /></h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">Designing an AI Assistant for High-Stakes Medical Consultations</p>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						ONI (Continuum Pregnancy Care) is an AI-powered healthcare platform connecting Ob-Gyns,
+						clinic staff, and expecting mothers through a unified pregnancy-care ecosystem, with a
+						doctor-facing Electronic Medical Record (EMR), mother-facing mobile app, and shared design
+						system.
+					</p>
+					<p class="bodycol">
+						Doctors need to <strong>diagnose, decide, and document</strong>, without losing focus on the
+						patient.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="about__art">
+						<img src="/images/ONI/About.png" alt="Glitch-art silhouette of a pregnant figure" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ PROBLEM STATEMENT ============ -->
+		<section class="block reveal">
+			<div class="zgrid">
+				<div class="zgrid__left">
+					<h2 class="h2"><PixelText text="PROBLEM" pixel={[2, 6]} /><br /><PixelText text="STATEMNT" pixel={[5]} /></h2>
+				</div>
+				<div class="zgrid__right">
+					<blockquote class="sidewhite sidewhite--quote">
+						&ldquo;The information isn&rsquo;t the problem. It&rsquo;s documenting everything accurately while
+						managing the consultation.&rdquo;<br />
+						<span>~ Gynaecologist research interview</span>
+					</blockquote>
+				</div>
+			</div>
+
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<div class="problem__img">
+						<img src="/images/ONI/Problem statement.png" alt="Doctor-facing EMR treatment screen with prescription and notes" />
+					</div>
+				</div>
+				<div class="zgrid__right">
+					<p class="bodycol">
+						The existing EMR relied heavily on manual documentation, making it difficult for doctors to
+						capture information while managing the patient conversation.
+					</p>
+					<p class="sidewhite">High patient volume &middot; Time-sensitive consultations &middot; Diagnosis + documentation</p>
+				</div>
+			</div>
+
+			<div class="cardgrid">
+				{
+					problemCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title pixelify">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ MY ROLE ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="MY" pixel={[0, 1]} /> <PixelText text="ROLE" pixel={[1]} /></h2>
+				<p class="headrow__side">Cross function collaboration, System thinking and&nbsp; Problem solving</p>
+			</div>
+			<p class="bodycol">
+				I worked as the <strong>Product Designer for ONI&rsquo;s doctor-facing experience</strong>, focusing
+				on how AI could reduce documentation effort without interrupting care.
+			</p>
+			<div class="cardgrid">
+				{
+					roleCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title pixelify">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ USER RESEARCH ============ -->
+		<section class="block reveal">
+			<div class="ur__header">
+				<span class="ur__star" aria-hidden="true">
+					<svg viewBox="0 0 24 24"><path d="M12 1 C12.5 7 17 11.5 23 12 C17 12.5 12.5 17 12 23 C11.5 17 7 12.5 1 12 C7 11.5 11.5 7 12 1 Z" fill="currentColor"/></svg>
+				</span>
+				<h2 class="ur__title pixelify">USER RESEARCH</h2>
+				<svg class="ur__wire" viewBox="0 0 640 44" preserveAspectRatio="none" aria-hidden="true">
+					<path d="M1 40 H210 C270 40 262 8 322 8 H639" stroke="#8a8a8a" stroke-width="2" fill="none" stroke-linecap="round"/>
+				</svg>
+				<span class="ur__hexes" aria-hidden="true">
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+				</span>
+			</div>
+
+			<div class="headrow headrow--tight">
+				<p class="bodycol bodycol--noindent">We interviewed gynaecologists across clinics and hospitals, revealing three recurring themes:</p>
+				<p class="headrow__side">Time pressure &middot; Multitasking &middot; Low tolerance for unreliable AI</p>
+			</div>
+
+			<div class="doctorbox">
+				<div class="doctorbox__photoWrap">
+					<img class="doctorbox__photo" src="/images/ONI/User research.png" alt="Portrait of Dr. Zoya Khan, gynaecologist" />
+				</div>
+				<div class="doctorbox__content">
+					<p>
+						<em>Hello, I&rsquo;m Dr. Zoya Khan. Most of my day moves quickly from one patient to the next, so I rely{" "}
+						<strong>heavily on conversation and memory to keep consultations moving.</strong></em>
+					</p>
+					<p>
+						<em
+							>I need technology to stay in the background capturing what matters, keeping records complete, and
+							helping me follow through without taking over my decisions.</em
+						>
+					</p>
+					<p class="doctorbox__need"><em>PRIMARY NEED &rarr; <strong>Capture accurately without interrupting care</strong></em></p>
+					<p class="doctorbox__logLabel">PRACTICE&nbsp; LOG</p>
+					<p class="doctorbox__log">20&ndash;35 CONSULTATIONS&nbsp; |&nbsp; HIGH-RISK CARE&nbsp; |&nbsp; HINDI + ENGLISH</p>
+				</div>
+			</div>
+
+			<div class="connectorrow">
+				<div class="connectorrow__seg connectorrow__seg--cap">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M0,1 H78 C90,1 94,14 99,27 C94,40 90,53 78,53 H0" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					<span class="connectorrow__label">STATUS :</span> <span class="connectorrow__value">TIME-PRESSED</span>
+				</div>
+				<div class="connectorrow__seg connectorrow__seg--mid">
+					<span class="connectorrow__label">PRIORITY :</span> <span class="connectorrow__value">PATIENT CONVERSATION</span>
+				</div>
+				<div class="connectorrow__seg connectorrow__seg--cap connectorrow__seg--capRight">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M100,1 H22 C10,1 6,14 1,27 C6,40 10,53 22,53 H100" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					<span class="connectorrow__label">CONTROL :</span> <span class="connectorrow__value">DOCTOR LED</span>
+				</div>
+			</div>
+
+			<div class="cardgrid cardgrid--four">
+				{
+					researchThemes.map((c) => (
+						<div class="hexcard cardgrid__item cardgrid__item--sm">
+							<svg class="hexcard__frame" viewBox="0 0 227 165" preserveAspectRatio="none" aria-hidden="true">
+								<path d="M0,0 H207 L227,20 V165 H20 L0,145 Z" fill="none" stroke="#7a7a7a" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+							</svg>
+							<div class="notchcard notchcard--sm">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ MARKET RESEARCH ============ -->
+		<section class="block reveal">
+			<div class="zgrid">
+				<div class="zgrid__left">
+					<h2 class="h2"><PixelText text="MARKET" pixel={[1, 4]} /><br /><PixelText text="RESEARCH" pixel={[4, 7]} /></h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">
+						The opportunity wasn&rsquo;t simplifying documentation. It was lowering cognitive load.
+					</p>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						Documentation is a significant source of clinician workload. Physicians can spend nearly 2
+						hours on EMR work per hour of direct patient care (Sinsky et al.). A 2026 study found 45% of
+						EMR time occurred outside scheduled hours, averaging 3 hours per 8 scheduled hours (Rule et
+						al.).
+					</p>
+					<p class="bodycol">
+						<strong
+							>In a 263-clinician study, reported burnout fell from 51.9% &rarr; 38.8% after 30 days with an
+							ambient AI scribe, alongside a 54 mins&nbsp; reduction in after-hours documentation (Olson et al.,
+							JAMA Network Open, 2025).</strong
+						>
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="market__img">
+						<img src="/images/ONI/market research.png" alt="Doctor consulting a young patient" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ INDIAN CONTEXT ============ -->
+		<section class="block reveal">
+			<h2 class="h3 center h3--secondary pixelify">INDIAN CONTEXT</h2>
+			<div class="centercol">
+				<p class="bodycol bodycol--center indian__body">
+					A review of 28.5M primary-care consultations across 67 countries found consultation
+					times ranging from 48 seconds to 22.5 minutes; in 18 countries, average
+					consultations were 5 minutes or less (Irving et al., BMJ Open, 2017).
+				</p>
+				<p class="bodycol bodycol--center indian__body">This suggested a different approach from traditional ambient scribes:</p>
+				<p class="bodycol bodycol--center indian__flow">Listen &rarr; Transcribe to Capture &rarr; AI Complete &rarr; Doctor Review</p>
+			</div>
+		</section>
+
+		<!-- ============ COMPETITIVE LANDSCAPE ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="COMPETITIVE" pixel={[2, 5]} /><br /><PixelText text="LANDSCAPE" pixel={[1, 2, 6]} /></h2>
+				<p class="headrow__side">
+					I evaluated competitors across: Clinical workflow &middot; Documentation &middot; AI assistance
+					&middot; Specialty depth &middot; Patient context &middot; Device flexibility
+				</p>
+			</div>
+
+			<div class="table-wrap">
+				<table class="ctable">
+					<thead>
+						<tr>
+							{competitiveHeaders.map((h) => <th><span class="tagchip pixelify">{h}</span></th>)}
+						</tr>
+					</thead>
+					<tbody>
+						{
+							competitiveRows.map((row) => (
+								<tr>
+									<td class="ctable__name">{row[0]}</td>
+									{row.slice(1).map((v) => <td>{v}</td>)}
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<h3 class="h3 center h3--secondary pixelify">THE OPPORTUNITY</h3>
+			<div class="centercol">
+				<p class="bodycol bodycol--center">
+					Most solutions focused on one part of the workflow: <strong>records, voice, practice
+					management, or AI-assisted entry.</strong>
+				</p>
+				<p class="bodycol bodycol--center"><strong>ONI could connect patient context, clinical workflow, AI assistance, and pregnancy-specific care.</strong></p>
+			</div>
+		</section>
+
+		<!-- ============ RESEARCH TO DESIGN PRINCIPLES ============ -->
+		<section class="block reveal">
+			<div class="headrow headrow--mid">
+				<h2 class="h2"><PixelText text="RESEARCH" pixel={[2, 5]} /><br />TO <PixelText text="DESIGN" pixel={[5]} /><br />PRINCIPLES</h2>
+				<p class="headrow__side">Doctors work across environments, so&nbsp; Design for each device</p>
+			</div>
+
+			<div class="cardgrid">
+				{
+					principleCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title pixelify">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+
+			<div class="devicerow">
+				{
+					deviceCaptions.map((d) => (
+						<p class="devicerow__item">
+							<span class="devicerow__device">{d.device}</span> {d.text}
+						</p>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ USER JOURNEY ============ -->
+		<section class="block reveal">
+			<div class="headrow headrow--mid">
+				<h2 class="h2"><PixelText text="USER" pixel={[2]} /><br /><PixelText text="JOURNEY" pixel={[4]} /></h2>
+				<p class="headrow__side">
+					The key opportunity was to move documentation into the consultation flow, rather than treating it
+					as a separate task.
+				</p>
+			</div>
+
+			<p class="journey__flow">Prepare &rarr; Review &rarr; Consult &rarr; Capture &rarr; Review &rarr; Prescribe &rarr; Follow-up</p>
+
+			<div class="wide-img">
+				<img src="/images/ONI/journey-map.png" alt="Five-stage doctor journey map with doing, thinking, feeling, friction and consequence rows" />
+			</div>
+		</section>
+
+		<!-- ============ INFORMATION ARCHITECTURE ============ -->
+		<section class="block reveal">
+			<h2 class="h2"><PixelText text="INFORMATION" pixel={[6]} /><br /><PixelText text="ARCHITECTURE" pixel={[3, 7]} /></h2>
+			<div class="wide-img wide-img--center">
+				<img src="/images/ONI/information-architecture.png" alt="Information architecture tree for ONI doctors interface" />
+			</div>
+		</section>
+
+		<!-- ============ USER FLOW ============ -->
+		<section class="block reveal">
+			<h2 class="h2"><PixelText text="USER" pixel={[2]} /> FLOW</h2>
+			<div class="wide-img wide-img--flow">
+				<img src="/images/ONI/user-flow.png" alt="User flow diagram from ONI home through consultation screens" />
+			</div>
+			<div class="wide-img wide-img--wireframes">
+				<img src="/images/ONI/Wireframes.png" alt="Five black-and-white wireframe screens of the ONI doctor app" />
+			</div>
+		</section>
+
+		<!-- ============ UI DESIGN / HOME SCREEN ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2">UI <PixelText text="DESIGN" pixel={[5]} /></h2>
+				<p class="headrow__side headrow__side--pixel pixelify">HOME SCREEN</p>
+			</div>
+			<p class="bodycol bodycol--wide">
+				The general home screen across devices displays the doctor&rsquo;s profile, a basic patient summary,
+				and the active queue. However, to fit the smaller mobile layout properly, the patient queue is
+				removed from the mobile home screen and relocated to a separate screen.
+			</p>
+			<div class="devicetrio">
+				<div class="devicetrio__desktop">
+					<img src="/images/ONI/Home - desktop.png" alt="ONI home screen on desktop" />
+				</div>
+				<div class="devicetrio__tablet">
+					<img src="/images/ONI/Home - Tablet.png" alt="ONI home screen on tablet" />
+				</div>
+				<div class="devicetrio__mobile">
+					<img src="/images/ONI/Home - Mobile.png" alt="ONI home screen on mobile" />
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ PRESCRIPTION FLOW ============ -->
+		<section class="block reveal">
+			<h2 class="h2 h2--secondary pixelify">PRESCRIPTION FLOW</h2>
+			<div class="bodycol bodycol--wide bodycol--headspace">
+				<p>
+					One of the biggest design challenges was breaking down a complex desktop prescription page which
+					displays everything simultaneously into smaller sections. For tablets, adding sub-tabs made it
+					easy for doctors to track their location and remember to scroll. However, on mobile. I was bit
+					Challenging
+				</p>
+				<p class="bodycol__p2">
+					On the desktop prescription page, all sections were displayed simultaneously, including symptoms
+					medication, supplements medication , doctor notes, follow-up dates, and additional tests.
+				</p>
+			</div>
+
+			<div class="rx__pair">
+				<div class="rx__desktop">
+					<img src="/images/ONI/Medication - desktop.png" alt="Prescription screen on desktop" />
+				</div>
+				<div class="rx__tablet-wrap">
+					<div class="rx__tablet">
+						<img src="/images/ONI/medicatio - tablet.png" alt="Prescription screen on tablet with sub-tabs" />
+					</div>
+				</div>
+			</div>
+
+			<p class="bodycol bodycol--wide">
+				On mobile screens, each of those subsections is separated into its own individual screen instead of
+				appearing all at once.
+			</p>
+			<div class="wide-img wide-img--rxmobile">
+				<img src="/images/ONI/Medication - mobile.png" alt="Six mobile prescription flow screens in sequence" />
+			</div>
+		</section>
+
+		<!-- ============ KEEPING PATIENT RISK ALWAYS VISIBLE ============ -->
+		<section class="block reveal">
+			<h2 class="h2 h2--secondary pixelify">KEEPING PATIENT RISK ALWAYS VISIBLE</h2>
+			<p class="bodycol bodycol--wide bodycol--headspace">
+				I surfaced the risk level at the top of the patient card, keeping it visible even while scrolling on
+				mobile. The same risk indicator is reinforced within the appointment view, so critical patient
+				context stays easy to spot throughout the consultation.
+			</p>
+
+			<div class="riskrow">
+				<div class="riskrow__phones">
+					<img src="/images/ONI/risk mobile.png" alt="Two ONI mobile screens showing risk badges in the header and appointment list" />
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ VALIDATION & RESULTS ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="VALIDATION" pixel={[1, 5]} /> <span class="px">&amp;</span> <PixelText text="RESULTS" pixel={[6]} /></h2>
+				<p class="headrow__side">In 12 simulated consultations with 3 Ob-Gyn doctors, the prototype showed:</p>
+			</div>
+			<div class="bodycol bodycol--wide">
+				<p>Doctors reported greater confidence when AI outputs were reviewable and explicitly confirmed.</p>
+				<p class="bodycol__p2">Prototype validation results; not production deployment metrics.</p>
+			</div>
+
+			<div class="cardgrid cardgrid--result">
+				{
+					resultCards.map((r) => (
+						<div class="hexcard cardgrid__item cardgrid__item--sm">
+							<svg class="hexcard__frame" viewBox="0 0 227 165" preserveAspectRatio="none" aria-hidden="true">
+								<path d="M0,0 H207 L227,20 V165 H20 L0,145 Z" fill="none" stroke="#7a7a7a" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+							</svg>
+							<div class="resultcard">
+								<p class="resultcard__value">{r.value}</p>
+								<p class="resultcard__label">{r.label}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ LEARNINGS & SOURCES ============ -->
+		<section class="block reveal">
+			<h2 class="h3 center h3--secondary pixelify">LEARNINGS &amp; SOURCES</h2>
+			<div class="bodycol bodycol--wide bodycol--learnings">
+				<p>
+					Trust in AI comes from giving doctors visibility and control over its outputs, while designing
+					for uncertainty and potential errors.
+				</p>
+				<p class="bodycol__p2">
+					Responsive design also meant adapting each device to different clinical moments. Ultimately, the
+					solution went beyond screens, balancing clinical needs, AI limitations, workflow, and technical
+					feasibility.
+				</p>
+			</div>
+			<div class="connectorrow connectorrow--citations">
+				<div class="connectorrow__seg connectorrow__seg--cap">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M0,1 H78 C90,1 94,14 99,27 C94,40 90,53 78,53 H0" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					{citations[0]}
+				</div>
+				<div class="connectorrow__seg connectorrow__seg--mid">{citations[1]}</div>
+				<div class="connectorrow__seg connectorrow__seg--cap connectorrow__seg--capRight">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M100,1 H22 C10,1 6,14 1,27 C6,40 10,53 22,53 H100" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					{citations[2]}
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<LetsTalk />
+	<SiteFooter />
+</Layout>
+
+<style>
+	/* ============================================================
+	   Shared grid — ONE container for the whole page, matching the
+	   header's own box exactly (var(--container):1016px + 24px
+	   inline padding => content 968px, edges at 212/1228 on a 1440
+	   viewport). Every section, table, card row and diagram sits
+	   inside this same box; nothing else declares its own max-width.
+	   ============================================================ */
+	/* One reusable device-size system, used by every section that shows a
+	   desktop/tablet/mobile screenshot (UI Design's Home Screen trio,
+	   Prescription Flow's desktop+tablet pair). Chosen so the three fit
+	   the standard grid (968px content) in the 3-up Home Screen row
+	   while keeping the reference's desktop > tablet > mobile hierarchy:
+	   424 + 280 + 210 + 2×27 gap = 968. Prescription's 2-up row reuses
+	   the same desktop/tablet widths for consistency. */
+	.oni {
+		overflow-x: hidden;
+		--case-desktop-w: 424px;
+		--case-tablet-w: 280px;
+		--case-mobile-w: 210px;
+	}
+
+	.block {
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 76px 24px 0;
+	}
+
+	.split,
+	.headrow {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 40px;
+		margin-bottom: 30px;
+	}
+
+	/* The repeated "large heading on one side + short supporting copy on
+	   the other" pattern (My Role, Research to Design Principles, User
+	   Journey, Competitive Landscape, UI Design, Validation…): the side
+	   copy sits vertically centered against the heading block, not
+	   pinned to its top. */
+	.headrow--mid {
+		align-items: center;
+	}
+
+	.headrow--tight {
+		margin-bottom: 40px;
+	}
+
+	.headrow__side {
+		flex-shrink: 0;
+		max-width: 412px;
+		text-align: left;
+		font-size: 19px;
+		line-height: 1.45;
+		color: #fff;
+	}
+
+	.headrow__side--pixel {
+		font-size: 30px;
+		color: #99999999;
+	}
+
+	/* The About/Problem/Market "Z" composition: heading+paragraph stacked
+	   in the left column, short white copy+image stacked in the right
+	   column — not heading/copy paired on one row with a full-width
+	   paragraph below. */
+	.zgrid {
+		display: flex;
+		justify-content: space-between;
+		gap: 40px;
+		margin-bottom: 20px;
+	}
+
+	.zgrid--tight {
+		margin-top: 6px;
+	}
+
+	.zgrid--mid {
+		align-items: center;
+	}
+
+	.zgrid__left {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.zgrid__right {
+		flex-shrink: 0;
+		width: 412px;
+	}
+
+	.zgrid__right > .bodycol + .sidewhite,
+	.zgrid__right > .sidewhite + .bodycol {
+		margin-top: 18px;
+	}
+
+	.h2 {
+		font-size: 56px;
+		font-weight: 500;
+		line-height: 1.06;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+
+	.h2--secondary {
+		color: #99999999;
+		font-size: 40px;
+	}
+
+	.h3 {
+		font-size: 32px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		margin-bottom: 28px;
+	}
+
+	.h3--secondary {
+		color: #99999999;
+	}
+
+	.center {
+		text-align: center;
+	}
+
+	/* Short highlighted supporting copy — this is WHITE in the reference
+	   (not the muted gray used for explanatory paragraphs). */
+	.sidewhite {
+		font-size: 19px;
+		line-height: 1.4;
+		color: #fff;
+	}
+
+	.sidewhite--quote {
+		font-style: italic;
+	}
+
+	.sidewhite--quote span {
+		display: inline-block;
+		margin-top: 10px;
+		color: #99999999;
+		font-size: 16px;
+		font-style: normal;
+	}
+
+	/* Explanatory / gray body copy — kept to ~626px (measured against the
+	   reference's About/Problem/Competitive paragraphs) rather than
+	   stretching across the column. */
+	.bodycol {
+		max-width: 626px;
+		font-size: 19px;
+		line-height: 1.5;
+		color: #99999999;
+	}
+
+	.bodycol strong {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	.bodycol + .bodycol,
+	.bodycol__p2 {
+		margin-top: 20px;
+	}
+
+	/* A fixed-width block, centered as a whole — NOT flex+align-items:center
+	   around each paragraph individually. Centering each <p> separately
+	   gave every line its own (different) left edge once text-align:left
+	   was applied inside; this keeps one consistent left edge for every
+	   paragraph in the block, per the reference's "Review of 28.5M…" line. */
+	.centercol {
+		width: 626px;
+		max-width: 100%;
+		margin-inline: auto;
+	}
+
+	.bodycol--center {
+		text-align: left;
+		max-width: 100%;
+	}
+
+	/* Heading-to-body rhythm for the single-heading sections (Prescription
+	   Flow, Keeping Patient Risk) — matches the gap the reference keeps
+	   between an .h2 and the paragraph directly under it. */
+	.bodycol--headspace {
+		margin-top: 26px;
+	}
+
+	.bodycol--center strong {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	/* Indian Context: everything gray except the Listen→…→Doctor Review
+	   flow line, which is white (per the reference's highlight hierarchy). */
+	.indian__body {
+		color: #99999999;
+	}
+
+	.indian__flow {
+		color: #fff;
+		max-width: 100%;
+	}
+
+	.bodycol--learnings {
+		margin-inline: auto;
+		text-align: left;
+	}
+
+	/* ============================================================
+	   Hero — fits the same nav/meta-row bounding box as the rest of
+	   the page (var(--container)). The device composition is rendered
+	   at its full, unscaled 1599:764 asset ratio; only its width is
+	   set, so nothing is stretched or cropped.
+	   ============================================================ */
+	.hero {
+		position: relative;
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 30px 24px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		min-height: 360px;
+	}
+
+	.hero__device {
+		position: relative;
+		width: 561px;
+		flex-shrink: 0;
+	}
+
+	.hero__device img {
+		width: 100%;
+		height: auto;
+		display: block;
+		/* oni-hero.png bakes in a leftover "UX/Product design / Healthcare
+		   UX" caption past the laptop's right edge (we render that copy
+		   ourselves, live, in .hero__tags, positioned at that same spot) —
+		   fully fade out that trailing sliver, well clear of every device,
+		   so the baked copy doesn't show through under the live text. */
+		-webkit-mask-image: linear-gradient(to right, #000 0%, #000 60%, transparent 68%);
+		mask-image: linear-gradient(to right, #000 0%, #000 60%, transparent 68%);
+	}
+
+	/* Positioned at the exact spot the baked-in caption occupies in the
+	   source asset (measured directly on oni-hero.png: the text starts at
+	   75.2% of the image's width, 84.4% of its height) — i.e. immediately
+	   right of the laptop's lower half, not stacked under the whole
+	   composition. Left-aligned, and free to overflow past the device
+	   column's own edge since the caption is wider than the masked sliver
+	   it replaces. */
+	.hero__tags {
+		position: absolute;
+		left: 75.2%;
+		top: 84.4%;
+		text-align: left;
+		white-space: nowrap;
+		font-size: 19px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	.hero__copy {
+		flex: 1;
+		min-width: 240px;
+		text-align: right;
+	}
+
+	.hero__title {
+		font-size: 76px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		line-height: 1;
+		margin-bottom: 20px;
+	}
+
+	.hero__subtitle {
+		font-size: 25px;
+		font-weight: 400;
+		color: #fff;
+		white-space: nowrap;
+	}
+
+	/* ============================================================
+	   Meta row — top AND bottom hairline, with a vertical divider
+	   between each of the four items.
+	   ============================================================ */
+	.meta {
+		padding-top: 44px;
+	}
+
+	.meta__row {
+		display: flex;
+		align-items: stretch;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		padding: 24px 0;
+	}
+
+	.meta__col {
+		flex: 1;
+		text-align: center;
+	}
+
+	.meta__divider {
+		width: 1px;
+		background: var(--hairline);
+		flex-shrink: 0;
+	}
+
+	.meta__label {
+		font-size: 16px;
+		color: #99999999;
+		margin-bottom: 8px;
+	}
+
+	.meta__value {
+		font-size: 20px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	/* ============================================================
+	   About / glitch art
+	   ============================================================ */
+	.about__art {
+		margin-top: 18px;
+		width: 100%;
+		aspect-ratio: 380 / 350;
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+		overflow: hidden;
+	}
+
+	.about__art img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* ============================================================
+	   Problem statement
+	   ============================================================ */
+	.problem__img {
+		max-width: 100%;
+	}
+
+	.problem__img img {
+		width: 100%;
+		height: auto;
+	}
+
+	/* ============================================================
+	   Notch-card grids (Problem / Role / Principles / Research themes /
+	   Validation results) — all share the same NotchBox geometry.
+	   ============================================================ */
+	.cardgrid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 32px;
+		margin-top: 40px;
+	}
+
+	.cardgrid :global(.cardgrid__item) {
+		flex-shrink: 0;
+	}
+
+	.notchcard {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 30px 30px 0;
+		text-align: center;
+	}
+
+	.notchcard__title {
+		font-size: 21px;
+		letter-spacing: 0.02em;
+		margin-bottom: 16px;
+	}
+
+	.notchcard__desc {
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* User Research's 4 finding cards — title+description behave as one
+	   vertically-centered group inside the fixed-height card, instead of
+	   being pinned to the top via padding-top. */
+	.notchcard--sm {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0 22px;
+	}
+
+	.notchcard--sm .notchcard__title {
+		font-size: 19px;
+		font-family: "Neue Montreal", sans-serif;
+		font-weight: 500;
+		color: #fff;
+		margin-bottom: 8px;
+	}
+
+	.notchcard--sm .notchcard__desc {
+		font-size: 16px;
+	}
+
+	.cardgrid--four,
+	.cardgrid--result {
+		gap: 20px;
+	}
+
+	/* User Research's 4 finding cards and the Validation result cards share
+	   this shape — the portfolio's existing CTA-style angular notch
+	   (top-right + bottom-left 45° cuts), used here as a fallback after
+	   several passes trying to hand-trace the reference's own geometry at
+	   this card width; it's simple, symmetric (so nothing "drifts" off
+	   center) and already an established shape in this codebase. */
+	.hexcard {
+		position: relative;
+		width: 227px;
+		height: 165px;
+	}
+
+	.hexcard__frame {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.hexcard .notchcard,
+	.hexcard .resultcard {
+		position: relative;
+		z-index: 1;
+	}
+
+	/* Same four-box visual system as the User Research finding cards —
+	   value+label vertically centered as one group, same rule applied. */
+	.resultcard {
+		height: 100%;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0 24px;
+		text-align: center;
+	}
+
+	.resultcard__value {
+		font-size: 36px;
+		font-weight: 500;
+		color: #fff;
+		margin-bottom: 10px;
+	}
+
+	.resultcard__label {
+		font-size: 15px;
+		color: #99999999;
+		line-height: 1.3;
+	}
+
+	/* ============================================================
+	   User Research special heading
+	   ============================================================ */
+	.ur__header {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		margin-bottom: 30px;
+	}
+
+	.ur__star {
+		width: 26px;
+		height: 26px;
+		color: #fff;
+		flex-shrink: 0;
+	}
+	.ur__star svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.ur__title {
+		font-size: 44px;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		white-space: nowrap;
+	}
+
+	.ur__wire {
+		flex: 1;
+		height: 42px;
+		min-width: 100px;
+	}
+
+	.ur__hexes {
+		display: inline-flex;
+		gap: 6px;
+		flex-shrink: 0;
+	}
+	.ur__hexes svg {
+		width: 30px;
+		height: 34px;
+	}
+
+	/* Doctor research box — thin but clearly visible outline, with the
+	   portrait inset (not flush against the border). */
+	.doctorbox {
+		display: flex;
+		gap: 24px;
+		border: 1px solid rgba(255, 255, 255, 0.28);
+		padding: 20px;
+		margin-bottom: 34px;
+	}
+
+	.doctorbox__photoWrap {
+		width: 260px;
+		flex-shrink: 0;
+	}
+
+	.doctorbox__photo {
+		width: 100%;
+		height: 340px;
+		object-fit: cover;
+		display: block;
+		filter: grayscale(1) contrast(1.05);
+	}
+
+	.doctorbox__content {
+		padding: 16px 20px 16px 0;
+		font-size: 19px;
+		line-height: 1.42;
+		color: #fff;
+	}
+
+	.doctorbox__content p + p {
+		margin-top: 16px;
+	}
+
+	.doctorbox__content strong {
+		font-weight: 500;
+	}
+
+	.doctorbox__need {
+		margin-top: 22px !important;
+		color: #99999999;
+	}
+
+	.doctorbox__logLabel {
+		margin-top: 24px !important;
+		font-size: 16px;
+		color: #99999999;
+		letter-spacing: 0.04em;
+	}
+
+	.doctorbox__log {
+		margin-top: 8px !important;
+		font-size: 16px;
+		color: #fff;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+	}
+
+	/* ============================================================
+	   Connector row — shared "DNA / bowtie" visual language used by
+	   both STATUS/PRIORITY/CONTROL and the Learnings citation row.
+	   Traced from the reference at high zoom: the first and last
+	   segments each carry a COMPLETE pill outline of their own — open
+	   (flat, no cap) on their outer edge, tapering to a smooth ROUNDED
+	   point (not a sharp chevron) on the edge facing the middle
+	   segment. The middle segment has NO border of its own; it just
+	   floats, unbordered, in the gap between the two facing points.
+	   This is a different shape than the bowtie knot StatusStrip.astro
+	   uses elsewhere on the site — the reference draws this row's
+	   connector differently, so it's built here rather than reused.
+	   ============================================================ */
+	.connectorrow {
+		display: flex;
+		align-items: stretch;
+		margin-bottom: 40px;
+	}
+
+	.connectorrow__seg {
+		position: relative;
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 16px 30px;
+		font-size: 19px;
+		white-space: nowrap;
+		text-align: center;
+	}
+
+	.connectorrow__seg--cap {
+		flex: 0 1 340px;
+	}
+
+	.connectorrow__seg--mid {
+		flex: 1 1 auto;
+	}
+
+	.connectorrow__shape {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.connectorrow__label,
+	.connectorrow__seg--mid {
+		color: #99999999;
+	}
+
+	.connectorrow__seg > *:not(.connectorrow__shape) {
+		position: relative;
+		z-index: 1;
+	}
+
+	.connectorrow__value {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	.connectorrow--citations {
+		margin-top: 30px;
+		margin-bottom: 0;
+	}
+
+	.connectorrow--citations .connectorrow__seg {
+		font-size: 15px;
+		color: #99999999;
+		white-space: normal;
+		padding: 16px 26px;
+	}
+
+	/* ============================================================
+	   Market research
+	   ============================================================ */
+	.market__img {
+		width: 100%;
+	}
+
+	.market__img img {
+		width: 100%;
+		height: auto;
+		filter: grayscale(1) contrast(1.05);
+	}
+
+	/* ============================================================
+	   Competitive landscape table
+	   ============================================================ */
+	.table-wrap {
+		overflow-x: auto;
+		margin-bottom: 56px;
+	}
+
+	.ctable {
+		width: 100%;
+		border-collapse: collapse;
+		min-width: 860px;
+	}
+
+	.ctable th,
+	.ctable td {
+		text-align: left;
+		padding: 16px 14px;
+		font-size: 18px;
+		color: #99999999;
+		white-space: nowrap;
+	}
+
+	.ctable thead th {
+		padding-bottom: 24px;
+	}
+
+	.ctable__name {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	/* Notched, violet-outlined tag chip — matches the reference's
+	   purple table-header treatment (measured against the source
+	   pixels, this is --accent, not a neutral gray hairline). */
+	.tagchip {
+		display: inline-block;
+		border: 1px solid var(--accent);
+		clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 46%, 100% 100%, 0 100%);
+		padding: 9px 22px 9px 18px;
+		font-size: 15px;
+		letter-spacing: 0.02em;
+		color: #99999999;
+	}
+
+	/* ============================================================
+	   Device caption row (Research to Design Principles) — top AND
+	   bottom hairline.
+	   ============================================================ */
+	.devicerow {
+		display: flex;
+		justify-content: space-between;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		margin-top: 40px;
+		padding: 20px 0;
+		font-size: 18px;
+		color: #99999999;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.devicerow__device {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	/* ============================================================
+	   User journey / IA / User flow — all share the same standard
+	   grid width as the rest of the page (confirmed by pixel-measuring
+	   the reference: the journey table, the IA tree and the wireframe
+	   row all line up with the same 1016px box), just filled edge to
+	   edge within it.
+	   ============================================================ */
+	.journey__flow {
+		font-size: 18px;
+		color: #99999999;
+		margin-bottom: 30px;
+	}
+
+	.wide-img {
+		width: 100%;
+	}
+
+	.wide-img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.wide-img--center {
+		margin-top: 40px;
+	}
+
+	.wide-img--flow {
+		margin-top: 36px;
+		margin-bottom: 24px;
+	}
+
+	/* ============================================================
+	   UI Design / Home screen
+	   ============================================================ */
+	.devicetrio {
+		display: flex;
+		align-items: flex-start;
+		gap: 27px;
+		flex-wrap: wrap;
+		margin-top: 44px;
+	}
+
+	.devicetrio__desktop {
+		width: var(--case-desktop-w);
+		flex-shrink: 0;
+	}
+
+	.devicetrio__tablet {
+		width: var(--case-tablet-w);
+		flex-shrink: 0;
+	}
+
+	.devicetrio__mobile {
+		width: var(--case-mobile-w);
+		flex-shrink: 0;
+	}
+
+	.devicetrio img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Prescription flow
+	   ============================================================ */
+	.rx__pair {
+		display: flex;
+		gap: 36px;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		margin: 40px 0 44px;
+	}
+
+	.rx__desktop {
+		width: var(--case-desktop-w);
+		flex-shrink: 0;
+	}
+
+	.rx__tablet-wrap {
+		position: relative;
+		flex: 0 1 auto;
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+	}
+
+	.rx__desktop img,
+	.rx__tablet img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.rx__tablet {
+		width: var(--case-tablet-w);
+		flex-shrink: 0;
+	}
+
+	.wide-img--rxmobile {
+		margin-top: 30px;
+	}
+
+	/* ============================================================
+	   Keeping patient risk always visible
+	   ============================================================ */
+	.riskrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 34px;
+		flex-wrap: wrap;
+		margin-top: 50px;
+	}
+
+	.riskrow__phones {
+		max-width: 480px;
+	}
+
+	.riskrow__phones img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Responsive
+	   ============================================================ */
+	@media (max-width: 860px) {
+		.hero {
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			min-height: 0;
+			padding-top: 10px;
+		}
+
+		.hero__device {
+			width: 100%;
+			max-width: 420px;
+			margin-bottom: 40px;
+		}
+
+		.hero__subtitle {
+			white-space: normal;
+		}
+
+		/* The desktop caption is absolutely positioned + nowrap so it can
+		   sit precisely beside the laptop; at narrow widths that overflows
+		   the viewport, so it falls back to a normal, centered, in-flow
+		   caption under the mockup instead. */
+		.hero__tags {
+			position: static;
+			margin-top: 20px;
+			text-align: center;
+			white-space: normal;
+		}
+
+		.hero__copy {
+			text-align: center;
+		}
+
+		.meta__row {
+			flex-wrap: wrap;
+			row-gap: 24px;
+		}
+
+		.meta__col {
+			flex: 0 0 44%;
+		}
+
+		.meta__divider {
+			display: none;
+		}
+
+		.split,
+		.headrow,
+		.zgrid {
+			flex-direction: column;
+		}
+
+		.headrow__side,
+		.zgrid__right {
+			text-align: left;
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.zgrid__right img,
+		.about__art {
+			max-width: 300px;
+		}
+
+		.h2 {
+			font-size: 38px;
+		}
+
+		.h2--secondary {
+			font-size: 28px;
+		}
+
+		.doctorbox {
+			flex-direction: column;
+		}
+
+		.doctorbox__photoWrap {
+			width: 100%;
+		}
+
+		.doctorbox__photo {
+			height: 260px;
+		}
+
+		.connectorrow {
+			flex-direction: column;
+			padding: 10px 0;
+		}
+
+		.connectorrow__shape {
+			display: none;
+		}
+
+		.connectorrow__seg,
+		.connectorrow__seg--cap {
+			flex: 1 1 auto;
+			justify-content: flex-start;
+			padding: 10px 0;
+		}
+
+		.devicetrio {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.devicetrio__desktop {
+			width: 100%;
+		}
+
+		.devicetrio__tablet,
+		.devicetrio__mobile {
+			width: 60%;
+			margin-inline: auto;
+		}
+
+		.rx__pair {
+			flex-direction: column;
+		}
+
+		.rx__desktop {
+			width: 100%;
+		}
+
+		.rx__tablet {
+			width: 100%;
+			max-width: 280px;
+		}
+
+		.riskrow {
+			flex-direction: column;
+		}
+
+		.cardgrid {
+			justify-content: center;
+		}
+
+		.cardgrid :global(.cardgrid__item) {
+			width: 100% !important;
+			max-width: 468px;
+		}
+
+		.cardgrid :global(.notchbox),
+		.cardgrid .hexcard {
+			width: 100% !important;
+		}
+
+		.ur__header {
+			flex-wrap: wrap;
+		}
+
+		.ur__wire {
+			display: none;
+		}
+
+		.ur__title {
+			white-space: normal;
+			font-size: 36px;
+		}
+
+		.ctable {
+			min-width: 700px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero__title {
+			font-size: 44px;
+		}
+
+		.h2 {
+			font-size: 32px;
+		}
+
+		.h2--secondary {
+			font-size: 24px;
+		}
+
+		.ur__title {
+			font-size: 28px;
+		}
+
+		.meta__col {
+			flex: 0 0 100%;
+		}
+	}
+</style>

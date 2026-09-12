@@ -1,0 +1,310 @@
+---
+import PixelText from "./PixelText.astro";
+
+/**
+ * Featured-work card. Angular violet frame drawn as an inline SVG stroke.
+ *
+ * RETRACED directly from references/final Landing page.png by scanning the
+ * actual pixels (not inferred from prior CSS): for every x column under the
+ * card, the bottom-most purple stroke pixel was found, producing a
+ * bottom_y(x) profile. That profile shows ONE continuous silhouette — flat
+ * baseline, notch, flat shoulder, notch, flat baseline to the corner — with
+ * NO extra vertical step anywhere, including at the point where the image
+ * begins. The two notches are NOT symmetric: each has a short, steep drop
+ * on its left side and a long, gradual (~45deg) rise on its right side.
+ * Measured notch x-ranges (852-wide design space, scale = 852/1692 derived
+ * from the reference's measured card width):
+ *   left  notch: 189 -> 193 (steep) .. 262 (floor) .. 298 (gradual) — under the tag row
+ *   right notch: 527 -> 531 (steep) .. 757 (floor) .. 790 (gradual) — under the media viewport
+ * (Baseline y=348, floor y=376 — kept at these long-established values since
+ * they matched the retrace within measurement noise.) The bottom-right
+ * corner (831,348)->(851,328) was intentionally left unchanged — it was
+ * already confirmed correct against the live render.
+ *
+ * Card box: 852 x 376 (main bottom at y348, notch tips at y376).
+ *
+ * SHARED GEOMETRY: FRAME is the master polygon description for the whole
+ * card. The media viewport's clip-path (see .pcard__media below) is
+ * DERIVED from these same numbers — every coordinate in it is
+ * `frame-coordinate / box-size`, written out next to the matching FRAME
+ * vertex in the comment there, so the relationship is auditable at a
+ * glance. Two SVG techniques were tried to make this a single literal
+ * shared definition (an objectBoundingBox clipPath with a scale()
+ * transform, and embedding the <img> in a <foreignObject> clipped by the
+ * same userSpaceOnUse path) — both render incorrectly in practice
+ * (confirmed by screenshot + pixel sampling: the first drops the image
+ * entirely, the second mispositions it under this SVG's non-uniform
+ * preserveAspectRatio="none" scaling). Percentage-based clip-path on a
+ * plain HTML box is the reliable, well-supported mechanism, so that's what
+ * actually ships; do not change one side's numbers without updating the
+ * other from the same FRAME coordinates.
+ */
+interface Props {
+	date: string;
+	title: string;
+	titlePixel?: number[];
+	description: string;
+	tags: string[];
+	image: string;
+	imageAlt: string;
+	imagePosition?: string;
+	href?: string;
+}
+
+const {
+	date,
+	title,
+	titlePixel = [],
+	description,
+	tags,
+	image,
+	imageAlt,
+	imagePosition = "center 38%",
+	href,
+} = Astro.props;
+
+const FRAME =
+	"M35 1 H842 Q851 1 851 10 V328 L831 348 H790 L757 376 H531 L527 348 H298 L262 376 H193 L189 348 H10 Q1 348 1 336 V32 Z";
+
+/* When href is supplied (currently only ONI CARES), the whole card becomes
+   a single <a> instead of a plain <article> — same markup/classes either
+   way, so none of the existing visual/hover CSS below needs to change. */
+const Tag = href ? "a" : "article";
+---
+
+<Tag class="pcard" {...(href ? { href } : {})}>
+	<svg
+		class="pcard__frame"
+		viewBox="0 0 852 376"
+		preserveAspectRatio="none"
+		aria-hidden="true"
+	>
+		<path
+			d={FRAME}
+			fill="#080808"
+			stroke="#744af3"
+			stroke-width="2"
+			stroke-linejoin="round"
+			vector-effect="non-scaling-stroke"></path>
+	</svg>
+
+	<div class="pcard__body">
+		<p class="pcard__date">{date}</p>
+		<h3 class="pcard__title">
+			<PixelText text={title} pixel={titlePixel} />
+		</h3>
+		<p class="pcard__desc">{description}</p>
+		<div class="pcard__ctaSlot">
+			<div class="pcard__tags">
+				{tags.map((t) => <span class="pcard__tag">{t}</span>)}
+			</div>
+			<span class="pcard__viewcase" aria-hidden="true">
+				<span>View Case Study</span>
+				<svg class="pcard__viewcaseArrow" viewBox="0 0 24 24" fill="none">
+					<path
+						d="M4 12h15M13 6l6 6-6 6"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="square"
+						stroke-linejoin="miter"></path>
+				</svg>
+			</span>
+		</div>
+	</div>
+
+	<div class="pcard__media">
+		<img src={image} alt={imageAlt} loading="lazy" style={`object-position:${imagePosition}`} />
+	</div>
+</Tag>
+
+<style>
+	.pcard {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 376px;
+	}
+
+	.pcard__frame {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.pcard__body {
+		position: relative;
+		z-index: 2;
+		width: 46%;
+		padding: 44px 0 0 40px;
+	}
+
+	.pcard__date {
+		font-size: 16px;
+		letter-spacing: 0.06em;
+		color: var(--text-dim);
+		margin-bottom: 24px;
+	}
+
+	.pcard__title {
+		font-size: 52px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+		color: #f2eefb;
+		margin-bottom: 22px;
+		line-height: 1;
+	}
+
+	.pcard__desc {
+		font-size: 22px;
+		line-height: 1.4;
+		color: #9a9a9c;
+		max-width: 312px;
+		margin-bottom: 26px;
+	}
+
+	/* Tags <-> "View Case Study" crossfade on card hover. .pcard__ctaSlot is
+	   sized only by .pcard__tags (the CTA is position:absolute, so it can't
+	   affect the slot's box) — this is what guarantees zero layout shift:
+	   nothing else in .pcard__body ever moves, regardless of which of the
+	   two is visible. Both sit at the same top-left point so the swap reads
+	   as a crossfade in place rather than one sliding under the other. */
+	.pcard__ctaSlot {
+		position: relative;
+	}
+
+	.pcard__tags {
+		display: inline-flex;
+		border: 1px solid var(--hairline);
+		border-radius: 14px;
+		overflow: hidden;
+		opacity: 1;
+		transition: opacity 180ms ease;
+	}
+
+	.pcard__tag {
+		font-size: 17px;
+		color: #a8a8aa;
+		padding: 10px 18px;
+	}
+
+	.pcard__tag + .pcard__tag {
+		border-left: 1px solid var(--hairline);
+	}
+
+	/* "View Case Study" hover CTA — references/works-card-hover.png. Same
+	   angular notch silhouette as the site's other CTA buttons (Cta.astro's
+	   --cta-notch), filled solid violet. Width (312px) matches
+	   .pcard__desc's own max-width — measured against the reference, the
+	   button's left/right edges landed almost exactly on that existing
+	   value, so it reuses it rather than introducing a new one. */
+	.pcard__viewcase {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 312px;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 16px 22px;
+		background: var(--violet);
+		color: #fff;
+		font-size: 19px;
+		font-weight: 500;
+		clip-path: var(--cta-notch);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 180ms ease;
+	}
+
+	.pcard__viewcaseArrow {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+	}
+
+	.pcard:hover {
+		cursor: pointer;
+	}
+
+	.pcard:hover .pcard__tags {
+		opacity: 0;
+	}
+
+	.pcard:hover .pcard__viewcase {
+		opacity: 1;
+	}
+
+	/* Dedicated media viewport on the right, clipped to follow the SAME
+	   silhouette as FRAME's right-hand notch + bottom-right corner, so the
+	   purple stroke traces directly along the image edge with no black gap.
+
+	   .pcard__frame is an SVG with viewBox="0 0 852 376" and
+	   preserveAspectRatio="none" scaled to width:100% of .pcard, so its X
+	   axis scales with whatever width the card actually renders at (.pcard
+	   is width:100% up to max-width:900px, and this file has no @media
+	   breakpoints, so the card is fluid at every viewport — it is NOT
+	   guaranteed to render at exactly 852px). .pcard height is always a
+	   fixed 376px, so the frame's Y axis never scales.
+
+	   .pcard__media must track that same horizontal scaling, so its
+	   right/width AND every X-coordinate in the clip-path are PERCENTAGES —
+	   of .pcard for right/width, of the media box's own 444px width for the
+	   clip-path points — rather than fixed px (fixed px only ever lines up
+	   with the frame at exactly 852px card width, which was the bug in an
+	   earlier version of this file). Y-coordinates stay in px since .pcard's
+	   height never varies.
+
+	   Box basis: 444 x 366 (card-local x403..847, y10..376). Each polygon
+	   point below is commented with the FRAME vertex (minus the 403,10 box
+	   offset) it must keep matching: */
+	.pcard__media {
+		position: absolute;
+		z-index: 1;
+		/* Top inset reduced 10px -> 2px so the gap above the image matches the
+		   (near-zero) gap the notch clip already gives it below — measured on
+		   the rendered page: at 5px top inset the top gap was still ~6px vs a
+		   ~0-1px bottom, visibly uneven, so it was taken down further. The
+		   bottom of the box is re-anchored at the same card-y (376, the notch
+		   floor) by adding the same 8px (10 - 2) to every FRAME-anchored
+		   clip-path point below and to the box height, so the notch/corner
+		   alignment against the (unchanged) outline is fully preserved — only
+		   the top edge actually moves. */
+		top: 2px;
+		right: 0.587%; /* 5 / 852 */
+		width: 52.1127%; /* 444 / 852 */
+		height: 374px;
+		overflow: hidden;
+		clip-path: polygon(
+			0 8px,
+			1.8018% 0,
+			/* FRAME 842,1  -> local 439,-9  -> clamped to top edge */
+			98.4234% 0,
+			/* FRAME (top-right rounded corner, approximated) */
+			100% 7px,
+			100% 328px,
+			/* FRAME 831,348 -> local 428,346 */
+			95.9459% 344px,
+			/* FRAME 790,348 -> local 387,346 (retraced) */
+			87.1622% 346px,
+			/* FRAME 757,376 -> local 354,374 (retraced) */
+			79.7297% 374px,
+			/* FRAME 531,376 -> local 128,374 (retraced) */
+			28.8288% 374px,
+			/* FRAME 527,348 -> local 124,346 (retraced) */
+			27.9279% 346px,
+			0 344px
+		);
+	}
+
+	.pcard__media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+</style>

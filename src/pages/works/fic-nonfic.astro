@@ -1,0 +1,1298 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import NotchBox from "../../components/NotchBox.astro";
+import PixelText from "../../components/PixelText.astro";
+import LetsTalk from "../../components/LetsTalk.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+/* ============================================================
+   Content — every string below is read from
+   references/Fic non fic Case study.png (cross-checked only for
+   wording against content/Fic non fic content.docx). Confirmed
+   corrections applied per the brief: "STATEMNT" -> "STATEMENT",
+   "LANDSCARE" -> "LANDSCAPE", "Domine" -> "Domain", and the
+   product name written consistently as "FIC NON-FIC". Everything
+   else (incl. the PNG-only citation, the Goals icon, the full
+   Competitive Landscape content, the hero subtitle and the
+   "UI UX Designer" meta value) is kept exactly as the PNG shows it.
+
+   GRID: reuses ONI's exact system — ONE container (var(--container))
+   for the whole page, 626px body copy, 412px side copy, side text
+   left-aligned even when the block sits on the right. The only two
+   exceptions are the Competitive Landscape and Information
+   Architecture images, which are supplied compositions the
+   reference shows bleeding wider than the nav-aligned container.
+   ============================================================ */
+
+const metaRow = [
+	{ label: "Product", value: "FIC NON-FIC" },
+	{ label: "Domain", value: "Consumer App" }, // corrected: PNG shows "Domine"
+	{ label: "Platform", value: "Mobile App" },
+	{ label: "Role", value: "UI UX Designer" },
+];
+
+const problemCards = [
+	{ title: "SCATTERED READING JOURNEYS", desc: "Discovery, borrowing, tracking, and community span separate platforms." },
+	{ title: "DISCONNECTED LIBRARY EXPERIENCE", desc: "Finding and accessing books isn’t connected to the reading journey." },
+	{ title: "LIMITED COMMUNITY CONTINUITY", desc: "Reading progress and discussions remain separate experiences." },
+];
+
+const roleCards = [
+	{ title: "UX & RESEARCH", desc: "Conducted competitive analysis and lightweight UX research." },
+	{ title: "PRODUCT DESIGN", desc: "Designed user flows and high-fidelity UI for new features." },
+	{ title: "MOBILE-FIRST", desc: "Advocated for a mobile-first experience based on user behaviour." },
+	{ title: "DESIGN SYSTEMS", desc: "Extended the product using the existing style guide and design system." },
+];
+
+const goals = [
+	{ title: "UNIFY THE READING JOURNEY", desc: "Connect discovery, borrowing, reading, and community experiences." },
+	{ title: "PRIORITIZE MOBILE USERS", desc: "Shift from a web-first approach to a mobile-first experience." },
+	{ title: "SIMPLIFY KEY JOURNEYS", desc: "Create intuitive flows for borrowing, lending, book clubs, events, and reading challenges." },
+	{ title: "EXPAND THE PRODUCT", desc: "Build beyond the existing Read, Borrow, and Meet experience." },
+	{ title: "MAINTAIN CONSISTENCY", desc: "Extend the existing design system across new features and interactions." },
+];
+
+const researchCards = [
+	{ title: "DISCOVERY WAS FRAGMENTED", desc: "Readers used different platforms to discover, track, and borrow books." },
+	{ title: "BORROWING LACKED CONTEXT", desc: "Finding a book rarely connected users to nearby or second-hand copies." },
+	{ title: "COMMUNITIES FELT DISCONNECTED", desc: "Finding a book club that matched a reader’s interests was difficult." },
+	{ title: "MOBILE WAS THE PRIMARY TOUCHPOINT", desc: "The experience needed to support quick, on-the-go interactions." },
+];
+
+const flowSteps = [
+	{ label: "Client brief", value: "Web application" },
+	{ label: "Research Insight", value: "97% mobile usage among 15 - 29 year olds", citation: "(Press Information Bureau GOI 2025)" },
+	{ label: "Design direction", value: "Mobile-first experience" },
+];
+
+const colorSwatches = [
+	{ hex: "#7C3AED", class: "swatch--purple" },
+	{ hex: "#C1A0FF", class: "swatch--lavender" },
+	{ hex: "#FFFFFF", class: "swatch--white" },
+	{ hex: "#333333", class: "swatch--gray" },
+];
+
+const impactCards = [
+	{ title: "From Web-First to Mobile-First", desc: "Shifted the web concept into a mobile-first experience built around reader behaviour." },
+	{ title: "Beyond Read, Borrow & Meet", desc: "Expanded 3 core areas into a connected reading and community ecosystem." },
+];
+---
+
+<Layout title="FIC NON-FIC — Maryamul Aasia">
+	<Header active="works" />
+
+	<main class="fic">
+		<!-- ============ HERO ============ -->
+		<section class="hero">
+			<div class="hero__device reveal">
+				<img src="/images/Fic non fic/hero.png" alt="FicNonFic home screen shown on a phone resting on a podium" />
+				<p class="hero__tags">UI/ Product design<br />Community App</p>
+			</div>
+			<div class="hero__copy reveal" style="--reveal-delay:120ms">
+				<h1 class="hero__title">
+					<PixelText text="FIC NON-FIC" pixel={[6]} />
+				</h1>
+				<p class="hero__subtitle">A community-powered library to borrow, read, and meet.</p>
+			</div>
+		</section>
+
+		<!-- ============ META ROW ============ -->
+		<section class="block meta reveal">
+			<div class="meta__row">
+				{
+					metaRow.map((m, i) => (
+						<>
+							{i > 0 && <span class="meta__divider" aria-hidden="true" />}
+							<div class="meta__col">
+								<p class="meta__label">{m.label}</p>
+								<p class="meta__value">{m.value}</p>
+							</div>
+						</>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ ABOUT ============ -->
+		<section class="block reveal">
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<h2 class="h2">
+						<PixelText text="ABOUT" pixel={[2]} /><br /><PixelText text="FIC NON-FIC" pixel={[4]} />
+					</h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">Designing a connected reading ecosystem for modern readers</p>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						FicNonFic is a nonprofit platform helping communities discover, borrow, and enjoy books
+						through local libraries and reading communities. Starting with an existing Read, Borrow, and
+						Meet foundation, I expanded the product into new mobile-first journeys while working within
+						an established design system.
+					</p>
+					<p class="bodycol">
+						In a fragmented reading journey, every discovery, borrow, and connection happens somewhere
+						else. FicNonFic brings it all into one place.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="about__art">
+						<img src="/images/Fic non fic/About.png" alt="Aerial view of a person browsing a curved library" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ PROBLEM STATEMENT ============ -->
+		<section class="block reveal">
+			<div class="zgrid">
+				<div class="zgrid__left">
+					<h2 class="h2 pixelify">PROBLEM<br />STATEMENT</h2>
+				</div>
+				<div class="zgrid__right">
+					<blockquote class="sidewhite sidewhite--quote">
+						&ldquo;I can find books anywhere. What&rsquo;s missing is one place to find the right book,
+						borrow it, and find people who want to read it with me.&rdquo;<br />
+						<span>~ User Insight</span>
+					</blockquote>
+				</div>
+			</div>
+
+			<div class="zgrid zgrid--mid zgrid--tight zgrid--reverse">
+				<div class="zgrid__left">
+					<div class="problem__img">
+						<img src="/images/Fic non fic/problem.png" alt="Illustration of a reader surrounded by discovery, messaging and social icons" />
+					</div>
+				</div>
+				<div class="zgrid__right zgrid__right--wide">
+					<p class="bodycol">
+						Readers often switch between multiple platforms to discover, borrow, track, and discuss
+						books, creating a fragmented reading experience.
+					</p>
+					<p class="bodycol bodycol--strong">
+						Fragmented journeys &rarr; repeated effort, disconnected experiences, and limited reading
+						continuity.
+					</p>
+				</div>
+			</div>
+
+			<div class="cardgrid">
+				{
+					problemCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ MY ROLE ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2 pixelify">MY ROLE</h2>
+				<p class="headrow__side">User-centred thinking &middot; System thinking &middot; Problem solving &middot; Collaboration</p>
+			</div>
+			<p class="bodycol">
+				I expanded the existing Read, Borrow &amp; Meet experience through research, mobile-first flows,
+				and new high-fidelity features.
+			</p>
+			<div class="cardgrid">
+				{
+					roleCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ GOALS ============ -->
+		<section class="block reveal">
+			<div class="headrow headrow--goals">
+				<h2 class="h2 pixelify goals__heading">
+					<span class="goals__icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24"><path d="M12 1 C12.5 7 17 11.5 23 12 C17 12.5 12.5 17 12 23 C11.5 17 7 12.5 1 12 C7 11.5 11.5 7 12 1 Z" fill="currentColor"/></svg>
+					</span>
+					GOALS
+				</h2>
+				<svg class="goals__wire" viewBox="0 0 400 44" preserveAspectRatio="none" aria-hidden="true">
+					<path d="M1 40 H140 C190 40 184 8 234 8 H399" stroke="#8a8a8a" stroke-width="2" fill="none" stroke-linecap="round"/>
+				</svg>
+				<span class="goals__hexes" aria-hidden="true">
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+					<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+				</span>
+			</div>
+			<div class="goalstack">
+				{
+					goals.map((g) => (
+						<NotchBox width={968} height={126} class="goalstack__item">
+							<div class="goalrow">
+								<h3 class="goalrow__title">{g.title}</h3>
+								<p class="goalrow__desc">{g.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ RESEARCH ============ -->
+		<section class="block reveal">
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<h2 class="h2"><PixelText text="RESEARCH" pixel={[3]} /></h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">
+						Light research helped identify reader friction and opportunities before expanding the
+						product.
+					</p>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						We conducted lightweight UX research and competitive analysis across reading, library,
+						community, bookstore, and event platforms to understand how readers discover, borrow,
+						track, and engage around books.
+					</p>
+					<p class="bodycol">
+						Reading journeys felt fragmented, with functional but disconnected library experiences.
+						Community discovery rarely reflected readers&rsquo; interests.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="research__art">
+						<img src="/images/Fic non fic/Research.png" alt="Reading glasses resting on a stack of books" />
+					</div>
+				</div>
+			</div>
+			<div class="cardgrid">
+				{
+					researchCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ COMPETITIVE LANDSCAPE ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2">
+					<PixelText text="COMPETITIVE" pixel={[2]} /><br /><PixelText text="LANDSCAPE" pixel={[2, 6]} />
+				</h2>
+				<p class="headrow__side">
+					I analyzed reading, library, bookstore, and community platforms to uncover patterns, gaps, and
+					opportunities for FICNONFIC.
+				</p>
+			</div>
+		</section>
+		<div class="wide-break reveal">
+			<img src="/images/Fic non fic/competitive-analysis.png" alt="Competitive analysis table across category, patterns, gaps and opportunities" />
+		</div>
+
+		<!-- ============ WHEN RESEARCH CHANGED THE DIRECTION ============ -->
+		<section class="block reveal">
+			<h2 class="h3 pixelify h3--gray">WHEN RESEARCH CHANGED THE DIRECTION</h2>
+			<p class="bodycol bodycol--wide">
+				Designed for the way readers actually use the product, one hand, on the go, and in short browsing
+				sessions.
+			</p>
+			<div class="flowrow">
+				{
+					flowSteps.map((s, i) => (
+						<>
+							<div class="flowbox">
+								<svg class="flowbox__frame" viewBox="0 0 227 165" preserveAspectRatio="none" aria-hidden="true">
+									<path d="M0,0 H207 L227,20 V165 H20 L0,145 Z" fill="none" stroke="#7a7a7a" stroke-width="1.5" vector-effect="non-scaling-stroke" />
+								</svg>
+								<div class="flowbox__content">
+									<p class="flowbox__label">{s.label}</p>
+									<p class="flowbox__value">{s.value}</p>
+									{s.citation && <p class="flowbox__citation">{s.citation}</p>}
+								</div>
+							</div>
+							{i < flowSteps.length - 1 && (
+								<svg class="flowrow__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+									<path d="M4 12h15M13 6l6 6-6 6" stroke="#8a8a8a" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" />
+								</svg>
+							)}
+						</>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ INFORMATION ARCHITECTURE ============ -->
+		<section class="block reveal">
+			<h2 class="h2">
+				<PixelText text="INFORMATION" pixel={[6, 10]} /><br /><PixelText text="ARCHITECTURE" pixel={[3, 6]} />
+			</h2>
+		</section>
+		<div class="wide-break wide-break--ia reveal">
+			<img src="/images/Fic non fic/IA.png" alt="Information architecture tree for the FicNonFic app" />
+		</div>
+
+		<!-- ============ VISUAL DIRECTION ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2">
+					<PixelText text="VISUAL" pixel={[2]} /><br /><PixelText text="DIRECTION" pixel={[0, 4, 7]} />
+				</h2>
+				<p class="headrow__side">
+					Royal Purple, Outfit, and glassmorphism create a clear, approachable, and distinctive reading
+					experience.
+				</p>
+			</div>
+
+			<p class="label">Colors &amp; Typography</p>
+
+			<div class="swatchgrid">
+				{
+					colorSwatches.map((s) => (
+						<div class:list={["swatch", s.class]}>
+							<span>{s.hex}</span>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="typespec">
+				<div class="typespec__left">
+					<div class="typespec__row">
+						<p class="typespec__name">Outfit</p>
+						<div class="typespec__pills">
+							<span class="pill">Bold</span>
+							<span class="pill">Regular</span>
+							<span class="pill">Light</span>
+						</div>
+					</div>
+					<p class="typespec__sample">
+						Aa Bb Cc Dd Ee Ff Hh Ii Jj<br />
+						Kk Ll Mm Nn Oo Pp Qq Rr<br />
+						Ss Tt Uu Vv Ww Xx Yy Zz
+					</p>
+				</div>
+				<p class="typespec__glyph">Aa</p>
+			</div>
+		</section>
+
+		<!-- ============ UI DESIGN / HOME SCREEN ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2">UI <PixelText text="DESIGN" pixel={[2]} /></h2>
+				<p class="headrow__side headrow__side--pixel pixelify">HOME SCREEN</p>
+			</div>
+			<div class="zgrid">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						The home screen combines featured banners with borrow/lend request updates,
+						Fiction/Non-Fiction filters, and newly added books.
+					</p>
+					<p class="bodycol">
+						Glassmorphism creates a distinctive, layered identity while keeping the experience
+						lightweight and content-focused.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="homescreen__img">
+						<img src="/images/Fic non fic/Home screen.png" alt="FicNonFic home screen on mobile" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ MEET & READ ============ -->
+		<section class="block reveal">
+			<h2 class="h2 pixelify h2--secondary">MEET &amp; READ</h2>
+			<p class="bodycol">
+				The Meet screen combines book clubs, events, challenges, and community activities to help readers
+				connect around books.
+			</p>
+			<p class="bodycol">
+				The Read screen combines book discovery, reading progress, challenges, and activities to keep
+				readers engaged throughout their journey.
+			</p>
+			<div class="wide-img">
+				<img src="/images/Fic non fic/meet and read.png" alt="FicNonFic Meet and Read screens on two phones" />
+			</div>
+		</section>
+
+		<!-- ============ OTHER SCREENS ============ -->
+		<section class="block reveal">
+			<h2 class="h2 pixelify h2--secondary">OTHER SCREENS</h2>
+			<div class="wide-img">
+				<img src="/images/Fic non fic/other screens.png" alt="FicNonFic book detail, progress and profile screens on three phones" />
+			</div>
+		</section>
+
+		<!-- ============ IMPACT ============ -->
+		<section class="block block--impact reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="IMPACT" pixel={[2, 5]} /></h2>
+				<p class="headrow__side">How the design expanded and strengthened the overall product experience.</p>
+			</div>
+			<div class="cardgrid cardgrid--two">
+				{
+					impactCards.map((c) => (
+						<NotchBox width={468} height={168} class="cardgrid__item">
+							<div class="notchcard notchcard--left">
+								<h3 class="notchcard__title notchcard__title--white">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+	</main>
+
+	<LetsTalk />
+	<SiteFooter />
+</Layout>
+
+<style>
+	/* ============================================================
+	   Shared grid — reuses ONI's system exactly: one container for
+	   the whole page, 626px body copy, 412px side copy (left-aligned
+	   even where the block sits on the right). The Competitive
+	   Landscape and Information Architecture images are the only two
+	   sections allowed past that boundary, per the reference.
+	   ============================================================ */
+	.fic {
+		overflow-x: hidden;
+	}
+
+	.block {
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 76px 24px 0;
+	}
+
+	/* A little extra breathing room before Let's Talk specifically —
+	   Impact is the last section on the page, so this only affects the
+	   gap below it. */
+	.block--impact {
+		padding-bottom: 40px;
+	}
+
+	.headrow,
+	.zgrid {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 40px;
+		margin-bottom: 30px;
+	}
+
+	.zgrid--mid {
+		align-items: center;
+	}
+
+	.zgrid--tight {
+		margin-top: 6px;
+	}
+
+	.zgrid--reverse {
+		flex-direction: row-reverse;
+	}
+
+	.zgrid__left {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.zgrid__right {
+		flex-shrink: 0;
+		width: 412px;
+	}
+
+	.zgrid__right--wide {
+		width: 626px;
+	}
+
+	.zgrid__right > .bodycol + .bodycol {
+		margin-top: 18px;
+	}
+
+	.h2 {
+		font-size: 56px;
+		font-weight: 500;
+		line-height: 1.06;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+
+	.h3 {
+		font-size: 32px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		margin-bottom: 20px;
+	}
+
+	.h3--gray {
+		color: #99999999;
+	}
+
+	/* Secondary section heading — same size/hierarchy as the "HOME SCREEN"
+	   pixel label (.headrow__side--pixel: 28px, gray), used for MEET & READ
+	   and OTHER SCREENS so they read as sub-headings, not primary titles. */
+	.h2--secondary {
+		font-size: 28px;
+		color: #99999999;
+		margin-bottom: 12px;
+	}
+
+	.headrow__side {
+		flex-shrink: 0;
+		max-width: 412px;
+		text-align: left;
+		font-size: 19px;
+		line-height: 1.45;
+		color: #fff;
+	}
+
+	.headrow__side--pixel {
+		font-size: 28px;
+		color: #99999999;
+	}
+
+	.sidewhite {
+		max-width: 412px;
+		text-align: left;
+		font-size: 19px;
+		line-height: 1.4;
+		color: #fff;
+	}
+
+	.sidewhite--quote {
+		font-style: italic;
+	}
+
+	.sidewhite--quote span {
+		display: inline-block;
+		margin-top: 10px;
+		color: #99999999;
+		font-size: 16px;
+		font-style: normal;
+	}
+
+	.bodycol {
+		max-width: 626px;
+		font-size: 19px;
+		line-height: 1.5;
+		color: #99999999;
+	}
+
+	.bodycol--wide {
+		max-width: 626px;
+	}
+
+	.bodycol--strong {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	.bodycol + .bodycol {
+		margin-top: 20px;
+	}
+
+	.label {
+		font-size: 19px;
+		color: #99999999;
+		margin-bottom: 24px;
+	}
+
+	/* ============================================================
+	   Hero
+	   ============================================================ */
+	.hero {
+		position: relative;
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 30px 24px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		min-height: 360px;
+	}
+
+	.hero__device {
+		position: relative;
+		width: 372px;
+		flex-shrink: 0;
+	}
+
+	.hero__device img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.hero__copy {
+		flex: 1;
+		min-width: 240px;
+		text-align: right;
+	}
+
+	.hero__title {
+		font-size: 76px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		line-height: 1;
+		margin-bottom: 20px;
+	}
+
+	.hero__subtitle {
+		font-size: 25px;
+		font-weight: 400;
+		color: #fff;
+	}
+
+	/* Positioned just past the podium's right edge (hero.png's own content
+	   spans to ~94% of the asset's width, measured directly on the file),
+	   roughly level with the podium — matches the reference, where this
+	   caption is its own left-aligned block near the device, not stacked
+	   under the (right-aligned) subtitle. */
+	.hero__tags {
+		position: absolute;
+		left: 94%;
+		top: 79%;
+		text-align: left;
+		white-space: nowrap;
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* ============================================================
+	   Meta row
+	   ============================================================ */
+	.meta {
+		padding-top: 44px;
+	}
+
+	.meta__row {
+		display: flex;
+		align-items: stretch;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		padding: 24px 0;
+	}
+
+	.meta__col {
+		flex: 1;
+		text-align: center;
+	}
+
+	.meta__divider {
+		width: 1px;
+		background: var(--hairline);
+		flex-shrink: 0;
+	}
+
+	.meta__label {
+		font-size: 16px;
+		color: #99999999;
+		margin-bottom: 8px;
+	}
+
+	.meta__value {
+		font-size: 20px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	/* ============================================================
+	   About / Research art — notch already baked into the asset,
+	   so this just sizes the image; no clip-path added on top.
+	   ============================================================ */
+	.about__art,
+	.research__art {
+		width: 100%;
+	}
+
+	.about__art img,
+	.research__art img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Problem statement image (plain rect + glow, per the asset)
+	   ============================================================ */
+	.problem__img {
+		max-width: 100%;
+	}
+
+	.problem__img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Notch-card grids
+	   ============================================================ */
+	.cardgrid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 32px;
+		margin-top: 40px;
+	}
+
+	.cardgrid :global(.cardgrid__item) {
+		flex-shrink: 0;
+	}
+
+	.notchcard {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 30px 30px 0;
+		text-align: center;
+	}
+
+	.notchcard__title {
+		font-size: 20px;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		margin-bottom: 16px;
+		text-transform: uppercase;
+	}
+
+	.notchcard__desc {
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* Impact's two cards: title/description left-aligned, title in
+	   white Medium weight — matches the reference's left-aligned
+	   card text for this section (unlike the centered card text
+	   used everywhere else). */
+	.notchcard--left {
+		text-align: left;
+	}
+
+	.notchcard__title--white {
+		color: #fff;
+		text-transform: none;
+		font-size: 21px;
+	}
+
+	.cardgrid--two {
+		gap: 32px;
+	}
+
+	/* ============================================================
+	   Goals — full-width stacked notch rows, title+description on
+	   ONE row (not stacked like the other notchcards).
+	   ============================================================ */
+	.goalstack {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		margin-top: 40px;
+	}
+
+	.goalstack :global(.goalstack__item) {
+		width: 100% !important;
+	}
+
+	/* Bottom padding equals NotchBox's own NOTCH_DEPTH (32px): the box's
+	   full height includes that recessed notch area at the bottom, which
+	   reads as outside the card's visual interior, so centering the text
+	   against the full height alone leaves it sitting low. Excluding that
+	   depth from the centering area (via padding, not height/size) puts the
+	   text back on the card's true visual center. */
+	.goalrow {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 0 36px 32px;
+		display: flex;
+		align-items: center;
+		gap: 24px;
+	}
+
+	.goalrow__title {
+		flex: 0 0 320px;
+		font-size: 20px;
+		font-weight: 500;
+		color: #fff;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+	}
+
+	.goalrow__desc {
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	.headrow--goals {
+		align-items: center;
+		gap: 24px;
+	}
+
+	.goals__heading {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		white-space: nowrap;
+	}
+
+	/* align-items:center on .goals__heading centers the icon against the
+	   H2's full line-box, but the Pixelify glyphs sit noticeably higher
+	   within that line-box than its geometric center (measured against the
+	   rendered page: ~19.5px), so the icon reads as sitting too low next to
+	   the text. Nudging it up by that same amount lines up the two visual
+	   centers exactly, without touching layout/spacing (gap, gaps, size). */
+	.goals__icon {
+		width: 28px;
+		height: 28px;
+		color: #fff;
+		flex-shrink: 0;
+		transform: translateY(-19.5px);
+	}
+
+	.goals__icon svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.goals__wire {
+		flex: 1;
+		height: 40px;
+		min-width: 80px;
+	}
+
+	.goals__hexes {
+		display: inline-flex;
+		gap: 6px;
+		flex-shrink: 0;
+	}
+
+	.goals__hexes svg {
+		width: 28px;
+		height: 32px;
+	}
+
+	/* ============================================================
+	   Wide exceptions — Competitive Landscape + Information
+	   Architecture. Both are supplied compositions the reference
+	   shows bleeding past the nav-aligned container.
+	   ============================================================ */
+	.wide-break {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: min(1232px, 100vw);
+		margin: 40px auto 0;
+		padding-inline: 24px;
+	}
+
+	.wide-break img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.wide-break--ia {
+		margin-top: 40px;
+	}
+
+	/* ============================================================
+	   Meet & Read / Other Screens — pre-composited images, kept
+	   inside the normal container, native aspect ratio.
+	   ============================================================ */
+	.wide-img {
+		width: 100%;
+		margin-top: 40px;
+	}
+
+	.wide-img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   When Research Changed the Direction — flow boxes
+	   ============================================================ */
+	.flowrow {
+		display: flex;
+		align-items: stretch;
+		gap: 20px;
+		margin-top: 40px;
+	}
+
+	/* Box geometry reuses the existing "hexcard" shape (ONI's research-theme
+	   cards: an SVG frame with top-right + bottom-left corners cut, viewBox
+	   0 0 227 165, preserveAspectRatio="none" so it stretches to fill
+	   whatever size this box actually renders at) rather than a new outline.
+	   The frame is an absolutely-positioned height:100% child, which needs
+	   a definite (non-auto) height on .flowbox to resolve against — same
+	   fix as the Goals rows — so the height is explicit and the content is
+	   vertically centered inside it (keeps the shorter Client-brief/Design-
+	   direction boxes visually balanced against the taller Research Insight
+	   box, which also carries a citation line). */
+	.flowbox {
+		position: relative;
+		flex: 1 1 0;
+		box-sizing: border-box;
+		height: 165px;
+	}
+
+	.flowbox:nth-child(3) {
+		flex-grow: 1.8;
+	}
+
+	.flowbox__frame {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.flowbox__content {
+		position: relative;
+		z-index: 1;
+		height: 100%;
+		box-sizing: border-box;
+		padding: 22px 26px 26px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+
+	.flowbox__label {
+		font-size: 19px;
+		color: #99999999;
+		margin-bottom: 16px;
+	}
+
+	.flowbox__value {
+		font-size: 22px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	.flowbox__citation {
+		margin-top: 6px;
+		font-size: 13px;
+		font-style: italic;
+		color: #99999999;
+	}
+
+	.flowrow__arrow {
+		width: 22px;
+		height: 22px;
+		flex-shrink: 0;
+		align-self: center;
+		color: #8a8a8a;
+	}
+
+	/* ============================================================
+	   Visual direction — color swatches + type specimen
+	   ============================================================ */
+	.swatchgrid {
+		display: grid;
+		grid-template-columns: 320px 1fr 1fr;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			"purple lavender white"
+			"purple gray gray";
+		gap: 20px;
+		margin-bottom: 56px;
+	}
+
+	/* CTA-style geometry — same --cta-notch shape as the flow boxes above,
+	   rather than a separate NotchBox-style cut. */
+	.swatch {
+		position: relative;
+		box-sizing: border-box;
+		padding: 20px 24px;
+		display: flex;
+		align-items: flex-end;
+		font-size: 18px;
+		font-weight: 500;
+		clip-path: var(--cta-notch);
+	}
+
+	.swatch--purple {
+		grid-area: purple;
+		background: #7c3aed;
+		color: #fff;
+	}
+
+	.swatch--lavender {
+		grid-area: lavender;
+		background: #c1a0ff;
+		color: #1c1c1c;
+		min-height: 140px;
+	}
+
+	.swatch--white {
+		grid-area: white;
+		background: #ffffff;
+		color: #1c1c1c;
+		min-height: 140px;
+	}
+
+	.swatch--gray {
+		grid-area: gray;
+		background: #333333;
+		color: #fff;
+		min-height: 90px;
+	}
+
+	.typespec {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 40px;
+		flex-wrap: wrap;
+	}
+
+	/* "Outfit" + the Bold/Regular/Light pills sit on one row, per the
+	   reference — not stacked. */
+	.typespec__row {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 24px;
+		margin-bottom: 20px;
+	}
+
+	.typespec__name {
+		font-size: 24px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	.typespec__pills {
+		display: flex;
+		gap: 12px;
+	}
+
+	.pill {
+		border: 1px solid var(--accent);
+		border-radius: 4px;
+		padding: 6px 16px;
+		font-size: 16px;
+		color: #99999999;
+	}
+
+	.typespec__sample {
+		font-size: 19px;
+		line-height: 1.6;
+		color: #99999999;
+	}
+
+	.typespec__glyph {
+		font-size: 160px;
+		font-weight: 500;
+		color: var(--violet);
+		line-height: 1;
+	}
+
+	/* ============================================================
+	   UI Design / Home screen
+	   ============================================================ */
+	.homescreen__img {
+		width: 100%;
+	}
+
+	.homescreen__img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Responsive
+	   ============================================================ */
+	@media (max-width: 860px) {
+		.hero {
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			min-height: 0;
+			padding-top: 10px;
+		}
+
+		.hero__device {
+			width: 100%;
+			max-width: 340px;
+			margin-bottom: 32px;
+		}
+
+		/* The desktop caption is absolutely positioned + nowrap so it can
+		   sit precisely beside the podium; at narrow widths that overflows
+		   the viewport, so it falls back to a normal, centered, in-flow
+		   caption under the mockup instead. */
+		.hero__tags {
+			position: static;
+			display: block;
+			margin-top: 16px;
+			text-align: center;
+			white-space: normal;
+		}
+
+		.hero__copy {
+			text-align: center;
+		}
+
+		.meta__row {
+			flex-wrap: wrap;
+			row-gap: 24px;
+		}
+
+		.meta__col {
+			flex: 0 0 44%;
+		}
+
+		.meta__divider {
+			display: none;
+		}
+
+		.headrow,
+		.zgrid,
+		.zgrid--reverse {
+			flex-direction: column;
+		}
+
+		.headrow__side,
+		.sidewhite,
+		.zgrid__right,
+		.zgrid__right--wide {
+			text-align: left;
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.h2 {
+			font-size: 38px;
+		}
+
+		.h3 {
+			font-size: 26px;
+		}
+
+		.cardgrid :global(.cardgrid__item) {
+			width: 100% !important;
+			max-width: 468px;
+		}
+
+		.cardgrid :global(.notchbox) {
+			width: 100% !important;
+		}
+
+		/* NotchBox's frame is an absolutely-positioned SVG at height:100% —
+		   against an auto-height parent that resolves to nothing (percentage
+		   heights on an abspos element need a definite-height containing
+		   block), so it can't be left to "auto" here. Stacking title+
+		   description at mobile needs more room than the desktop row's
+		   126px, so this sets an explicit, generously-sized fixed height
+		   instead (covers the longest wrapped description at this width). */
+		.goalstack :global(.goalstack__item) {
+			height: 210px !important;
+		}
+
+		.goalrow {
+			height: 100%;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			gap: 8px;
+			padding: 24px 24px 56px;
+		}
+
+		.goalrow__title {
+			flex: none;
+		}
+
+		.flowrow {
+			flex-direction: column;
+		}
+
+		/* flex-basis:0 (from the desktop "flex: 1 1 0") is read against the
+		   main axis, which becomes height once the row goes column — that
+		   would override the explicit 165px height with flex-grow sizing
+		   instead, so it's reset back to the box's own height here. */
+		.flowbox,
+		.flowbox:nth-child(3) {
+			flex: none;
+		}
+
+		.flowrow__arrow {
+			transform: rotate(90deg);
+			align-self: center;
+		}
+
+		.swatchgrid {
+			grid-template-columns: 1fr 1fr;
+			grid-template-areas:
+				"purple purple"
+				"lavender white"
+				"gray gray";
+		}
+
+		.typespec {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.wide-break {
+			padding-inline: 24px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero__title {
+			font-size: 44px;
+		}
+
+		.h2 {
+			font-size: 32px;
+		}
+
+		.meta__col {
+			flex: 0 0 100%;
+		}
+
+		.swatchgrid {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"purple"
+				"lavender"
+				"white"
+				"gray";
+		}
+	}
+</style>

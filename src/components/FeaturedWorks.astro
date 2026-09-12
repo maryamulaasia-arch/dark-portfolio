@@ -1,0 +1,178 @@
+---
+import PixelText from "./PixelText.astro";
+import ProjectCard from "./ProjectCard.astro";
+
+/* Per-heading pixel maps — inspected separately in the reference. */
+const l1 = { text: "FEATURED", pixel: [2, 7] };
+const l2 = { text: "WORKS", pixel: [0, 3] };
+
+interface Props {
+	subtitleLines?: string[];
+}
+
+/* Home's subtitle is the default so the Home page needs no changes; the
+   Works page passes its own page-specific copy instead. */
+const {
+	subtitleLines = ["Ideas I’ve shaped,", "Products I’ve shipped,", "Lessons I’ve picked up."],
+} = Astro.props;
+
+const projects = [
+	{
+		date: "MAR 2026",
+		title: "ONI CARES",
+		titlePixel: [1, 5], // N, A
+		description:
+			"An AI-powered care platform connecting doctors, care teams, and expecting mothers.",
+		tags: ["Healthcare UX", "AI Clinical App"],
+		image: "/images/oni-work.png",
+		imageAlt: "Oni Cares — two people comparing app screens on their phones",
+		href: "/works/oni-cares",
+	},
+	{
+		date: "MAY 2026",
+		title: "FIC NON - FIC",
+		titlePixel: [5], // O in NON
+		description:
+			"A reading app for finding your next book, your kind of people, and your kind of stories.",
+		tags: ["Community", "Consumer App"],
+		image: "/images/ficnonfic-work.png",
+		imageAlt: "Fic non-fic — reading app preview",
+		href: "/works/fic-nonfic",
+	},
+	{
+		date: "MAR 2025",
+		title: "BCL",
+		titlePixel: [0], // B
+		description:
+			"An AI-powered career coach helping people set goals, build habits, and grow with intention.",
+		tags: ["AI Life Coach", "B2B SAAS"],
+		image: "/images/bcl-work.png",
+		imageAlt: "BCL — career coaching app preview",
+		href: "/works/bcl",
+	},
+];
+---
+
+<section class="featured" id="works">
+	<div class="featured__grid" aria-hidden="true"></div>
+
+	<div class="featured__head">
+		<h2 class="featured__title">
+			<span class="featured__line"><PixelText text={l1.text} pixel={l1.pixel} /></span>
+			<span class="featured__line"><PixelText text={l2.text} pixel={l2.pixel} /></span>
+		</h2>
+		<p class="featured__sub">
+			{
+				subtitleLines.map((line, i) => (
+					<>
+						{line}
+						{i < subtitleLines.length - 1 && <br />}
+					</>
+				))
+			}
+		</p>
+	</div>
+
+	<div class="featured__cards">
+		{
+			projects.map((p, i) => (
+				<div class="reveal" style={`--reveal-delay:${i * 130}ms`}>
+					<ProjectCard {...p} />
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.featured {
+		position: relative;
+		max-width: 900px;
+		margin-inline: auto;
+		padding-inline: 24px;
+		padding-top: 112px;
+		padding-bottom: 90px;
+	}
+
+	/* Large, softly-blurred dark-grey square blocks behind the section —
+	   irregularly scattered (right of the heading, along the right of the
+	   cards, between cards, lower-left near BCL). Not a sharp graph-paper
+	   grid; that lives on <body>. Sits below the heading + cards. */
+	.featured__grid {
+		position: absolute;
+		top: 90px;
+		bottom: 30px;
+		left: -90px;
+		right: -90px;
+		z-index: 0;
+		pointer-events: none;
+		filter: blur(26px);
+		background-repeat: no-repeat;
+		background-image:
+			linear-gradient(rgba(206, 216, 226, 0.03), rgba(206, 216, 226, 0.03)),
+			linear-gradient(rgba(206, 216, 226, 0.022), rgba(206, 216, 226, 0.022)),
+			linear-gradient(rgba(206, 216, 226, 0.028), rgba(206, 216, 226, 0.028)),
+			linear-gradient(rgba(206, 216, 226, 0.018), rgba(206, 216, 226, 0.018)),
+			linear-gradient(rgba(206, 216, 226, 0.03), rgba(206, 216, 226, 0.03)),
+			linear-gradient(rgba(206, 216, 226, 0.016), rgba(206, 216, 226, 0.016)),
+			linear-gradient(rgba(206, 216, 226, 0.024), rgba(206, 216, 226, 0.024)),
+			linear-gradient(rgba(206, 216, 226, 0.018), rgba(206, 216, 226, 0.018));
+		background-size:
+			230px 210px,
+			200px 180px,
+			210px 210px,
+			170px 200px,
+			240px 220px,
+			160px 190px,
+			190px 210px,
+			180px 200px;
+		background-position:
+			calc(50% - 720px + 930px) 10px,
+			calc(50% - 720px + 640px) -30px,
+			calc(50% - 720px + 1090px) 250px,
+			calc(50% - 720px + 60px) 560px,
+			calc(50% - 720px + 1070px) 900px,
+			calc(50% - 720px + 120px) 1120px,
+			calc(50% - 720px - 40px) 1180px,
+			calc(50% - 720px + 1140px) 1200px;
+	}
+
+	.featured__head,
+	.featured__cards {
+		position: relative;
+		z-index: 1;
+	}
+
+	.featured__head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 64px;
+	}
+
+	.featured__title {
+		font-size: 80px;
+		font-weight: 500;
+		line-height: 0.86;
+		text-transform: uppercase;
+		letter-spacing: -0.06em;
+		margin-left: -8px;
+	}
+
+	.featured__line {
+		display: block;
+	}
+
+	.featured__sub {
+		font-size: 20px;
+		line-height: 1.5;
+		color: var(--text-dim);
+		text-align: left;
+	}
+
+	.featured__cards {
+		display: flex;
+		flex-direction: column;
+		gap: 64px;
+	}
+</style>

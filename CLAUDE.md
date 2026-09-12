@@ -1,5 +1,9 @@
 ## Development
 
+This project runs on **port 4322** — `http://localhost:4322/`. Port 4321 belongs to a
+separate project (Mix Media portfolio); never use it here. The port is pinned in
+`astro.config.mjs` (`server.port`), so `npm run dev` / `astro dev` already bind to 4322.
+
 When starting the dev server, use background mode:
 
 ```

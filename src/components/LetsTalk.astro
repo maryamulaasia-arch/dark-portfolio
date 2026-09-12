@@ -1,0 +1,97 @@
+---
+import PixelText from "./PixelText.astro";
+import Cta from "./Cta.astro";
+
+/* "LET'S TALK" — inspected separately: T (in LET'S) and A (in TALK). */
+const heading = { text: "LET'S TALK", pixel: [2, 7] };
+---
+
+<section class="talk" id="contact">
+	<p class="talk__whisper reveal">You bring the idea,<br />I&rsquo;ll bring the pixels.</p>
+
+	<div class="talk__panel">
+		<span class="talk__fold" aria-hidden="true"></span>
+
+		<div class="talk__content reveal" style="--reveal-delay:130ms">
+			<h2 class="talk__title">
+				<PixelText text={heading.text} pixel={heading.pixel} />
+			</h2>
+			<p class="talk__lead">Got an idea worth exploring?<br />Let&rsquo;s connect.</p>
+			<Cta label="Contact Me" href="mailto:maryamulaasia@gmail.com" variant="solid" fill="#6a4fd0" class="talk__cta" />
+		</div>
+	</div>
+</section>
+
+<style>
+	.talk {
+		position: relative;
+		padding-top: 26px;
+	}
+
+	/* Panel — deep-violet, its right edge ends on the same content boundary as
+	   the About / status box above (x188–1252 at 1440px, i.e. 1064px centred);
+	   the left side is a 45° silhouette with a folded top-left corner.
+	   Total height ≈ 344px. */
+	.talk__panel {
+		position: relative;
+		max-width: 1064px;
+		margin-inline: auto;
+		min-height: 344px;
+		background: var(--violet-deep);
+		clip-path: polygon(177px 0, 100% 0, 100% 100%, 0 100%, 0 181px);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		padding: 46px 24px 30px;
+		overflow: visible;
+	}
+
+	/* the lighter "peeled" corner flap */
+	.talk__fold {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200px;
+		height: 200px;
+		background: var(--violet-fold);
+		clip-path: polygon(177px 0, 148px 152px, 0 181px);
+	}
+
+	.talk__whisper {
+		position: absolute;
+		left: calc(50% - 532px);
+		top: 52px;
+		font-size: 17px;
+		line-height: 1.42;
+		color: #fff;
+		z-index: 3;
+	}
+
+	.talk__content {
+		position: relative;
+		z-index: 1;
+		text-align: center;
+		margin-inline: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.talk__title {
+		font-size: 70px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: #fff;
+		line-height: 1;
+		margin-bottom: 20px;
+	}
+
+	.talk__lead {
+		font-size: 24px;
+		line-height: 1.4;
+		color: #fff;
+		margin-bottom: 26px;
+	}
+</style>

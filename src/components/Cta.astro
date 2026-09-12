@@ -1,0 +1,32 @@
+---
+/**
+ * Angular / notched CTA button used across the page.
+ * variant: "outline" (accent 2px frame) | "solid" (filled).
+ * fill: optional CSS colour override for the interior / fill.
+ */
+interface Props {
+	label: string;
+	href?: string;
+	variant?: "outline" | "solid";
+	fill?: string;
+	class?: string;
+	target?: string;
+}
+
+const { label, href = "#", variant = "outline", fill, class: klass = "", target } = Astro.props;
+const style = fill ? `--cta-fill:${fill}` : undefined;
+const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+---
+
+<a href={href} class:list={["cta", `cta--${variant}`, klass]} style={style} target={target} rel={rel}>
+	<span>{label}</span>
+	<svg class="cta__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+		<path
+			d="M4 12h15M13 6l6 6-6 6"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="square"
+			stroke-linejoin="miter"
+		></path>
+	</svg>
+</a>

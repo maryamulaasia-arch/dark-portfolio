@@ -1,0 +1,31 @@
+---
+/**
+ * Renders `text`, wrapping the characters at the given 0-based `pixel`
+ * indices (spaces included in the count) in a <span class="px"> so only
+ * those specific glyphs render in Pixelify Sans.
+ *
+ * The index map for each heading line is derived by inspecting
+ * references/final Landing page.png glyph-by-glyph — not a generic
+ * letter mapping.
+ */
+interface Props {
+	text: string;
+	pixel?: number[];
+}
+
+const { text, pixel = [] } = Astro.props;
+const pixelSet = new Set(pixel);
+const chars = [...text];
+---
+
+{
+	chars.map((ch, i) =>
+		ch === " " ? (
+			" "
+		) : pixelSet.has(i) ? (
+			<span class="px">{ch}</span>
+		) : (
+			<span>{ch}</span>
+		),
+	)
+}

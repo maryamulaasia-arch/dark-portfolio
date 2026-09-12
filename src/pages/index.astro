@@ -1,17 +1,24 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import LogoStrip from "../components/LogoStrip.astro";
+import FeaturedWorks from "../components/FeaturedWorks.astro";
+import WhyHireMe from "../components/WhyHireMe.astro";
+import About from "../components/About.astro";
+import StatusStrip from "../components/StatusStrip.astro";
+import LetsTalk from "../components/LetsTalk.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<Header />
+	<Hero />
+	<LogoStrip />
+	<FeaturedWorks />
+	<WhyHireMe />
+	<About />
+	<StatusStrip />
+	<LetsTalk />
+	<SiteFooter />
+</Layout>

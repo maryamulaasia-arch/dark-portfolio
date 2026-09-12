@@ -1,0 +1,41 @@
+---
+import PixelText from "./PixelText.astro";
+
+/* "WHY HIRE ME?" — inspected separately: only the two E's are pixelated. */
+const heading = { text: "WHY HIRE ME?", pixel: [7, 10] };
+---
+
+<section class="whyhire">
+	<h2 class="whyhire__title">
+		<PixelText text={heading.text} pixel={heading.pixel} />
+	</h2>
+	<svg class="whyhire__arrow" viewBox="0 0 24 58" aria-hidden="true">
+		<path
+			d="M9.5 0 H14.5 V40 H20 L12 58 L4 40 H9.5 Z"
+			fill="#7c5cf8"></path>
+	</svg>
+</section>
+
+<style>
+	.whyhire {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 66px;
+		padding-bottom: 30px;
+	}
+
+	.whyhire__title {
+		font-size: 54px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: var(--text);
+	}
+
+	.whyhire__arrow {
+		width: 22px;
+		height: 55px;
+		margin-top: 30px;
+	}
+</style>

@@ -1,0 +1,170 @@
+---
+const collab = ["BCL", "HAPELLO", "ONI CARES", "FIC - NONFIC", "ANCHAE"];
+
+interface Props {
+	/* Home's bio box ends after two paragraphs + the inline contact/collab
+	   lines. The standalone About page shows a third paragraph instead, with
+	   no inline footer (contact + collab log move into their own sections
+	   there) — passing this prop is what tells the component which page is
+	   asking. */
+	thirdParagraph?: string;
+	showInlineFooter?: boolean;
+}
+
+const { thirdParagraph, showInlineFooter = true } = Astro.props;
+---
+
+<section class="about" id="about">
+	<div class="about__inner">
+		<div class="about__header reveal">
+			<span class="about__star" aria-hidden="true">
+				<svg viewBox="0 0 24 24"><path d="M12 1 C12.5 7 17 11.5 23 12 C17 12.5 12.5 17 12 23 C11.5 17 7 12.5 1 12 C7 11.5 11.5 7 12 1 Z" fill="currentColor"/></svg>
+			</span>
+			<h2 class="about__name pixelify">MARYAMUL AASIA</h2>
+			<svg class="about__wire" viewBox="0 0 640 44" preserveAspectRatio="none" aria-hidden="true">
+				<path d="M1 40 H210 C270 40 262 8 322 8 H639" stroke="#8a8a8a" stroke-width="2" fill="none" stroke-linecap="round"/>
+			</svg>
+			<span class="about__hexes" aria-hidden="true">
+				<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+				<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+				<svg viewBox="0 0 26 30"><path d="M13 1 L24 8 V22 L13 29 L2 22 V8 Z" stroke="#8a8a8a" stroke-width="1.4" fill="none"/></svg>
+			</span>
+		</div>
+
+		<div class="about__box reveal" style="--reveal-delay:120ms">
+			<img class="about__avatar" src="/images/about-avatar.png" alt="Pixel-art portrait of Maryamul Aasia" />
+			<div class="about__content">
+				<p>
+					<em>Hello,</em> I&rsquo;m a <strong>Product/ UI UX</strong> designer with a year of
+					experience who loves turning messy problems into simple, useful experiences. I
+					design digital products with curiosity, clarity, and a human touch.
+				</p>
+				<p>
+					Beyond pixels and prototypes, I&rsquo;m a reader, a quiet observer, and a
+					collector of ideas from everywhere.
+				</p>
+				{thirdParagraph && <p>{thirdParagraph}</p>}
+				{
+					showInlineFooter && (
+						<>
+							<p class="about__contact">
+								<em>INITIATE CONTACT</em> &rarr; maryamulaasia@gmail.com
+							</p>
+							<p class="about__logLabel">COLLABORATION LOG</p>
+							<p class="about__log">{collab.join("  |  ")}</p>
+						</>
+					)
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about {
+		padding-block: 12px 28px;
+	}
+
+	.about__inner {
+		max-width: 1110px;
+		margin-inline: auto;
+		padding-inline: 24px;
+	}
+
+	.about__header {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		margin-bottom: 22px;
+	}
+
+	.about__star {
+		color: #fff;
+		width: 30px;
+		height: 30px;
+		flex-shrink: 0;
+	}
+	.about__star svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.about__name {
+		font-size: 56px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		line-height: 1;
+	}
+
+	.about__wire {
+		flex: 1;
+		height: 44px;
+		min-width: 120px;
+	}
+
+	.about__hexes {
+		display: inline-flex;
+		gap: 5px;
+		flex-shrink: 0;
+	}
+	.about__hexes svg {
+		width: 33px;
+		height: 38px;
+	}
+
+	.about__box {
+		display: flex;
+		gap: 52px;
+		border: 1px solid var(--hairline);
+		padding: 30px 40px 30px 30px;
+	}
+
+	.about__avatar {
+		width: 340px;
+		height: 356px;
+		object-fit: cover;
+		object-position: center;
+		border: 2px solid rgba(255, 255, 255, 0.55);
+		flex-shrink: 0;
+		align-self: flex-start;
+	}
+
+	.about__content {
+		font-size: 21px;
+		line-height: 1.32;
+		color: var(--text-muted);
+		max-width: 585px;
+	}
+
+	.about__content p {
+		margin-bottom: 34px;
+	}
+
+	.about__content strong {
+		font-weight: 600;
+		color: #fff;
+	}
+
+	.about__content em {
+		font-style: italic;
+	}
+
+	.about__contact {
+		color: #fff;
+	}
+
+	.about__logLabel {
+		font-size: 21px;
+		color: #fff;
+		margin-bottom: 16px !important;
+		letter-spacing: 0.03em;
+	}
+
+	.about__log {
+		font-size: 21px;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+		margin-bottom: 0 !important;
+	}
+</style>

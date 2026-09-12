@@ -1,0 +1,1345 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import NotchBox from "../../components/NotchBox.astro";
+import PixelText from "../../components/PixelText.astro";
+import LetsTalk from "../../components/LetsTalk.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+/* ============================================================
+   Content — every string below is read from
+   references/BCL Case study.png (cross-checked only for wording
+   against content/bcl content .docx). Confirmed corrections applied
+   per the brief: "STATEMNT" -> "STATEMENT", "Domine" -> "Domain",
+   "Cooperate" -> "Corporate", "AFTRE" -> "AFTER", "BEATS ARE VAGUE"
+   -> "BEATS VAGUE", "50+ LED" -> "50+". The "RESULTS" heading is
+   kept exactly as the PNG shows it (not "Impact", per the doc).
+   Doc-only content (Timeline, Evaluators stat, the 5-word loop
+   description, "The bet:" lead-in) is intentionally NOT included.
+
+   GRID: reuses the established system — ONE container for the
+   whole page, 626px body copy, 412px side copy (left-aligned even
+   when the block sits on the right). Wide exceptions: the
+   competitive-analysis, identity-trail IA, Redesign and Identity
+   Trail images, which the reference shows bleeding past the
+   nav-aligned container (all four are supplied compositions).
+
+   CARD GEOMETRY: unlike FIC's uniform-gap cardgrid, BCL's 2x2 and
+   3x2 NotchBox grids TOUCH vertically and only gap horizontally
+   (verified directly against the reference at high zoom) — a
+   different geometry, not forced to match FIC's pattern.
+   ============================================================ */
+
+const metaRow = [
+	{ label: "Product", value: "Better Corporate Life" }, // corrected: PNG shows "Better Cooperate Life"
+	{ label: "Domain", value: "B2B HR Tech" }, // corrected: PNG shows "Domine"
+	{ label: "Platform", value: "Web App" },
+	{ label: "Role", value: "UX Designer" },
+];
+
+const goalsCards = [
+	{ title: "EARN TRUST BEFORE ASKING FOR ANYTHING", desc: "Build enough trust for users to openly share career doubts." },
+	{ title: "GIVE THE AI SOMETHING TO WORK WITH", desc: "Capture identity, strengths, values, and goals for personal guidance." },
+	{ title: "MAKE SELF-REFLECTION FEEL SIMPLE", desc: "Break career identity into simple, guided steps." },
+	{ title: "TURN ONE SESSION INTO A RELATIONSHIP.", desc: "Build continuity, so every conversation moves forward." },
+];
+
+const roleCards = [
+	{ title: "UX AUDIT & USABILITY TESTING", desc: "heuristic evaluation and moderated sessions on the existing chatbot" },
+	{ title: "IDENTITY TRAIL {0→1}", desc: "defined and structured a new core experience" },
+	{ title: "RAPID PROTOTYPING", desc: "lo-fi wireframes to pressure-test the interaction model" },
+	{ title: "CONVERSATIONAL DESIGN", desc: "structured how the AI asks, reflects, and gives back" },
+];
+
+const auditCards = [
+	{ title: "Inconsistent UI patterns", desc: "Users relearned the interface on every screen" },
+	{ title: "Low-visibility CTAs", desc: "The next step was hard to find" },
+	{ title: "No back actions", desc: "Flows users couldn't exit" },
+	{ title: "Missing feedback", desc: "No confirmation that anything had happened" },
+	{ title: "Unclear labels", desc: "High cognitive load" },
+	{ title: "Chat friction", desc: "Inconsistent controls, no shortcuts" },
+];
+
+const failureRows = [
+	{ label: "Trust", value: "No credibility signals, and no reason to open up" },
+	{ label: "Value", value: "Nobody could say what the product did or where to start" },
+	{ label: "Onboarding", value: "Multiple equal-weight entry points; users wanted one guided first step" },
+	{ label: "Conversation", value: "Slow responses broke flow; the AI asked, but rarely gave back" },
+	{ label: "Personalisation", value: "Advice that told users what they already knew" },
+];
+
+const coachingRows = [
+	{ title: "PEOPLE OPEN UP BEFORE TAKING ADVICE", desc: "Human coaches listen first. Most AI tools jump straight to answers, making advice easier to dismiss." },
+	{ title: "A CONVERSATION NEEDS STRUCTURE", desc: "Frameworks like GROW give coaching a beginning, middle, and end. Without one, users face an empty text box without knowing what to do." },
+	{ title: "SELF-ASSESSMENTS STOP TOO EARLY", desc: "Quizzes reveal insights but often end there. The real value comes from knowing what to do next." },
+	{ title: "SMALL AND SPECIFIC BEATS VAGUE", desc: "“Rethink your career” goes nowhere. “Message someone in your target role this week” is actionable." }, // corrected: PNG shows "BEATS ARE VAGUE"
+	{ title: "PROGRESS NEEDS MEMORY", desc: "If every session starts fresh, users repeat themselves. Carrying past conversations forward makes guidance more meaningful." },
+];
+
+const dimensionRows = [
+	{ label: "Context", value: "Grounds advice in what's actually possible" },
+	{ label: "Strengths", value: "Builds on assets, not just gaps" },
+	{ label: "Values & anchors", value: "Separates good advice from right-for-them advice" },
+	{ label: "Aspirations", value: "Gives the conversation a destination" },
+	{ label: "Tensions", value: "Explains why known advice isn't acted on" },
+	{ label: "Coaching preference", value: "Shapes how the AI talks" },
+];
+
+const synthesisRows = [
+	{ title: "01. TRUST IS STRUCTURAL, NOT VISUAL", note: "(from the audit)", desc: "The top heuristic violations were unpredictable patterns, no system feedback, no way back. Users won't disclose to a product that" },
+	{ title: "02. GENERIC CONTEXT PRODUCES GENERIC ADVICE", note: "(from usability testing)", desc: "Surface-level context created surface-level guidance. The Trail captures six identity dimensions to make every conversation more personal." },
+	{ title: "03. OPEN-ENDED REFLECTION OVERWHELMS", note: "(from coaching and identity research)", desc: "A blank chat expects users to know what to ask. The Trail replaces this with small, guided steps that deepen over time." },
+];
+
+const auditFoundRows = [
+	{ label: "Inconsistent controls between messages and pop-ups", value: "One pattern set across the session — learned once, not relearned" },
+	{ label: "The next step was hard to find", value: "A single, unmissable action at every point in the conversation" },
+	{ label: "No way back out of a flow", value: "Every step in a session is exitable and revisitable" },
+	{ label: "No confirmation anything had happened", value: "Visible system status — the AI shows it's thinking, and every action confirms" },
+	{ label: "Labels users had to decode", value: "Plain language; nothing that needs interpreting mid-conversation" },
+	{ label: "A blank box with no shortcuts", value: "Suggested prompts and consistent controls, so users never face an empty prompt" },
+];
+
+const beforeAfterRows = [
+	{ label: "First impression", before: "“Creepy,” “like a student project”", after: "A guided first step with a clear promise" },
+	{ label: "Entry point", before: "Multiple equal-weight options; nobody knew where to start", after: "One path in — the Trail" },
+	{ label: "What the AI knows", before: "Surface-level, unstructured", after: "Six identity dimensions, built session by session" },
+	{ label: "Advice", before: "What users already knew", after: "Grounded in their context, strengths, and constraints" },
+	{ label: "Session 2", before: "Starts from zero", after: "Opens from the last conversation" },
+];
+
+const producedRows = [
+	{ title: "A PRIORITIZED ROADMAP THE TEAM DIDN'T HAVE", desc: "50+ documented issues across 12 screens, ranked by severity, turning “the chatbot feels off” into a fixable backlog." },
+	{ title: "A WORKING DEFINITION OF CAREER IDENTITY", desc: "Six dimensions that now shape what the AI asks, stores, and advises on. Personalization stopped being a copy problem and became a data model." },
+	{ title: "A RETENTION MECHANIC, NOT JUST A FEATURE", desc: "Because guidance compounds, each session leads naturally to the next. That's the difference between a tool users try and a coach they keep." },
+];
+---
+
+<Layout title="BCL — Maryamul Aasia">
+	<Header active="works" />
+
+	<main class="bcl">
+		<!-- ============ HERO ============ -->
+		<section class="hero">
+			<div class="hero__device reveal">
+				<img src="/images/BCL/hero.png" alt="StocAI coaching app shown on a desktop computer" />
+			</div>
+			<div class="hero__copy reveal" style="--reveal-delay:120ms">
+				<h1 class="hero__title">BCL</h1>
+				<p class="hero__subtitle">AI-powered career coaching for professionals.</p>
+				<p class="hero__tags">UX Design<br />B2B SaaS</p>
+			</div>
+		</section>
+
+		<!-- ============ META ROW ============ -->
+		<section class="block meta reveal">
+			<div class="meta__row">
+				{
+					metaRow.map((m, i) => (
+						<>
+							{i > 0 && <span class="meta__divider" aria-hidden="true" />}
+							<div class="meta__col">
+								<p class="meta__label">{m.label}</p>
+								<p class="meta__value">{m.value}</p>
+							</div>
+						</>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ ABOUT ============ -->
+		<section class="block reveal">
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<h2 class="h2">
+						<PixelText text="ABOUT" pixel={[2]} /><br /><PixelText text="BCL" pixel={[0]} />
+					</h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">Designing an AI Career Coach for Meaningful Career Growth</p>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						Better Corporate Life (BCL) is an AI-powered career coaching platform that helps
+						professionals understand their current career identity, define where they want to go, and
+						navigate the gap between the two through personalized guidance.
+					</p>
+					<p class="bodycol">
+						Your career is more than your current job title. StocAI helps you identify where you are
+						to where you want to be.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="about__art">
+						<img src="/images/BCL/about.png" alt="Chess piece and ladders on stacked white blocks, representing career progression" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ PROBLEM STATEMENT ============ -->
+		<section class="block reveal">
+			<div class="zgrid">
+				<div class="zgrid__left">
+					<h2 class="h2 pixelify">PROBLEM<br />STATEMENT</h2>
+				</div>
+				<div class="zgrid__right">
+					<blockquote class="sidewhite sidewhite--quote">
+						&ldquo;I know I want something to change. I just can&rsquo;t say what, or where to
+						start.&rdquo;<br />
+						<span>- User Insight</span>
+					</blockquote>
+				</div>
+			</div>
+			<div class="zgrid zgrid--mid zgrid--tight zgrid--reverse">
+				<div class="zgrid__left">
+					<div class="problem__img">
+						<img src="/images/BCL/Problem Statement.png" alt="Line-art illustration of a coach presenting to a small group" />
+					</div>
+				</div>
+				<div class="zgrid__right zgrid__right--wide">
+					<p class="bodycol">
+						Users wanted a coach that understood who they were before offering advice, but a blank
+						chat and generic responses made it difficult to build trust.
+					</p>
+					<p class="bodycol bodycol--strong">
+						The challenge was circular: personalization required context, but sharing context
+						required trust. Solving disclosure became the key to making the AI genuinely useful.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ GOALS ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="GOALS" pixel={[0, 2]} /></h2>
+				<p class="headrow__side">What I set out to achieve with the redesign:</p>
+			</div>
+			<div class="cardgrid cardgrid--touch">
+				{
+					goalsCards.map((c) => (
+						<NotchBox width={468} height={150} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ MY ROLE ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2 pixelify">MY ROLE</h2>
+				<p class="headrow__side">Research-led thinking &middot; Systems thinking &middot; AI UX &middot; Cross-functional collaboration</p>
+			</div>
+			<p class="bodycol">I owned research and the end-to-end experience, working across product and engineering.</p>
+			<div class="cardgrid cardgrid--touch">
+				{
+					roleCards.map((c) => (
+						<NotchBox width={468} height={150} class="cardgrid__item">
+							<div class="notchcard">
+								<h3 class="notchcard__title">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ RESEARCH ============ -->
+		<!-- This section is unusually long (Research intro + 4 subsections),
+		     so a single .reveal on the outer <section> would need 15% of
+		     that whole height visible at once to trigger — never true in a
+		     normal viewport, leaving it permanently invisible. Each
+		     subsection gets its own .reveal wrapper instead, sized so the
+		     15% threshold is reachable. -->
+		<section class="block">
+			<div class="reveal zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<h2 class="h2"><PixelText text="RESEARCH" pixel={[3]} /></h2>
+				</div>
+				<div class="zgrid__right">
+					<p class="sidewhite">
+						Conducted a UX audit and usability testing to uncover friction, validate findings, and
+						identify improvement opportunities.
+					</p>
+				</div>
+			</div>
+			<div class="reveal zgrid zgrid--mid zgrid--tight">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						Two weeks of heuristic audit, five moderated usability sessions on the live product,
+						competitive benchmarking, and desk research into career coaching and identity frameworks.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="photo__art">
+						<img src="/images/BCL/Research.png" alt="Hands arranging colored sticky notes on a printed journey map" />
+					</div>
+				</div>
+			</div>
+
+			<!-- ---- 1. UX Audit ---- -->
+			<div class="reveal">
+			<h3 class="subhead pixelify">UX AUDIT</h3>
+			<p class="bodycol">Heuristic evaluation of the existing product against Nielsen&rsquo;s 10 heuristics.</p>
+
+			<div class="connectorrow">
+				<div class="connectorrow__seg connectorrow__seg--cap">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M0,1 H78 C90,1 94,14 99,27 C94,40 90,53 78,53 H0" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					<span class="connectorrow__label">DURATION :</span> <span class="connectorrow__value">2 WEEK</span>
+				</div>
+				<div class="connectorrow__seg connectorrow__seg--mid">
+					<span class="connectorrow__label">SCREENS :</span> <span class="connectorrow__value">12</span>
+				</div>
+				<div class="connectorrow__seg connectorrow__seg--cap connectorrow__seg--capRight">
+					<svg class="connectorrow__shape" viewBox="0 0 100 54" preserveAspectRatio="none" aria-hidden="true">
+						<path d="M100,1 H22 C10,1 6,14 1,27 C6,40 10,53 22,53 H100" stroke="#8a8a8a" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke" />
+					</svg>
+					<span class="connectorrow__label">FINDINGS :</span> <span class="connectorrow__value">50+</span>
+				</div>
+			</div>
+
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<div class="photo__art photo__art--sm">
+						<img src="/images/BCL/Audit.png" alt="Annotated screenshot of the existing coach-selection modal with numbered audit callouts" />
+					</div>
+				</div>
+				<div class="zgrid__right zgrid__right--wide">
+					<p class="bodycol">
+						<strong>Screens audited:</strong> navigation, home, onboarding, chat, in-session pop-ups
+						(feedback, focus, insight, action, conclusion), summary &amp; completion, log in.
+					</p>
+					<p class="bodycol">
+						<strong>Top violations:</strong> Consistency &amp; Standards &middot; Visibility of System
+						Status &middot; User Control &amp; Freedom &middot; Recognition Rather Than Recall
+					</p>
+				</div>
+			</div>
+
+			<div class="cardgrid cardgrid--touch cardgrid--three">
+				{
+					auditCards.map((c) => (
+						<NotchBox width={306} height={168} class="cardgrid__item">
+							<div class="notchcard notchcard--left">
+								<h3 class="notchcard__title notchcard__title--white notchcard__title--plain">{c.title}</h3>
+								<p class="notchcard__desc">{c.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+
+			<p class="bodycol bodycol--wide">
+				<strong>Why it mattered:</strong> every top violation was a trust failure, not a visual one. A
+				product that asks users to name their career doubts cannot behave unpredictably. Trust first,
+				then personalisation.
+			</p>
+			<a class="readmore" href="#">Read Full report</a>
+			</div>
+
+			<!-- ---- 2. Usability Testing ---- -->
+			<div class="reveal">
+			<h3 class="subhead pixelify subhead--wide">Usability Testing For Existing Flow, 5 Participants</h3>
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						I ran moderated sessions on the existing live flow, taking participants through
+						onboarding and a full coaching conversation as it shipped.
+					</p>
+					<p class="bodycol">
+						<strong>Objective:</strong> find what breaks trust, engagement, and task completion in the
+						current experience.
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="photo__art">
+						<img src="/images/BCL/Usability testing.png" alt="Moderated usability testing session with a video-call panel over the coaching app" />
+					</div>
+				</div>
+			</div>
+
+			<div class="table-wrap">
+				<table class="ctable2">
+					<thead>
+						<tr>
+							<th><span class="tagchip pixelify">FAILURE</span></th>
+							<th><span class="tagchip pixelify">WHAT HAPPENED</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							failureRows.map((r) => (
+								<tr>
+									<td class="ctable2__label">{r.label}</td>
+									<td>{r.value}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<p class="bodycol bodycol--wide">
+				The verdict was blunt. Users called it &ldquo;creepy,&rdquo; &ldquo;unprofessional,&rdquo;
+				&ldquo;like a student project.&rdquo; Most said they wouldn&rsquo;t share personal career
+				information with it.
+			</p>
+			<a class="readmore" href="#">Read Full report</a>
+			</div>
+
+			<!-- ---- 3. Career Coaching & Identity Research ---- -->
+			<div class="reveal">
+			<h3 class="subhead pixelify subhead--wide">Career Coaching &amp; Identity Research</h3>
+			<div class="zgrid zgrid--mid">
+				<div class="zgrid__left">
+					<p class="bodycol">
+						Desk research across two connected questions: how good coaching works, and what a career
+						identity is actually made of — drawing on coaching platforms, reflection apps, AI career
+						tools, and the literature on professional identity <em>(Schein&rsquo;s Career Anchors,
+						Ibarra, Savickas, Self-Determination Theory).</em>
+					</p>
+				</div>
+				<div class="zgrid__right">
+					<div class="photo__art">
+						<img src="/images/BCL/Coach.png" alt="Two people in conversation during a coaching session" />
+					</div>
+				</div>
+			</div>
+			</div>
+
+			<div class="reveal">
+			<h4 class="subhead2 pixelify">How coaching works</h4>
+			<div class="goalstack">
+				{
+					coachingRows.map((r) => (
+						<NotchBox width={968} height={126} class="goalstack__item">
+							<div class="goalrow">
+								<h3 class="goalrow__title">{r.title}</h3>
+								<p class="goalrow__desc">{r.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+			</div>
+
+			<div class="reveal">
+			<h4 class="subhead2 pixelify">What identity is made of</h4>
+			<p class="bodycol bodycol--wide">
+				<strong>Core finding: identity isn&rsquo;t one data point, and it isn&rsquo;t stable.</strong>{" "}
+				That rules out a one-time quiz and points to something the product builds over time.
+			</p>
+
+			<div class="table-wrap">
+				<table class="ctable2">
+					<thead>
+						<tr>
+							<th><span class="tagchip pixelify">DIMENSION</span></th>
+							<th><span class="tagchip pixelify">WHY THE AI NEEDS IT</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							dimensionRows.map((r) => (
+								<tr>
+									<td class="ctable2__label">{r.label}</td>
+									<td>{r.value}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+			</div>
+
+			<!-- ---- 4. Competitive Analysis ---- -->
+			<div class="reveal">
+			<h3 class="subhead pixelify">Competitive Analysis</h3>
+			<p class="bodycol bodycol--wide">Four AI-led guidance products, benchmarked on memory, structure, and personalisation.</p>
+			</div>
+		</section>
+		<div class="wide-break reveal">
+			<img src="/images/BCL/competitive-analysis.png" alt="Competitive analysis table comparing Ash, Dehurdle, Summit and Headspace" />
+		</div>
+		<section class="block reveal">
+			<p class="bodycol bodycol--wide" style="margin-top:40px">
+				The gap: each of these knows something about the user: mood, goals, streaks. None builds a
+				professional identity picture: strengths, values, aspirations, blockers. Without that, guidance is
+				either emotionally supportive or task-focused, never career-specific.
+			</p>
+		</section>
+
+		<!-- ============ SYNTHESIS ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2"><PixelText text="SYNTHESIS" pixel={[1, 6]} /></h2>
+				<p class="headrow__side">
+					&ldquo;Users don&rsquo;t just want an AI that answers career questions. They want an AI that
+					understands who they are first.&rdquo;
+				</p>
+			</div>
+			<p class="bodycol bodycol--wide">
+				The three become one mechanic: a progressive disclosure loop where structure earns trust, trust
+				unlocks context, and context makes the next conversation better than the last.
+			</p>
+			<div class="goalstack">
+				{
+					synthesisRows.map((r) => (
+						<NotchBox width={968} height={126} class="goalstack__item">
+							<div class="goalrow">
+								<h3 class="goalrow__title">
+									{r.title} <em class="goalrow__note">{r.note}</em>
+								</h3>
+								<p class="goalrow__desc">{r.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+
+		<!-- ============ INFORMATION ARCHITECTURE ============ -->
+		<section class="block reveal">
+			<h2 class="h2">
+				<PixelText text="INFORMATION" pixel={[6, 10]} /><br /><PixelText text="ARCHITECTURE" pixel={[3, 6]} />
+			</h2>
+		</section>
+		<div class="wide-break wide-break--ia reveal">
+			<img src="/images/BCL/identity-trail-ia.png" alt="Identity Trail information architecture tree" />
+		</div>
+
+		<!-- ============ THE SOLUTION ============ -->
+		<section class="block reveal">
+			<div class="headrow">
+				<h2 class="h2">THE <PixelText text="SOLUTION" pixel={[1]} /></h2>
+				<p class="headrow__side">
+					The problem had two halves, so the solution did too, in the order the research demanded: fix
+					trust, then personalise.
+				</p>
+			</div>
+
+			<h3 class="subhead pixelify">Part 1 Redesigning the Chat</h3>
+			<p class="bodycol bodycol--wide">
+				Identity Trail asks users to disclose. Nobody discloses to a product that behaves unpredictably.
+				So the audit findings had to be resolved first, not as polish, but as the precondition for
+				everything else.
+			</p>
+			<p class="bodycol bodycol--wide">
+				The audit covered 12 screens, but I prioritized <strong>chat</strong>: it&rsquo;s where disclosure
+				happens, where the coaching actually takes place, and where testing showed trust collapsing
+				fastest. Fixing it moved the most, soonest. The remaining findings were documented as a
+				prioritized backlog for the team.
+			</p>
+		</section>
+		<div class="wide-break wide-break--gray reveal">
+			<img src="/images/BCL/Redesign.png" alt="Before and after chat screens of the StocAI coaching flow" />
+		</div>
+		<section class="block reveal">
+			<div class="table-wrap" style="margin-top:40px">
+				<table class="ctable2">
+					<thead>
+						<tr>
+							<th><span class="tagchip pixelify">WHAT THE AUDIT FOUND</span></th>
+							<th><span class="tagchip pixelify">WHAT THE REDESIGN DOES</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							auditFoundRows.map((r) => (
+								<tr>
+									<td class="ctable2__label">{r.label}</td>
+									<td>{r.value}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<p class="bodycol bodycol--wide">
+				The principle: predictability is the trust signal. Users don&rsquo;t say &ldquo;this violates
+				consistency heuristics&rdquo; they say &ldquo;it feels like a student project&rdquo; and close the
+				tab.
+			</p>
+
+			<h3 class="subhead pixelify">Part 2 Identity Trail</h3>
+			<p class="bodycol bodycol--wide">
+				A guided Current Me &rarr; Future Me journey that builds a professional identity picture the AI
+				can actually coach against.
+			</p>
+			<p class="bodycol bodycol--wide">
+				Why a trail, not a quiz. Asking for all six dimensions upfront is an interrogation. The trail is
+				built incrementally: a short start unlocks personalisation immediately, then deepens each
+				session. Every step gives something back, so disclosure feels like an exchange rather than a
+				form.
+			</p>
+		</section>
+		<div class="wide-break wide-break--gray reveal">
+			<img src="/images/BCL/identity trail.png" alt="Identity Trail screens: Future ID, Current Me, obstacles, dashboard and thoughts" />
+		</div>
+		<section class="block reveal">
+			<p class="bodycol bodycol--wide" style="margin-top:40px">
+				<strong>The loop, running forwards:</strong> Every session uses the profile, and every session
+				enriches it.
+			</p>
+		</section>
+		<div class="wide-img reveal">
+			<img src="/images/BCL/end-to-end-flow-.png" alt="End-to-end flow: onboarding, identity discovery, dashboard, personalised guidance, looping back" />
+		</div>
+
+		<!-- ============ RESULTS ============ -->
+		<section class="block reveal">
+			<div class="headrow" style="margin-top:40px">
+				<h2 class="h2 pixelify">RESULTS</h2>
+				<p class="headrow__side">
+					BCL&rsquo;s competitors know how users feel or what they&rsquo;re doing. Identity Trail is the
+					only one that knows <em>who they are</em> and in career coaching, that&rsquo;s the whole
+					product.
+				</p>
+			</div>
+
+			<div class="table-wrap">
+				<table class="ctable2">
+					<thead>
+						<tr>
+							<th></th>
+							<th><span class="tagchip pixelify">BEFORE</span></th>
+							<th><span class="tagchip pixelify">AFTER</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							beforeAfterRows.map((r) => (
+								<tr>
+									<td class="ctable2__label">{r.label}</td>
+									<td>{r.before}</td>
+									<td>{r.after}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<h3 class="subhead2plain">Three things it produced</h3>
+			<div class="goalstack">
+				{
+					producedRows.map((r) => (
+						<NotchBox width={968} height={126} class="goalstack__item">
+							<div class="goalrow">
+								<h3 class="goalrow__title">{r.title}</h3>
+								<p class="goalrow__desc">{r.desc}</p>
+							</div>
+						</NotchBox>
+					))
+				}
+			</div>
+		</section>
+	</main>
+
+	<LetsTalk />
+	<SiteFooter />
+</Layout>
+
+<style>
+	/* ============================================================
+	   Shared grid — same system as ONI/FIC: one container for the
+	   whole page, 626px body copy, 412px side copy (left-aligned
+	   even where the block sits on the right).
+	   ============================================================ */
+	.bcl {
+		overflow-x: hidden;
+	}
+
+	.block {
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 76px 24px 0;
+	}
+
+	.headrow,
+	.zgrid {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 40px;
+		margin-bottom: 30px;
+	}
+
+	.zgrid--mid {
+		align-items: center;
+	}
+
+	.zgrid--tight {
+		margin-top: 6px;
+	}
+
+	.zgrid--reverse {
+		flex-direction: row-reverse;
+	}
+
+	.zgrid__left {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.zgrid__right {
+		flex-shrink: 0;
+		width: 412px;
+	}
+
+	.zgrid__right--wide {
+		width: 626px;
+	}
+
+	.zgrid__right > .bodycol + .bodycol {
+		margin-top: 18px;
+	}
+
+	.h2 {
+		font-size: 56px;
+		font-weight: 500;
+		line-height: 1.06;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+
+	.headrow__side {
+		flex-shrink: 0;
+		max-width: 412px;
+		text-align: left;
+		font-size: 19px;
+		line-height: 1.45;
+		color: #fff;
+	}
+
+	.sidewhite {
+		max-width: 412px;
+		text-align: left;
+		font-size: 19px;
+		line-height: 1.4;
+		color: #fff;
+	}
+
+	.sidewhite--quote {
+		font-style: italic;
+	}
+
+	.sidewhite--quote span {
+		display: inline-block;
+		margin-top: 10px;
+		color: #99999999;
+		font-size: 16px;
+		font-style: normal;
+	}
+
+	.bodycol {
+		max-width: 626px;
+		font-size: 19px;
+		line-height: 1.5;
+		color: #99999999;
+	}
+
+	.bodycol--wide {
+		max-width: 626px;
+	}
+
+	.bodycol--strong {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	.bodycol strong {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	.bodycol + .bodycol {
+		margin-top: 20px;
+	}
+
+	/* Sub-headings inside Research/The Solution — fully Pixelify,
+	   smaller than the main .h2 headings (matches the reference's
+	   secondary-heading hierarchy within each subsection). */
+	.subhead {
+		font-size: 32px;
+		font-weight: 500;
+		color: #fff;
+		margin-top: 56px;
+		margin-bottom: 20px;
+	}
+
+	.subhead--wide {
+		max-width: 720px;
+	}
+
+	.subhead2 {
+		font-size: 24px;
+		font-weight: 500;
+		color: #fff;
+		margin-top: 40px;
+		margin-bottom: 24px;
+	}
+
+	/* "Three things it produced" — plain Neue Montreal, no Pixelify,
+	   confirmed against the reference. */
+	.subhead2plain {
+		font-size: 24px;
+		font-weight: 500;
+		color: #fff;
+		margin-top: 56px;
+		margin-bottom: 24px;
+	}
+
+	.readmore {
+		display: inline-block;
+		margin-top: 20px;
+		color: var(--accent);
+		text-decoration: underline;
+		font-size: 19px;
+	}
+
+	/* ============================================================
+	   Hero — desktop-only composition, no pixel treatment on "BCL"
+	   (confirmed against the reference: plain Neue Montreal).
+	   ============================================================ */
+	.hero {
+		position: relative;
+		max-width: var(--container);
+		margin-inline: auto;
+		padding: 30px 24px 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		min-height: 360px;
+	}
+
+	.hero__device {
+		position: relative;
+		width: 440px;
+		flex-shrink: 0;
+	}
+
+	.hero__device img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.hero__copy {
+		flex: 1;
+		min-width: 240px;
+		text-align: right;
+	}
+
+	.hero__title {
+		font-size: 76px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		line-height: 1;
+		margin-bottom: 20px;
+	}
+
+	.hero__subtitle {
+		font-size: 25px;
+		font-weight: 400;
+		color: #fff;
+	}
+
+	.hero__tags {
+		margin-top: 18px;
+		text-align: right;
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* ============================================================
+	   Meta row
+	   ============================================================ */
+	.meta {
+		padding-top: 44px;
+	}
+
+	.meta__row {
+		display: flex;
+		align-items: stretch;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		padding: 24px 0;
+	}
+
+	.meta__col {
+		flex: 1;
+		text-align: center;
+	}
+
+	.meta__divider {
+		width: 1px;
+		background: var(--hairline);
+		flex-shrink: 0;
+	}
+
+	.meta__label {
+		font-size: 16px;
+		color: #99999999;
+		margin-bottom: 8px;
+	}
+
+	.meta__value {
+		font-size: 20px;
+		font-weight: 500;
+		color: #fff;
+	}
+
+	/* ============================================================
+	   About / Research / Coach / Audit photos — notch baked into
+	   the "about" asset; the rest are plain rectangles, sized only.
+	   ============================================================ */
+	.about__art,
+	.photo__art {
+		width: 100%;
+	}
+
+	.about__art img,
+	.photo__art img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.photo__art--sm {
+		max-width: 412px;
+	}
+
+	.problem__img {
+		max-width: 100%;
+	}
+
+	.problem__img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Notch-card grids — 2x2 and 3x2: cards TOUCH vertically and
+	   only gap horizontally (confirmed against the reference at
+	   high zoom — a different geometry from FIC's uniform gap).
+	   ============================================================ */
+	.cardgrid {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 56px;
+	}
+
+	.cardgrid--touch {
+		row-gap: 18px;
+		column-gap: 32px;
+	}
+
+	.cardgrid--three {
+		column-gap: 24px;
+	}
+
+	.cardgrid :global(.cardgrid__item) {
+		flex-shrink: 0;
+	}
+
+	/* Bottom padding equals NotchBox's own NOTCH_DEPTH (32px), same fix as
+	   the goalstack rows: the box's full height includes that recessed
+	   notch area at the bottom, which reads as outside the card's visual
+	   interior, so text needs to clear it rather than sit centered against
+	   the full height. Vertically centering the title+desc as one group
+	   (not pinned to the top) keeps cards with 1-line and 2-line titles
+	   looking consistent. */
+	.notchcard {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 28px 22px 32px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+
+	.notchcard__title {
+		font-size: 18px;
+		font-weight: 500;
+		letter-spacing: 0.005em;
+		margin-bottom: 14px;
+		text-transform: uppercase;
+	}
+
+	.notchcard__desc {
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* The 6-issue audit cards: left-aligned, white Medium title in
+	   normal case (not uppercase) — matches the reference exactly. */
+	.notchcard--left {
+		text-align: left;
+	}
+
+	.notchcard__title--white {
+		color: #fff;
+	}
+
+	.notchcard__title--plain {
+		text-transform: none;
+		font-size: 21px;
+	}
+
+	/* ============================================================
+	   Full-width stacked rows (How coaching works / Synthesis /
+	   Three things it produced) — reuses FIC's corrected goalstack
+	   pattern: gapped rows, text vertically centered accounting for
+	   NotchBox's bottom notch recess.
+	   ============================================================ */
+	.goalstack {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		margin-top: 40px;
+		margin-bottom: 56px;
+	}
+
+	.goalstack :global(.goalstack__item) {
+		width: 100% !important;
+	}
+
+	.goalrow {
+		height: 100%;
+		box-sizing: border-box;
+		padding: 0 36px 32px;
+		display: flex;
+		align-items: center;
+		gap: 24px;
+	}
+
+	.goalrow__title {
+		flex: 0 0 340px;
+		font-size: 19px;
+		font-weight: 500;
+		color: #fff;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		line-height: 1.3;
+	}
+
+	.goalrow__note {
+		display: block;
+		text-transform: none;
+		font-style: italic;
+		font-weight: 400;
+		color: #99999999;
+		font-size: 16px;
+		margin-top: 4px;
+	}
+
+	.goalrow__desc {
+		font-size: 18px;
+		line-height: 1.4;
+		color: #99999999;
+	}
+
+	/* ============================================================
+	   Stat row — reuses ONI's exact bowtie/DNA connector.
+	   ============================================================ */
+	.connectorrow {
+		display: flex;
+		align-items: stretch;
+		margin: 30px 0 40px;
+	}
+
+	.connectorrow__seg {
+		position: relative;
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 16px 30px;
+		font-size: 19px;
+		white-space: nowrap;
+		text-align: center;
+	}
+
+	.connectorrow__seg--cap {
+		flex: 0 1 340px;
+	}
+
+	.connectorrow__seg--mid {
+		flex: 1 1 auto;
+	}
+
+	.connectorrow__shape {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+
+	.connectorrow__label,
+	.connectorrow__seg--mid {
+		color: #99999999;
+	}
+
+	.connectorrow__seg > *:not(.connectorrow__shape) {
+		position: relative;
+		z-index: 1;
+	}
+
+	.connectorrow__value {
+		color: #fff;
+		font-weight: 500;
+	}
+
+	/* ============================================================
+	   2-column info tables — tagchip headers, then clean rows
+	   separated by whitespace only (no borders/lines anywhere).
+	   ============================================================ */
+	.table-wrap {
+		overflow-x: auto;
+		margin-top: 32px;
+		margin-bottom: 40px;
+	}
+
+	.ctable2 {
+		width: 100%;
+		border-collapse: collapse;
+		min-width: 560px;
+	}
+
+	.ctable2 th {
+		text-align: left;
+		padding-bottom: 28px;
+	}
+
+	.ctable2 td {
+		padding: 16px 14px;
+		font-size: 18px;
+		color: #99999999;
+		vertical-align: top;
+	}
+
+	.ctable2 tr td {
+		padding-top: 22px;
+		padding-bottom: 22px;
+	}
+
+	.ctable2__label {
+		color: #fff;
+		font-weight: 500;
+		white-space: nowrap;
+		text-align: left;
+	}
+
+	.tagchip {
+		display: inline-block;
+		border: 1px solid var(--accent);
+		clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 46%, 100% 100%, 0 100%);
+		padding: 9px 22px 9px 18px;
+		font-size: 15px;
+		letter-spacing: 0.02em;
+		color: #99999999;
+	}
+
+	/* ============================================================
+	   Wide exceptions — competitive-analysis, IA, Redesign, Identity
+	   Trail. All four are supplied compositions the reference shows
+	   bleeding past the nav-aligned container.
+	   ============================================================ */
+	.wide-break {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: min(1360px, 100vw);
+		margin: 40px auto 0;
+		padding-inline: 24px;
+	}
+
+	.wide-break img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.wide-break--ia {
+		margin-top: 40px;
+	}
+
+	/* The Solution's UI mockups (Redesign, Identity Trail) are presented
+	   black & white in the case study, per the reference — a CSS filter
+	   on the display only, the source assets stay untouched. */
+	.wide-break--gray img {
+		filter: grayscale(1) contrast(1.05);
+	}
+
+	/* End-to-end flow — stays inside the normal container. */
+	.wide-img {
+		width: 100%;
+		max-width: min(1160px, 100vw);
+		margin: 40px auto 0;
+		padding-inline: 24px;
+		box-sizing: border-box;
+	}
+
+	.wide-img img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* ============================================================
+	   Responsive
+	   ============================================================ */
+	@media (max-width: 860px) {
+		.hero {
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			min-height: 0;
+			padding-top: 10px;
+		}
+
+		.hero__device {
+			width: 100%;
+			max-width: 420px;
+			margin-bottom: 32px;
+		}
+
+		.hero__copy {
+			text-align: center;
+		}
+
+		.hero__tags {
+			text-align: center;
+		}
+
+		.meta__row {
+			flex-wrap: wrap;
+			row-gap: 24px;
+		}
+
+		.meta__col {
+			flex: 0 0 44%;
+		}
+
+		.meta__divider {
+			display: none;
+		}
+
+		.headrow,
+		.zgrid,
+		.zgrid--reverse {
+			flex-direction: column;
+		}
+
+		.headrow__side,
+		.sidewhite,
+		.zgrid__right,
+		.zgrid__right--wide {
+			text-align: left;
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.photo__art--sm {
+			max-width: 300px;
+		}
+
+		.h2 {
+			font-size: 38px;
+		}
+
+		.subhead {
+			font-size: 26px;
+		}
+
+		.cardgrid :global(.cardgrid__item) {
+			width: 100% !important;
+			max-width: 468px;
+		}
+
+		.cardgrid :global(.notchbox) {
+			width: 100% !important;
+		}
+
+		.cardgrid--touch {
+			row-gap: 18px;
+		}
+
+		.goalstack :global(.goalstack__item) {
+			height: 220px !important;
+		}
+
+		.goalrow {
+			height: 100%;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			gap: 8px;
+			padding: 24px 24px 56px;
+		}
+
+		.goalrow__title {
+			flex: none;
+		}
+
+		.connectorrow {
+			flex-direction: column;
+			padding: 10px 0;
+		}
+
+		.connectorrow__shape {
+			display: none;
+		}
+
+		.connectorrow__seg,
+		.connectorrow__seg--cap {
+			flex: 1 1 auto;
+			justify-content: flex-start;
+			padding: 10px 0;
+		}
+
+		.ctable2 {
+			min-width: 480px;
+		}
+
+		.wide-break,
+		.wide-img {
+			padding-inline: 24px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero__title {
+			font-size: 44px;
+		}
+
+		.h2 {
+			font-size: 32px;
+		}
+
+		.meta__col {
+			flex: 0 0 100%;
+		}
+	}
+</style>

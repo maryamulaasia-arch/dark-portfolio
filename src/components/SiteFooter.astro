@@ -1,0 +1,158 @@
+---
+import PixelText from "./PixelText.astro";
+
+/* Footer wordmark — inspected separately from the hero: here Y, U and the
+   second A are the pixelated glyphs (a different map than the hero). */
+const name = { text: "MARYAMUL AASIA", pixel: [3, 6, 10] };
+
+const nav = [
+	{ label: "Home", href: "/" },
+	{ label: "Works", href: "#works" },
+	{ label: "About", href: "#about" },
+];
+
+/* Social icons — the supplied files in public/Icons/ are the source of
+   truth (this replaces the old hand-drawn icon-pack paths above). Inlined
+   at build time via Vite's `?raw` glob import, rather than <img src>,
+   because an <img>-loaded SVG can't inherit CSS colour — these files' fill
+   is "currentColor" (the only edit made to the supplied SVGs: their
+   hardcoded fill="white" was swapped to fill="currentColor" so the
+   existing hover-colour mechanism below can reach them; every path/shape
+   is otherwise byte-identical to what was supplied).
+
+   A plain fs.readFileSync(new URL(..., import.meta.url)) broke in
+   production: Astro relocates this component's compiled module during
+   `astro build`, so import.meta.url no longer sits next to src/ and the
+   relative "../../public/Icons" walk landed inside dist/ instead of the
+   project's public/ folder. import.meta.glob is resolved by Vite at build
+   time against the real source tree, so it stays correct in both dev and
+   the production build. */
+const iconModules = import.meta.glob("../../public/Icons/*.svg", {
+	query: "?raw",
+	import: "default",
+	eager: true,
+}) as Record<string, string>;
+
+const socialFiles = [
+	{ label: "Behance", file: "behance.svg", href: "https://www.behance.net/maryamulaasia1" },
+	{
+		label: "Instagram",
+		file: "Instagram.svg",
+		href: "https://www.instagram.com/aasia_design?stkn=MW5wc2lndzViaWtlMw==",
+	},
+	{ label: "Dribbble", file: "Dribble.svg", href: "https://dribbble.com/maryamul_aasia" },
+	{ label: "LinkedIn", file: "linkedin.svg", href: "https://www.linkedin.com/in/maryamul-aasia/" },
+];
+
+const socials = socialFiles.map((s) => ({
+	...s,
+	svg: iconModules[`../../public/Icons/${s.file}`],
+}));
+---
+
+<footer class="footer">
+	<div class="footer__inner reveal">
+		<div class="footer__brand">
+			<h2 class="footer__name">
+				<PixelText text={name.text} pixel={name.pixel} />
+			</h2>
+			<p class="footer__role">
+				<span class="footer__dot" aria-hidden="true"></span>Product / UI UX Designer
+			</p>
+		</div>
+
+		<div class="footer__right">
+			<nav class="footer__nav" aria-label="Footer">
+				{nav.map((n) => <a href={n.href}>{n.label}</a>)}
+			</nav>
+			<div class="footer__socials">
+				{
+					socials.map((s) => (
+						<a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} set:html={s.svg} />
+					))
+				}
+			</div>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		margin-top: 18px;
+	}
+
+	/* Footer content shares the same boundary as the About / status box and the
+	   LET'S TALK panel: 1064px centred (x188–1252 at 1440px). The rules sit on
+	   this box so they span exactly that width, flush with the content. */
+	.footer__inner {
+		max-width: 1064px;
+		margin-inline: auto;
+		padding: 40px 0 36px;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	.footer__name {
+		font-size: 48px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.01em;
+		line-height: 1;
+		margin-bottom: 18px;
+	}
+
+	.footer__role {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		font-size: 21px;
+		color: var(--text-muted);
+	}
+
+	.footer__dot {
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		background: var(--violet);
+	}
+
+	.footer__right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 30px;
+		padding-top: 8px;
+	}
+
+	.footer__nav {
+		display: flex;
+		gap: 44px;
+		font-size: 22px;
+		color: #fff;
+	}
+
+	.footer__socials {
+		display: flex;
+		gap: 16px;
+	}
+
+	/* No hover colour change on these — the icons keep their supplied
+	   colour (currentColor -> #fff, set here) in every state. */
+	.footer__socials a {
+		display: flex;
+		color: #fff;
+	}
+
+	/* :global — these <svg> elements are inlined via set:html (raw file
+	   content, imported at build time from public/Icons/), so they never
+	   receive Astro's scoping attribute; a scoped `svg { ... }` selector
+	   would silently fail to match them. */
+	.footer__socials a :global(svg) {
+		width: 38px;
+		height: 38px;
+		display: block;
+	}
+</style>
