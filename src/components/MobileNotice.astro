@@ -1,0 +1,164 @@
+---
+import PixelText from "./PixelText.astro";
+import Cta from "./Cta.astro";
+---
+
+<main class="mobile-notice" aria-labelledby="mobile-notice-title">
+	<div class="mobile-notice__content">
+		<div class="mobile-notice__portrait" aria-hidden="true">
+			<img src="/images/hero-portrait.png" alt="" width="868" height="868" />
+		</div>
+		<h1 id="mobile-notice-title">
+			<span><PixelText text="THIS EXPERIENCE" pixel={[1, 6, 10]} /></span>
+			<span><PixelText text="NEEDS MORE ROOM" pixel={[0, 2, 7, 11, 13]} /></span>
+		</h1>
+		<p class="mobile-notice__intro">The mobile version<br />is still being refined</p>
+		<Cta
+			label="View Resume"
+			href="https://drive.google.com/file/d/1gDNM0vOyOEbpX7ixfrYwlGtaknI6dAnU/view?usp=sharing"
+			target="_blank"
+			variant="solid"
+			class="mobile-notice__resume"
+		/>
+		<p class="mobile-notice__desktop">Switch to desktop<br />for the full portfolio</p>
+	</div>
+</main>
+
+<style>
+	.mobile-notice {
+		display: none;
+	}
+
+	/* The 390 × 844 reference is a single composition, scaled uniformly to
+	   fit the available phone viewport. All overrides remain mobile-only. */
+	@media (width < 768px) {
+		:global(html),
+		:global(body) {
+			height: 100%;
+			min-height: 0;
+			overflow: hidden;
+		}
+
+		:global(body > :not(.mobile-notice)) {
+			display: none !important;
+		}
+
+		.mobile-notice {
+			display: grid;
+			place-items: center;
+			position: fixed;
+			inset: 0;
+			height: 100dvh;
+			padding: env(safe-area-inset-top) env(safe-area-inset-right)
+				env(safe-area-inset-bottom) env(safe-area-inset-left);
+			overflow: hidden;
+			background: var(--bg);
+		}
+
+		.mobile-notice__content {
+			position: relative;
+			width: min(100%, calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 390 / 844));
+			aspect-ratio: 390 / 844;
+			container-type: inline-size;
+			background-image:
+				linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+			background-size: 22.5641% 10.3081%;
+			background-position: 20.69536% 4.75561%;
+		}
+
+		.mobile-notice__content::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background:
+				linear-gradient(#ffffff06, #ffffff06) 0 0 / 16.0256cqw 9.23077cqw,
+				linear-gradient(#ffffff06, #ffffff06) 38.58974cqw 9.23077cqw / 22.5641cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 83.71795cqw 31.53846cqw / 16.2821cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 0 53.84615cqw / 16.0256cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 61.15385cqw 53.84615cqw / 22.5641cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 16.0256cqw 143.07692cqw / 22.5641cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 0 187.69231cqw / 16.0256cqw 22.30769cqw,
+				linear-gradient(#ffffff06, #ffffff06) 38.58974cqw 210cqw / 22.5641cqw 6.41026cqw;
+			background-repeat: no-repeat;
+		}
+
+		h1 {
+			position: absolute;
+			top: 16.9431%;
+			left: 0;
+			width: 100%;
+			color: var(--violet);
+			font-size: 9.74359cqw;
+			font-weight: 500;
+			line-height: 1.31579;
+			letter-spacing: 0;
+			text-align: center;
+		}
+
+		h1 > span {
+			display: block;
+			white-space: nowrap;
+			transform: translateX(-1.02564cqw);
+		}
+
+		h1 > span:first-child {
+			transform: translateX(-1.79487cqw);
+		}
+
+		p {
+			position: absolute;
+			color: #ccc;
+			font-size: 6.66667cqw;
+			line-height: 1.2;
+			letter-spacing: normal;
+		}
+
+		.mobile-notice__intro {
+			left: 4.35897%;
+			top: 34.06398%;
+		}
+
+		.mobile-notice__desktop {
+			left: 40%;
+			top: 75.5332%;
+		}
+
+		.mobile-notice__portrait {
+			position: absolute;
+			left: 11.6667%;
+			top: 35.4265%;
+			width: 76.9231%;
+			height: 31.1611%;
+			overflow: hidden;
+		}
+
+		.mobile-notice__portrait img {
+			width: 100%;
+			height: auto;
+			filter: grayscale(1) brightness(0.8);
+			mix-blend-mode: luminosity;
+			clip-path: polygon(49% 5.8%, 53% 5.9%, 57% 7.2%, 60% 9.5%, 63% 12.5%, 65% 17%, 66% 22%, 65% 27%, 64% 31%, 67% 35%, 70% 39%, 76% 49%, 81% 62%, 84% 77%, 86% 100%, 18% 100%, 17% 87%, 17% 69%, 20% 55%, 25% 43%, 34% 36%, 35% 32%, 34% 29%, 35% 22%, 37% 14%, 40% 9%, 44% 6.5%);
+		}
+
+		.mobile-notice__content :global(.mobile-notice__resume) {
+			position: absolute;
+			left: 22.5641%;
+			top: 66.5877%;
+			width: 56.4103%;
+			height: 7.109%;
+			padding: 0 2.5641cqw 0 6.9231cqw;
+			gap: 2.5641cqw;
+			font-size: 6.66667cqw;
+			--cta-cut: 5.12821cqw;
+		}
+
+		.mobile-notice__content :global(.cta__arrow) {
+			width: 6.41026cqw;
+			height: 6.41026cqw;
+		}
+	}
+</style>
+
+
+
