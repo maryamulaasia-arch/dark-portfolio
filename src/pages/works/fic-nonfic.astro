@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import NotchBox from "../../components/NotchBox.astro";
@@ -87,7 +88,7 @@ const impactCards = [
 		<section class="hero">
 			<div class="hero__device reveal">
 				<img src="/images/Fic non fic/hero.png" alt="FicNonFic home screen shown on a phone resting on a podium" />
-				<p class="hero__tags">UI/ Product design<br />Community App</p>
+				<p class="hero__tags"><span>UI/ Product design</span><br /><span>Community App</span></p>
 			</div>
 			<div class="hero__copy reveal" style="--reveal-delay:120ms">
 				<h1 class="hero__title">
@@ -308,7 +309,9 @@ const impactCards = [
 			</div>
 		</section>
 		<div class="wide-break reveal">
-			<img src="/images/Fic non fic/competitive-analysis.png" alt="Competitive analysis table across category, patterns, gaps and opportunities" />
+			<ResponsiveImage src="/images/Fic non fic/competitive-analysis.png" alt="Competitive analysis table across category, patterns, gaps and opportunities">
+				<img src="/images/Fic non fic/competitive-analysis.png" alt="Competitive analysis table across category, patterns, gaps and opportunities" />
+			</ResponsiveImage>
 		</div>
 
 		<!-- ============ WHEN RESEARCH CHANGED THE DIRECTION ============ -->
@@ -350,7 +353,9 @@ const impactCards = [
 			</h2>
 		</section>
 		<div class="wide-break wide-break--ia reveal">
-			<img src="/images/Fic non fic/IA.png" alt="Information architecture tree for the FicNonFic app" />
+			<ResponsiveImage src="/images/Fic non fic/IA.png" alt="Information architecture tree for the FicNonFic app">
+				<img src="/images/Fic non fic/IA.png" alt="Information architecture tree for the FicNonFic app" />
+			</ResponsiveImage>
 		</div>
 
 		<!-- ============ VISUAL DIRECTION ============ -->
@@ -416,7 +421,9 @@ const impactCards = [
 				</div>
 				<div class="zgrid__right">
 					<div class="homescreen__img">
-						<img src="/images/Fic non fic/Home screen.png" alt="FicNonFic home screen on mobile" />
+						<ResponsiveImage src="/images/Fic non fic/Home screen.png" alt="FicNonFic home screen on mobile">
+				<img src="/images/Fic non fic/Home screen.png" alt="FicNonFic home screen on mobile" />
+			</ResponsiveImage>
 					</div>
 				</div>
 			</div>
@@ -434,7 +441,9 @@ const impactCards = [
 				readers engaged throughout their journey.
 			</p>
 			<div class="wide-img">
+				<ResponsiveImage src="/images/Fic non fic/meet and read.png" alt="FicNonFic Meet and Read screens on two phones" panels={2} panelAspect={1257 / 2 / 1268}>
 				<img src="/images/Fic non fic/meet and read.png" alt="FicNonFic Meet and Read screens on two phones" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -442,7 +451,9 @@ const impactCards = [
 		<section class="block reveal">
 			<h2 class="h2 pixelify h2--secondary">OTHER SCREENS</h2>
 			<div class="wide-img">
+				<ResponsiveImage src="/images/Fic non fic/other screens.png" alt="FicNonFic book detail, progress and profile screens on three phones" panels={3} panelAspect={1902 / 3 / 1269}>
 				<img src="/images/Fic non fic/other screens.png" alt="FicNonFic book detail, progress and profile screens on three phones" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -1137,7 +1148,7 @@ const impactCards = [
 	/* ============================================================
 	   Responsive
 	   ============================================================ */
-	@media (max-width: 860px) {
+	@media (max-width: 700px) {
 		.hero {
 			flex-direction: column;
 			align-items: center;

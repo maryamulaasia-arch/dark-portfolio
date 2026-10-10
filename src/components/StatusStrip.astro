@@ -81,7 +81,7 @@ const {
 	/* Long label/value pairs (e.g. "PATIENT CONVERSATION") can outgrow a
 	   narrow viewport even with nowrap; below 860px stack each segment full
 	   width instead of forcing the row to overflow horizontally. */
-	@media (max-width: 860px) {
+	@media (max-width: 700px) {
 		.status__inner {
 			flex-direction: column;
 			align-items: stretch;
@@ -98,4 +98,10 @@ const {
 			flex-wrap: wrap;
 		}
 	}
+
+	@media (max-width: 700px) {
+		.status__inner { padding-inline: var(--page-gutter); }
+		.status__seg { font-size: 17px; justify-content: space-between; }
+	}
+
 </style>

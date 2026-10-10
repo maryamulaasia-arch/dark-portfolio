@@ -167,4 +167,28 @@ const { thirdParagraph, showInlineFooter = true } = Astro.props;
 		letter-spacing: 0.02em;
 		margin-bottom: 0 !important;
 	}
+
+	@media (max-width: 700px) {
+		.about__header { gap: 16px; flex-wrap: wrap; }
+		.about__name { font-size: clamp(26px, 5vw, 48px); white-space: normal; }
+		.about__wire { min-width: 40px; }
+		.about__hexes svg { width: 24px; height: 28px; }
+		.about__box { gap: 28px; padding: 24px; }
+		.about__avatar { width: 30%; height: auto; }
+		.about__content { font-size: 18px; line-height: 1.6; min-width: 0; }
+		.about__content p { margin-bottom: 24px; overflow-wrap: anywhere; }
+		.about__logLabel, .about__log { font-size: 17px; }
+	}
+	@media (max-width: 700px) {
+		.about__inner { padding-inline: var(--page-gutter); }
+		.about__header { gap: 12px; }
+		.about__star { width: 22px; height: 22px; }
+		.about__name { font-size: clamp(24px, 6vw, 36px); }
+		.about__wire, .about__hexes { display: none; }
+		.about__box { flex-direction: column; padding: 20px; gap: 24px; }
+		.about__avatar { width: min(100%, 280px); align-self: center; }
+		.about__content { font-size: 17px; }
+		.about__content p:last-child { margin-bottom: 0; }
+	}
+
 </style>

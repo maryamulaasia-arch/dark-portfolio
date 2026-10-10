@@ -175,4 +175,20 @@ const projects = [
 		flex-direction: column;
 		gap: 64px;
 	}
+
+	@media (max-width: 700px) {
+		.featured { padding-block: 64px; }
+		.featured__grid { left: 0; right: 0; }
+		.featured__head { gap: 28px; }
+		.featured__title { font-size: clamp(44px, 7vw, 72px); margin-left: 0; line-height: 1; }
+		.featured__sub { font-size: 18px; }
+	}
+	@media (max-width: 700px) {
+		.featured { padding-inline: var(--page-gutter); }
+		.featured__head { flex-direction: column; align-items: center; gap: 24px; margin-bottom: 32px; }
+		.featured__title { font-size: clamp(44px, 12vw, 68px); }
+		.featured__sub { text-align: center; }
+		.featured__cards { gap: 32px; }
+	}
+
 </style>

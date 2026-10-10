@@ -1,5 +1,6 @@
 ---
 import Cta from "./Cta.astro";
+import MobileNavigation from "./MobileNavigation.astro";
 
 interface Props {
 	active?: "home" | "works" | "about";
@@ -30,17 +31,60 @@ const navItems = [
 			}
 		</nav>
 
-		<Cta label="Contact Me" href="https://mail.google.com/mail/?view=cm&fs=1&to=maryamulaasia@gmail.com" variant="outline" class="header__cta" />
+		<Cta label="Contact Me" href="https://www.linkedin.com/in/maryamul-aasia/" target="_blank" variant="solid" icon="linkedin" class="header__cta" />
 	</div>
+	<MobileNavigation active={active} />
 </header>
+
+<script>
+	const header = document.querySelector<HTMLElement>(".header");
+	if (header) {
+		let lastScrollY = window.scrollY;
+		let movement = 0;
+		let frameRequested = false;
+
+		const updateHeader = () => {
+			const scrollY = window.scrollY;
+			const delta = scrollY - lastScrollY;
+			if (Math.sign(delta) !== Math.sign(movement)) movement = delta;
+			else movement += delta;
+			header.classList.toggle("header--scrolled", scrollY > 8);
+			if (scrollY <= 8 || header.querySelector(".mobile-navigation--open")) {
+				header.classList.remove("header--hidden");
+				movement = 0;
+			} else if (movement > 8 && scrollY > header.offsetHeight) {
+				header.classList.add("header--hidden");
+				movement = 0;
+			} else if (movement < -8) {
+				header.classList.remove("header--hidden");
+				movement = 0;
+			}
+			lastScrollY = scrollY;
+			frameRequested = false;
+		};
+
+		window.addEventListener("scroll", () => {
+			if (frameRequested) return;
+			frameRequested = true;
+			requestAnimationFrame(updateHeader);
+		}, { passive: true });
+		updateHeader();
+	}
+</script>
 
 <style>
 	.header {
-		position: relative;
+		position: sticky;
+		top: 0;
 		z-index: 10;
 		padding-top: 34px;
 		padding-bottom: 28px;
+		transition: transform 220ms ease;
 	}
+
+	.header--scrolled { background: var(--bg); box-shadow: 0 1px 0 var(--hairline-soft); }
+	.header--hidden { transform: translateY(-100%); pointer-events: none; }
+	.header:has(.mobile-navigation--open) { transform: none; pointer-events: auto; }
 
 	.header__inner {
 		display: flex;
@@ -110,22 +154,32 @@ const navItems = [
 		margin-right: -14px;
 	}
 
-	/* Contact Me hover — fill with the hero "View Resume" violet.
-	   Geometry, size, padding and position are untouched; only the
-	   fill/border/text colours cross-fade. */
-	.header__inner :global(.header__cta),
-	.header__inner :global(.header__cta::before) {
-		transition:
-			background-color 0.22s ease,
-			color 0.22s ease;
+	.header__inner :global(.header__cta) {
+		font-size: 22px;
+		padding: 14px 22px;
+		gap: 8px;
+		--cta-cut: 18px;
 	}
 
-	.header__inner :global(.header__cta:hover) {
-		background: var(--violet);
-		color: #fff;
+	@media (max-width: 700px) {
+		.header { padding: max(24px, env(safe-area-inset-top)) 0 24px; }
+		.header__inner { gap: 24px; }
+		.nav { gap: clamp(20px, 4vw, 44px); }
+		.nav__link { min-height: 44px; display: flex; align-items: center; font-size: 20px; }
+		.header__inner :global(.header__cta) { margin-right: 0; font-size: 20px; }
+	}
+	@media (max-width: 600px) {
+		.header__inner { flex-wrap: wrap; gap: 16px; }
+		.nav { width: 100%; justify-content: space-between; gap: 16px; }
+		.nav__link { font-size: 18px; }
+		.header__inner :global(.header__cta) { font-size: 18px; padding: 14px 20px; margin-inline: auto; }
+	}
+	@media (max-width: 700px) {
+		.header { padding: 0; z-index: 100; }
+		.header__inner { display: none; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.header { transition: none; }
 	}
 
-	.header__inner :global(.header__cta:hover::before) {
-		background: var(--violet);
-	}
 </style>

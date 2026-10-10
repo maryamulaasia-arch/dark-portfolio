@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import NotchBox from "../../components/NotchBox.astro";
@@ -127,7 +128,7 @@ const producedRows = [
 			<div class="hero__copy reveal" style="--reveal-delay:120ms">
 				<h1 class="hero__title">BCL</h1>
 				<p class="hero__subtitle">AI-powered career coaching for professionals.</p>
-				<p class="hero__tags">UX Design<br />B2B SaaS</p>
+				<p class="hero__tags"><span>UX Design</span><br /><span>B2B SaaS</span></p>
 			</div>
 		</section>
 
@@ -313,7 +314,9 @@ const producedRows = [
 			<div class="zgrid zgrid--mid">
 				<div class="zgrid__left">
 					<div class="photo__art photo__art--sm">
-						<img src="/images/BCL/Audit.png" alt="Annotated screenshot of the existing coach-selection modal with numbered audit callouts" />
+						<ResponsiveImage src="/images/BCL/Audit.png" alt="Annotated screenshot of the existing coach-selection modal with numbered audit callouts">
+				<img src="/images/BCL/Audit.png" alt="Annotated screenshot of the existing coach-selection modal with numbered audit callouts" />
+			</ResponsiveImage>
 					</div>
 				</div>
 				<div class="zgrid__right zgrid__right--wide">
@@ -365,12 +368,14 @@ const producedRows = [
 				</div>
 				<div class="zgrid__right">
 					<div class="photo__art">
-						<img src="/images/BCL/Usability testing.png" alt="Moderated usability testing session with a video-call panel over the coaching app" />
+						<ResponsiveImage src="/images/BCL/Usability testing.png" alt="Moderated usability testing session with a video-call panel over the coaching app">
+				<img src="/images/BCL/Usability testing.png" alt="Moderated usability testing session with a video-call panel over the coaching app" />
+			</ResponsiveImage>
 					</div>
 				</div>
 			</div>
 
-			<div class="table-wrap">
+			<div class="table-wrap" tabindex="0" role="region" aria-label="Comparison table">
 				<table class="ctable2">
 					<thead>
 						<tr>
@@ -383,7 +388,7 @@ const producedRows = [
 							failureRows.map((r) => (
 								<tr>
 									<td class="ctable2__label">{r.label}</td>
-									<td>{r.value}</td>
+									<td data-label="WHAT HAPPENED">{r.value}</td>
 								</tr>
 							))
 						}
@@ -442,7 +447,7 @@ const producedRows = [
 				That rules out a one-time quiz and points to something the product builds over time.
 			</p>
 
-			<div class="table-wrap">
+			<div class="table-wrap" tabindex="0" role="region" aria-label="Comparison table">
 				<table class="ctable2">
 					<thead>
 						<tr>
@@ -455,7 +460,7 @@ const producedRows = [
 							dimensionRows.map((r) => (
 								<tr>
 									<td class="ctable2__label">{r.label}</td>
-									<td>{r.value}</td>
+									<td data-label="WHY THE AI NEEDS IT">{r.value}</td>
 								</tr>
 							))
 						}
@@ -471,7 +476,9 @@ const producedRows = [
 			</div>
 		</section>
 		<div class="wide-break reveal">
-			<img src="/images/BCL/competitive-analysis.png" alt="Competitive analysis table comparing Ash, Dehurdle, Summit and Headspace" />
+			<ResponsiveImage src="/images/BCL/competitive-analysis.png" alt="Competitive analysis table comparing Ash, Dehurdle, Summit and Headspace">
+				<img src="/images/BCL/competitive-analysis.png" alt="Competitive analysis table comparing Ash, Dehurdle, Summit and Headspace" />
+			</ResponsiveImage>
 		</div>
 		<section class="block reveal">
 			<p class="bodycol bodycol--wide" style="margin-top:40px">
@@ -517,7 +524,9 @@ const producedRows = [
 			</h2>
 		</section>
 		<div class="wide-break wide-break--ia reveal">
-			<img src="/images/BCL/identity-trail-ia.png" alt="Identity Trail information architecture tree" />
+			<ResponsiveImage src="/images/BCL/identity-trail-ia.png" alt="Identity Trail information architecture tree">
+				<img src="/images/BCL/identity-trail-ia.png" alt="Identity Trail information architecture tree" />
+			</ResponsiveImage>
 		</div>
 
 		<!-- ============ THE SOLUTION ============ -->
@@ -544,10 +553,12 @@ const producedRows = [
 			</p>
 		</section>
 		<div class="wide-break wide-break--gray reveal">
-			<img src="/images/BCL/Redesign.png" alt="Before and after chat screens of the StocAI coaching flow" />
+			<ResponsiveImage src="/images/BCL/Redesign.png" alt="Before and after chat screens of the StocAI coaching flow" sourceWidth={2554} sourceHeight={891} slices={[{ x: 0, y: 0, width: 1252, height: 714 }, { x: 1302, y: 0, width: 1252, height: 891 }]}>
+				<img src="/images/BCL/Redesign.png" alt="Before and after chat screens of the StocAI coaching flow" />
+			</ResponsiveImage>
 		</div>
 		<section class="block reveal">
-			<div class="table-wrap" style="margin-top:40px">
+			<div class="table-wrap" tabindex="0" role="region" aria-label="Comparison table" style="margin-top:40px">
 				<table class="ctable2">
 					<thead>
 						<tr>
@@ -560,7 +571,7 @@ const producedRows = [
 							auditFoundRows.map((r) => (
 								<tr>
 									<td class="ctable2__label">{r.label}</td>
-									<td>{r.value}</td>
+									<td data-label="WHAT THE REDESIGN DOES">{r.value}</td>
 								</tr>
 							))
 						}
@@ -587,7 +598,9 @@ const producedRows = [
 			</p>
 		</section>
 		<div class="wide-break wide-break--gray reveal">
-			<img src="/images/BCL/identity trail.png" alt="Identity Trail screens: Future ID, Current Me, obstacles, dashboard and thoughts" />
+			<ResponsiveImage src="/images/BCL/identity trail.png" alt="Identity Trail screens: Future ID, Current Me, obstacles, dashboard and thoughts" sourceWidth={2556} sourceHeight={2716} slices={[{ x: 0, y: 0, width: 1260, height: 852 }, { x: 1299, y: 0, width: 1257, height: 852 }, { x: 0, y: 892, width: 1260, height: 892 }, { x: 1299, y: 892, width: 1257, height: 892 }, { x: 0, y: 1824, width: 1260, height: 892 }, { x: 1299, y: 1824, width: 1257, height: 892 }]}>
+				<img src="/images/BCL/identity trail.png" alt="Identity Trail screens: Future ID, Current Me, obstacles, dashboard and thoughts" />
+			</ResponsiveImage>
 		</div>
 		<section class="block reveal">
 			<p class="bodycol bodycol--wide" style="margin-top:40px">
@@ -596,7 +609,9 @@ const producedRows = [
 			</p>
 		</section>
 		<div class="wide-img reveal">
-			<img src="/images/BCL/end-to-end-flow-.png" alt="End-to-end flow: onboarding, identity discovery, dashboard, personalised guidance, looping back" />
+			<ResponsiveImage src="/images/BCL/end-to-end-flow-.png" alt="End-to-end flow: onboarding, identity discovery, dashboard, personalised guidance, looping back">
+				<img src="/images/BCL/end-to-end-flow-.png" alt="End-to-end flow: onboarding, identity discovery, dashboard, personalised guidance, looping back" />
+			</ResponsiveImage>
 		</div>
 
 		<!-- ============ RESULTS ============ -->
@@ -610,7 +625,7 @@ const producedRows = [
 				</p>
 			</div>
 
-			<div class="table-wrap">
+			<div class="table-wrap" tabindex="0" role="region" aria-label="Comparison table">
 				<table class="ctable2">
 					<thead>
 						<tr>
@@ -624,8 +639,8 @@ const producedRows = [
 							beforeAfterRows.map((r) => (
 								<tr>
 									<td class="ctable2__label">{r.label}</td>
-									<td>{r.before}</td>
-									<td>{r.after}</td>
+									<td data-label="BEFORE">{r.before}</td>
+									<td data-label="AFTER">{r.after}</td>
 								</tr>
 							))
 						}
@@ -1210,7 +1225,7 @@ const producedRows = [
 	/* ============================================================
 	   Responsive
 	   ============================================================ */
-	@media (max-width: 860px) {
+	@media (max-width: 700px) {
 		.hero {
 			flex-direction: column;
 			align-items: center;

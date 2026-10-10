@@ -34,4 +34,10 @@ const worksSubtitle = [
 	.works-lead {
 		margin-top: -50px;
 	}
+
+	@media (max-width: 700px) {
+		.works-lead { margin-top: 0; }
+		.works-lead :global(.featured) { padding-top: 32px; }
+	}
+
 </style>

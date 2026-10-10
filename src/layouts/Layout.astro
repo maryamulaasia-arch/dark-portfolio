@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import MobileNotice from "../components/MobileNotice.astro";
+import "../styles/responsive.css";
 
 interface Props {
 	title?: string;
@@ -29,7 +29,9 @@ const { title = "Maryamul Aasia — Product / UI UX Designer" } = Astro.props;
 	</head>
 	<body>
 		<slot />
-		<MobileNotice />
+		<script>
+			import "../scripts/responsive-frames";
+		</script>
 
 		<script is:inline>
 			(function () {
@@ -56,7 +58,11 @@ const { title = "Maryamul Aasia — Product / UI UX Designer" } = Astro.props;
 								}
 							});
 						},
-						{ threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
+						{
+							// Stacked mobile sections can be taller than the viewport.
+							threshold: window.matchMedia("(max-width: 700px)").matches ? 0 : 0.15,
+							rootMargin: "0px 0px -60px 0px",
+						},
 					);
 
 					els.forEach(function (el) {

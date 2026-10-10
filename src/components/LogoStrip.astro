@@ -87,4 +87,21 @@ const logos = [
 		background-color: var(--hairline);
 		flex-shrink: 0;
 	}
+
+	@media (max-width: 700px) {
+		.logos__inner { display: flex; justify-content: flex-start; gap: 0; padding: 24px var(--page-gutter); overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; }
+		.logos__inner::-webkit-scrollbar { display: none; }
+		.logos__divider { display: block; }
+		.logos__item, .logos__item:first-child, .logos__item:last-child { flex: none; padding-inline: 14px; gap: 12px; }
+		.logos__item:first-child { padding-left: 0; }
+		.logos__item:last-child { padding-right: 0; }
+		.logos__label { font-size: 18px; }
+	}
+	@media (max-width: 700px) {
+		.logos__inner { min-height: 72px; padding-block: 16px; justify-content: space-between; overflow-x: hidden; }
+		.logos__item, .logos__item:first-child, .logos__item:last-child { padding-inline: 0; gap: 0; }
+		.logos__divider { height: 24px; margin-inline: 4px; }
+		.logos__label { display: none; }
+	}
+
 </style>

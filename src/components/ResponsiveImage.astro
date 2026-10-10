@@ -1,0 +1,50 @@
+---
+interface Props {
+	src: string;
+	alt: string;
+	panels?: number;
+	panelAspect?: number;
+	slices?: { x: number; y: number; width: number; height: number }[];
+	sourceWidth?: number;
+	sourceHeight?: number;
+}
+const { src, alt, panels, panelAspect, slices, sourceWidth, sourceHeight } = Astro.props;
+---
+
+<div class="readable-image" data-panels={panels ?? slices?.length} style={`--panel-count:${panels ?? 1};--panel-aspect:${panelAspect ?? 1}`}>
+	<div class="readable-image__viewport">
+		<slot />
+	</div>
+	{panels && panels > 1 && <div class="readable-image__stack">
+		{Array.from({ length: panels }, (_, index) => <div class="readable-image__panel" role="img" aria-label={`${alt}, screen ${index + 1} of ${panels}`}>
+			<img src={src} alt="" loading="lazy" style={`--panel-index:${index}`} />
+		</div>)}
+	</div>}
+	{slices && <div class="readable-image__stack">
+		{slices.map((slice, index) => <div class="readable-image__slice" role="img" aria-label={`${alt}, screen ${index + 1} of ${slices.length}`} style={`--slice-x:${slice.x};--slice-y:${slice.y};--slice-width:${slice.width};--slice-height:${slice.height};--source-width:${sourceWidth};--source-height:${sourceHeight}`}>
+			<img src={src} alt="" loading="lazy" />
+		</div>)}
+	</div>}
+</div>
+
+<style>
+	.readable-image, .readable-image__viewport { display: contents; }
+	.readable-image__stack { display: none; }
+	@media (max-width: 700px) {
+		.readable-image { display: block; width: 100%; min-width: 0; }
+		.readable-image__viewport { display: block; width: 100%; }
+		.readable-image[data-panels] .readable-image__viewport { display: none; }
+		.readable-image__stack { display: grid; justify-items: center; gap: 24px; width: 100%; }
+		.readable-image__panel { width: min(100%, 360px); aspect-ratio: var(--panel-aspect); overflow: hidden; }
+		.readable-image__panel img { display: block; width: calc(100% * var(--panel-count)); max-width: none; height: auto; transform: translateX(calc(-100% * var(--panel-index) / var(--panel-count))); }
+		.readable-image__slice { width: 100%; aspect-ratio: var(--slice-width) / var(--slice-height); overflow: hidden; }
+		.readable-image__slice img { display: block; width: calc(100% * var(--source-width) / var(--slice-width)); max-width: none; height: auto; transform: translate(calc(-100% * var(--slice-x) / var(--source-width)), calc(-100% * var(--slice-y) / var(--source-height))); }
+		/* Fit complete UI assets to the available width without changing their ratio. */
+		.readable-image__viewport :global(img) {
+			width: 100% !important;
+			max-width: 100% !important;
+			height: auto !important;
+			object-fit: contain;
+		}
+	}
+</style>

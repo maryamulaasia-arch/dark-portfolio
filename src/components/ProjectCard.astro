@@ -88,6 +88,10 @@ const Tag = href ? "a" : "article";
 			vector-effect="non-scaling-stroke"></path>
 	</svg>
 
+	<div class="pcard__media">
+		<img src={image} alt={imageAlt} loading="lazy" style={`object-position:${imagePosition}`} />
+	</div>
+
 	<div class="pcard__body">
 		<p class="pcard__date">{date}</p>
 		<h3 class="pcard__title">
@@ -112,9 +116,6 @@ const Tag = href ? "a" : "article";
 		</div>
 	</div>
 
-	<div class="pcard__media">
-		<img src={image} alt={imageAlt} loading="lazy" style={`object-position:${imagePosition}`} />
-	</div>
 </Tag>
 
 <style>
@@ -307,4 +308,20 @@ const Tag = href ? "a" : "article";
 		object-fit: cover;
 		display: block;
 	}
+
+	@media (max-width: 700px) {
+		.pcard { display: flex; flex-direction: column; height: auto; padding: 1px 1px 36px; }
+		.pcard__body { width: 100%; padding: 24px 20px 16px; }
+		.pcard__date { margin-bottom: 16px; font-size: 14px; }
+		.pcard__title { font-size: clamp(30px, 7vw, 46px); line-height: 1.16; margin-bottom: 16px; }
+		.pcard__desc { font-size: 18px; max-width: 100%; margin-bottom: 24px; }
+		.pcard__tags { display: flex; width: fit-content; max-width: 100%; flex-wrap: nowrap; margin-inline: auto; }
+		.pcard__tag { font-size: 14px; padding: 10px clamp(6px, 2vw, 12px); white-space: nowrap; text-align: center; }
+		.pcard__viewcase { position: relative; width: 100%; max-width: 312px; margin: 20px auto 0; opacity: 1; font-size: 17px; padding: 14px 18px; }
+		.pcard:hover .pcard__tags { opacity: 1; }
+		.pcard__media { position: relative; top: auto; right: auto; width: calc(100% - 40px); height: auto; margin: 20px auto 0; clip-path: none; }
+		.pcard__media img { height: auto; object-fit: contain; }
+	}
+	.pcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
 </style>

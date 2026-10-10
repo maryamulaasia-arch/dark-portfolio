@@ -2,6 +2,17 @@
 import PixelText from "./PixelText.astro";
 import Cta from "./Cta.astro";
 
+interface Props {
+	destination?: "linkedin" | "resume";
+}
+
+const { destination = "resume" } = Astro.props;
+const isLinkedIn = destination === "linkedin";
+const ctaLabel = isLinkedIn ? "Contact Me" : "View Resume";
+const ctaUrl = isLinkedIn
+	? "https://www.linkedin.com/in/maryamul-aasia/"
+	: "https://drive.google.com/file/d/1gDNM0vOyOEbpX7ixfrYwlGtaknI6dAnU/view?usp=sharing";
+
 /* "LET'S TALK" — inspected separately: T (in LET'S) and A (in TALK). */
 const heading = { text: "LET'S TALK", pixel: [2, 7] };
 ---
@@ -17,7 +28,7 @@ const heading = { text: "LET'S TALK", pixel: [2, 7] };
 				<PixelText text={heading.text} pixel={heading.pixel} />
 			</h2>
 			<p class="talk__lead">Got an idea worth exploring?<br />Let&rsquo;s connect.</p>
-			<Cta label="Contact Me" href="https://mail.google.com/mail/?view=cm&fs=1&to=maryamulaasia@gmail.com" variant="solid" fill="#6a4fd0" class="talk__cta" />
+			<Cta label={ctaLabel} href={ctaUrl} target="_blank" variant="solid" class="talk__cta" />
 		</div>
 	</div>
 </section>
@@ -94,4 +105,17 @@ const heading = { text: "LET'S TALK", pixel: [2, 7] };
 		color: #fff;
 		margin-bottom: 26px;
 	}
+
+	@media (max-width: 700px) {
+		.talk { padding: 40px var(--page-gutter) 0; }
+		.talk__whisper { position: relative; left: auto; top: auto; margin-bottom: 24px; }
+		.talk__panel { min-height: 0; padding: 48px 24px 32px; clip-path: polygon(56px 0, 100% 0, 100% 100%, 0 100%, 0 56px); }
+		.talk__fold { width: 60px; height: 60px; clip-path: polygon(56px 0, 46px 46px, 0 56px); }
+		.talk__title { font-size: clamp(32px, 7vw, 60px); line-height: 1.2; }
+		.talk__lead { font-size: 20px; }
+	}
+	@media (max-width: 700px) {
+		.talk__content :global(.talk__cta) { font-size: clamp(16px, 4.5vw, 20px); padding: 13px 15px; gap: 9px; }
+	}
+
 </style>

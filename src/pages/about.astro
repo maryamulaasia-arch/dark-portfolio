@@ -196,4 +196,24 @@ const clientRows = [
 		font-size: 22px;
 		color: var(--text-muted);
 	}
+
+	@media (max-width: 700px) {
+		.why-lead { margin-top: 0; }
+		.about-details { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding-inline: var(--page-gutter); }
+		.about-details :global(.notchbox) { width: 100% !important; height: auto !important; }
+		.edu, .contact { height: auto; padding: 32px 24px 56px; }
+		.edu__heading, .cx__heading, .contact__heading { font-size: 26px; }
+		.edu__period { font-size: 19px; }
+		.edu__desc { font-size: 17px; line-height: 1.6; }
+		.cx { width: 100%; min-width: 0; }
+		.cx__row { flex-wrap: wrap; }
+		.cx__row--offset { margin-left: 0; }
+		.cx__tag { flex: 1; min-width: 85px; font-size: 16px; }
+		.contact__email { font-size: 18px; overflow-wrap: anywhere; }
+	}
+	@media (max-width: 700px) {
+		.about-details { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+		.edu__heading { text-align: left; }
+	}
+
 </style>

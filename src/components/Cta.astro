@@ -8,25 +8,36 @@ interface Props {
 	label: string;
 	href?: string;
 	variant?: "outline" | "solid";
+	icon?: "arrow" | "linkedin";
 	fill?: string;
 	class?: string;
 	target?: string;
 }
 
-const { label, href = "#", variant = "outline", fill, class: klass = "", target } = Astro.props;
+const { label, href = "#", variant = "outline", icon = "arrow", fill, class: klass = "", target } = Astro.props;
 const style = fill ? `--cta-fill:${fill}` : undefined;
 const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+const iconModules = import.meta.glob("../../public/Icons/linkedin.svg", {
+	query: "?raw",
+	import: "default",
+	eager: true,
+}) as Record<string, string>;
+const linkedinIcon = iconModules["../../public/Icons/linkedin.svg"];
 ---
 
 <a href={href} class:list={["cta", `cta--${variant}`, klass]} style={style} target={target} rel={rel}>
 	<span>{label}</span>
-	<svg class="cta__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-		<path
-			d="M4 12h15M13 6l6 6-6 6"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="square"
-			stroke-linejoin="miter"
-		></path>
-	</svg>
+	{icon === "linkedin" ? (
+		<span class="cta__linkedin" aria-hidden="true" set:html={linkedinIcon} />
+	) : (
+		<svg class="cta__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+			<path
+				d="M4 12h15M13 6l6 6-6 6"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="square"
+				stroke-linejoin="miter"
+			></path>
+		</svg>
+	)}
 </a>

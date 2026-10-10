@@ -317,6 +317,14 @@ button {
 	flex-shrink: 0;
 }
 
+.cta__linkedin,
+.cta__linkedin svg {
+	width: 1em;
+	height: 1em;
+	display: block;
+	flex-shrink: 0;
+}
+
 /* Outline: the element itself is the border colour; ::before paints the
    interior 2px smaller with the same silhouette, leaving a crisp frame
    on every edge — including the two diagonal cuts. */

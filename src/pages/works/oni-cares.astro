@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from "../../components/ResponsiveImage.astro";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import NotchBox from "../../components/NotchBox.astro";
@@ -105,7 +106,7 @@ const citations = [
 		<section class="hero">
 			<div class="hero__device reveal">
 				<img src="/images/ONI/oni-hero.png" alt="ONI Cares doctor dashboard shown on tablet, laptop and phone" />
-				<p class="hero__tags">UX/ Product design<br />Healthcare UX</p>
+				<p class="hero__tags"><span>UX/ Product design</span><br /><span>Healthcare UX</span></p>
 			</div>
 			<div class="hero__copy reveal" style="--reveal-delay:120ms">
 				<h1 class="hero__title">
@@ -181,7 +182,9 @@ const citations = [
 			<div class="zgrid zgrid--mid zgrid--tight">
 				<div class="zgrid__left">
 					<div class="problem__img">
-						<img src="/images/ONI/Problem statement.png" alt="Doctor-facing EMR treatment screen with prescription and notes" />
+						<ResponsiveImage src="/images/ONI/Problem statement.png" alt="Doctor-facing EMR treatment screen with prescription and notes">
+				<img src="/images/ONI/Problem statement.png" alt="Doctor-facing EMR treatment screen with prescription and notes" />
+			</ResponsiveImage>
 					</div>
 				</div>
 				<div class="zgrid__right">
@@ -369,7 +372,7 @@ const citations = [
 				</p>
 			</div>
 
-			<div class="table-wrap">
+			<div class="table-wrap" tabindex="0" role="region" aria-label="Comparison table">
 				<table class="ctable">
 					<thead>
 						<tr>
@@ -381,7 +384,7 @@ const citations = [
 							competitiveRows.map((row) => (
 								<tr>
 									<td class="ctable__name">{row[0]}</td>
-									{row.slice(1).map((v) => <td>{v}</td>)}
+									{row.slice(1).map((v, i) => <td data-label={competitiveHeaders[i + 1]}>{v}</td>)}
 								</tr>
 							))
 						}
@@ -443,7 +446,9 @@ const citations = [
 			<p class="journey__flow">Prepare &rarr; Review &rarr; Consult &rarr; Capture &rarr; Review &rarr; Prescribe &rarr; Follow-up</p>
 
 			<div class="wide-img">
+				<ResponsiveImage src="/images/ONI/journey-map.png" alt="Five-stage doctor journey map with doing, thinking, feeling, friction and consequence rows">
 				<img src="/images/ONI/journey-map.png" alt="Five-stage doctor journey map with doing, thinking, feeling, friction and consequence rows" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -451,7 +456,9 @@ const citations = [
 		<section class="block reveal">
 			<h2 class="h2"><PixelText text="INFORMATION" pixel={[6]} /><br /><PixelText text="ARCHITECTURE" pixel={[3, 7]} /></h2>
 			<div class="wide-img wide-img--center">
+				<ResponsiveImage src="/images/ONI/information-architecture.png" alt="Information architecture tree for ONI doctors interface">
 				<img src="/images/ONI/information-architecture.png" alt="Information architecture tree for ONI doctors interface" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -459,10 +466,14 @@ const citations = [
 		<section class="block reveal">
 			<h2 class="h2"><PixelText text="USER" pixel={[2]} /> FLOW</h2>
 			<div class="wide-img wide-img--flow">
+				<ResponsiveImage src="/images/ONI/user-flow.png" alt="User flow diagram from ONI home through consultation screens">
 				<img src="/images/ONI/user-flow.png" alt="User flow diagram from ONI home through consultation screens" />
+			</ResponsiveImage>
 			</div>
 			<div class="wide-img wide-img--wireframes">
+				<ResponsiveImage src="/images/ONI/Wireframes.png" alt="Five black-and-white wireframe screens of the ONI doctor app" panels={5} panelAspect={2560 / 5 / 1063}>
 				<img src="/images/ONI/Wireframes.png" alt="Five black-and-white wireframe screens of the ONI doctor app" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -479,10 +490,14 @@ const citations = [
 			</p>
 			<div class="devicetrio">
 				<div class="devicetrio__desktop">
-					<img src="/images/ONI/Home - desktop.png" alt="ONI home screen on desktop" />
+					<ResponsiveImage src="/images/ONI/Home - desktop.png" alt="ONI home screen on desktop">
+				<img src="/images/ONI/Home - desktop.png" alt="ONI home screen on desktop" />
+			</ResponsiveImage>
 				</div>
 				<div class="devicetrio__tablet">
-					<img src="/images/ONI/Home - Tablet.png" alt="ONI home screen on tablet" />
+					<ResponsiveImage src="/images/ONI/Home - Tablet.png" alt="ONI home screen on tablet">
+				<img src="/images/ONI/Home - Tablet.png" alt="ONI home screen on tablet" />
+			</ResponsiveImage>
 				</div>
 				<div class="devicetrio__mobile">
 					<img src="/images/ONI/Home - Mobile.png" alt="ONI home screen on mobile" />
@@ -508,11 +523,15 @@ const citations = [
 
 			<div class="rx__pair">
 				<div class="rx__desktop">
-					<img src="/images/ONI/Medication - desktop.png" alt="Prescription screen on desktop" />
+						<ResponsiveImage src="/images/ONI/Medication - desktop.png" alt="Prescription screen on desktop">
+				<img src="/images/ONI/Medication - desktop.png" alt="Prescription screen on desktop" />
+			</ResponsiveImage>
 				</div>
 				<div class="rx__tablet-wrap">
 					<div class="rx__tablet">
-						<img src="/images/ONI/medicatio - tablet.png" alt="Prescription screen on tablet with sub-tabs" />
+						<ResponsiveImage src="/images/ONI/medicatio - tablet.png" alt="Prescription screen on tablet with sub-tabs">
+				<img src="/images/ONI/medicatio - tablet.png" alt="Prescription screen on tablet with sub-tabs" />
+			</ResponsiveImage>
 					</div>
 				</div>
 			</div>
@@ -522,7 +541,9 @@ const citations = [
 				appearing all at once.
 			</p>
 			<div class="wide-img wide-img--rxmobile">
+				<ResponsiveImage src="/images/ONI/Medication - mobile.png" alt="Six mobile prescription flow screens in sequence" panels={6} panelAspect={2691 / 6 / 930}>
 				<img src="/images/ONI/Medication - mobile.png" alt="Six mobile prescription flow screens in sequence" />
+			</ResponsiveImage>
 			</div>
 		</section>
 
@@ -537,7 +558,9 @@ const citations = [
 
 			<div class="riskrow">
 				<div class="riskrow__phones">
-					<img src="/images/ONI/risk mobile.png" alt="Two ONI mobile screens showing risk badges in the header and appointment list" />
+					<ResponsiveImage src="/images/ONI/risk mobile.png" alt="Two ONI mobile screens showing risk badges in the header and appointment list" panels={2} panelAspect={917 / 2 / 930}>
+				<img src="/images/ONI/risk mobile.png" alt="Two ONI mobile screens showing risk badges in the header and appointment list" />
+			</ResponsiveImage>
 				</div>
 			</div>
 		</section>
@@ -1460,7 +1483,7 @@ const citations = [
 	/* ============================================================
 	   Responsive
 	   ============================================================ */
-	@media (max-width: 860px) {
+	@media (max-width: 700px) {
 		.hero {
 			flex-direction: column;
 			align-items: center;

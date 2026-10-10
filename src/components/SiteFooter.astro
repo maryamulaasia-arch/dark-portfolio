@@ -7,8 +7,8 @@ const name = { text: "MARYAMUL AASIA", pixel: [3, 6, 10] };
 
 const nav = [
 	{ label: "Home", href: "/" },
-	{ label: "Works", href: "#works" },
-	{ label: "About", href: "#about" },
+	{ label: "Works", href: ["/", "/works"].includes(Astro.url.pathname.replace(/\/$/, "") || "/") ? "#works" : "/works" },
+	{ label: "About", href: ["/", "/about"].includes(Astro.url.pathname.replace(/\/$/, "") || "/") ? "#about" : "/about" },
 ];
 
 /* Social icons — the supplied files in public/Icons/ are the source of
@@ -155,4 +155,16 @@ const socials = socialFiles.map((s) => ({
 		height: 38px;
 		display: block;
 	}
+
+	@media (max-width: 700px) {
+		.footer { padding: 0 var(--page-gutter) max(24px, env(safe-area-inset-bottom)); }
+		.footer__inner { gap: 32px; padding-block: 32px; flex-wrap: wrap; }
+		.footer__name { font-size: clamp(28px, 4vw, 44px); line-height: 1.2; }
+		.footer__role { font-size: 17px; }
+		.footer__right { align-items: flex-start; gap: 20px; }
+		.footer__nav { gap: 28px; font-size: 18px; }
+		.footer__nav a, .footer__socials a { min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+		.footer__socials a :global(svg) { width: 32px; height: 32px; }
+	}
+
 </style>
